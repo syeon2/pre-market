@@ -1,0 +1,6 @@
+server:
+  shutdown: graceful
+
+spring:
+  profiles:
+    default: local
