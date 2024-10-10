@@ -1,0 +1,14 @@
+[[Register-Account-API]]
+=== Register Account API
+
+[[API-Request]]
+==== API Request
+
+include::{snippets}/account-register/http-request.adoc[]
+include::{snippets}/account-register/request-fields.adoc[]
+
+[[Response]]
+==== API Response
+
+include::{snippets}/account-register/http-response.adoc[]
+include::{snippets}/account-register/response-fields.adoc[]
