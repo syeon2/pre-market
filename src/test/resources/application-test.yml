@@ -1,0 +1,8 @@
+spring:
+  config:
+    import: file:.env[.properties]
+
+logging:
+  level:
+    org.hibernate.SQL: debug
+    org.hibernate.orm.jdbc.bind: trace
