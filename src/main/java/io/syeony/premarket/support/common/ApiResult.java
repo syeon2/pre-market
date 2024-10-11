@@ -1,4 +1,4 @@
-package io.syeony.premarket.support.wrapper;
+package io.syeony.premarket.support.common;
 
 import org.springframework.http.HttpStatus;
 
@@ -32,7 +32,7 @@ public final class ApiResult<T> {
 		return ApiResult.of(HttpStatus.CREATED, HttpStatus.CREATED.getReasonPhrase(), data);
 	}
 
-	public static <T> ApiResult<T> error(HttpStatus status, String message) {
-		return ApiResult.of(status, message, null);
+	public static <T> ApiResult<T> error(String message) {
+		return new ApiResult<>(null, message, null);
 	}
 }
