@@ -1,5 +1,7 @@
 package io.syeony.premarket.account.domain.model;
 
+import java.util.UUID;
+
 import io.syeony.premarket.account.domain.model.vo.Address;
 import io.syeony.premarket.account.domain.model.vo.MemberId;
 import io.syeony.premarket.account.domain.model.vo.MemberRole;
@@ -56,6 +58,6 @@ public final class Account {
 	}
 
 	private MemberId generateMemberId() {
-		return MemberId.generate();
+		return MemberId.of(UUID.randomUUID().toString());
 	}
 }

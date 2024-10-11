@@ -15,6 +15,7 @@ import org.springframework.restdocs.payload.JsonFieldType;
 
 import io.syeony.premarket.ControllerTestSupport;
 import io.syeony.premarket.account.application.AccountFacade;
+import io.syeony.premarket.account.domain.model.vo.MemberId;
 import io.syeony.premarket.account.presentation.request.RegisterAccountRequest;
 
 class AccountCommandApiTest extends ControllerTestSupport {
@@ -33,7 +34,7 @@ class AccountCommandApiTest extends ControllerTestSupport {
 		RegisterAccountRequest request = createRegisterAccountRequest();
 
 		given(accountFacade.register(request.toRegisterAccountDto(), request.verificationCode()))
-			.willReturn("memberId");
+			.willReturn(new MemberId("memberId"));
 
 		// when // then
 		mockMvc.perform(
@@ -51,8 +52,8 @@ class AccountCommandApiTest extends ControllerTestSupport {
 					fieldWithPath("password").type(JsonFieldType.STRING).description("비밀번호"),
 					fieldWithPath("name").type(JsonFieldType.STRING).description("회원 이름"),
 					fieldWithPath("phone_number").type(JsonFieldType.STRING).description("전화번호"),
-					fieldWithPath("address.address1").type(JsonFieldType.STRING).description("주소1"),
-					fieldWithPath("address.address2").type(JsonFieldType.STRING).description("주소2"),
+					fieldWithPath("address.base_address").type(JsonFieldType.STRING).description("주소1"),
+					fieldWithPath("address.address_detail").type(JsonFieldType.STRING).description("주소2"),
 					fieldWithPath("address.zipcode").type(JsonFieldType.STRING).description("우편 번호"),
 					fieldWithPath("verification_code").type(JsonFieldType.STRING).description("가입 인증 번호")
 				),

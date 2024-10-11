@@ -16,7 +16,7 @@ public record RegisterAccountDto(
 	public Account toDomain() {
 		return Account.builder()
 			.email(email)
-			.password(Password.of(rawPassword))
+			.password(new Password(rawPassword, null))
 			.name(name)
 			.phoneNumber(phoneNumber)
 			.address(address.toDomain())
