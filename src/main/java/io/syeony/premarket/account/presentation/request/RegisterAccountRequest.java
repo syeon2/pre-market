@@ -4,6 +4,7 @@ import org.hibernate.validator.constraints.Length;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import io.syeony.premarket.account.application.dto.AddressDto;
 import io.syeony.premarket.account.application.dto.RegisterAccountDto;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
@@ -38,11 +39,13 @@ public record RegisterAccountRequest(
 	String verificationCode
 ) {
 	public record Address(
+		@JsonProperty(value = "base_address")
 		@NotBlank(message = "The address1 field is required")
-		String address1,
+		String baseAddress,
 
+		@JsonProperty(value = "address_detail")
 		@NotBlank(message = "The address2 field is required")
-		String address2,
+		String addressDetail,
 
 		@NotBlank(message = "The zipcode field is required")
 		String zipcode
@@ -55,7 +58,7 @@ public record RegisterAccountRequest(
 			.rawPassword(password)
 			.name(name)
 			.phoneNumber(phoneNumber)
-			.address(new RegisterAccountDto.Address(address.address1, address().address2, address().zipcode))
+			.address(new AddressDto(address.baseAddress, address().addressDetail, address().zipcode))
 			.build();
 	}
 }

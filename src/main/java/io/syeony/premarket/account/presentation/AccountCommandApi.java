@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import io.syeony.premarket.account.application.AccountFacade;
 import io.syeony.premarket.account.presentation.request.RegisterAccountRequest;
 import io.syeony.premarket.account.presentation.response.RegisterAccountResponse;
-import io.syeony.premarket.support.wrapper.ApiResult;
+import io.syeony.premarket.support.common.ApiResult;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
@@ -30,9 +30,9 @@ public final class AccountCommandApi {
 	public ResponseEntity<ApiResult<RegisterAccountResponse>> register(
 		@RequestBody @Valid RegisterAccountRequest request
 	) {
-		String memberId = accountFacade.register(request.toRegisterAccountDto(), request.verificationCode());
+		var memberId = accountFacade.register(request.toRegisterAccountDto(), request.verificationCode());
 		return ResponseEntity
 			.status(HttpStatus.CREATED)
-			.body(ApiResult.created(new RegisterAccountResponse(memberId)));
+			.body(ApiResult.created(new RegisterAccountResponse(memberId.value())));
 	}
 }

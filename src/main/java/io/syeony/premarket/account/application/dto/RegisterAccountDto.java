@@ -1,5 +1,7 @@
 package io.syeony.premarket.account.application.dto;
 
+import io.syeony.premarket.account.domain.model.Account;
+import io.syeony.premarket.account.domain.model.vo.Password;
 import lombok.Builder;
 
 @Builder
@@ -9,12 +11,15 @@ public record RegisterAccountDto(
 	String rawPassword,
 	String name,
 	String phoneNumber,
-	Address address
+	AddressDto address
 ) {
-	public record Address(
-		String address1,
-		String address2,
-		String zipcode
-	) {
+	public Account toDomain() {
+		return Account.builder()
+			.email(email)
+			.password(Password.of(rawPassword))
+			.name(name)
+			.phoneNumber(phoneNumber)
+			.address(address.toDomain())
+			.build();
 	}
 }
