@@ -1,2 +1,20 @@
 server:
   port: 8080
+
+spring:
+  config:
+    import: file:.env[.properties]
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ${MYSQL_URL_DEV}
+    username: ${MYSQL_USERNAME_DEV}
+    password: ${MYSQL_PASSWORD_DEV}
+
+  jpa:
+    database-platform: org.hibernate.dialect.MySQLDialect
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        show_sql: true
+    open-in-view: false
