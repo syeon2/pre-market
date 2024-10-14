@@ -21,4 +21,8 @@ public class AccountFacade {
 		verificationCodeVerifier.verify(accountDto.email(), verificationCode);
 		return registerAccountProcessor.register(accountDto.toDomain());
 	}
+
+	public void sendVerificationCode(String toEmail) {
+
+	}
 }

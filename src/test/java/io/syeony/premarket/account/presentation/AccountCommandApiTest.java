@@ -17,6 +17,7 @@ import io.syeony.premarket.ControllerTestSupport;
 import io.syeony.premarket.account.application.AccountFacade;
 import io.syeony.premarket.account.domain.model.vo.MemberId;
 import io.syeony.premarket.account.presentation.request.RegisterAccountRequest;
+import io.syeony.premarket.account.presentation.request.SendVerificationEmailRequest;
 
 class AccountCommandApiTest extends ControllerTestSupport {
 
@@ -63,6 +64,29 @@ class AccountCommandApiTest extends ControllerTestSupport {
 					fieldWithPath("data.member_id").type(JsonFieldType.STRING).description("가입된 회원 고유 아이디")
 				)
 			));
+	}
+
+	@Test
+	@DisplayName(value = "Send verification code when toEmail field is provided")
+	void sendVerificationCodeApi() throws Exception {
+		// given
+		SendVerificationEmailRequest request = new SendVerificationEmailRequest("waterkite94@gmail.com");
+
+		// when // then
+		mockMvc.perform(
+				post("/api/v1/accounts/email-verification")
+					.content(objectMapper.writeValueAsString(request))
+					.contentType(MediaType.APPLICATION_JSON)
+			).andDo(print())
+			.andExpect(status().isAccepted())
+			.andDo(document("account-email-verification",
+				preprocessRequest(prettyPrint()),
+				preprocessResponse(prettyPrint()),
+				requestFields(
+					fieldWithPath("to_email").type(JsonFieldType.STRING).description("전송할 이메일")
+				)
+			));
+
 	}
 
 	private RegisterAccountRequest createRegisterAccountRequest() {
