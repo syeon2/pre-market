@@ -18,3 +18,8 @@ spring:
       hibernate:
         show_sql: true
     open-in-view: false
+
+  data:
+    redis:
+      host: localhost
+      port: 6379

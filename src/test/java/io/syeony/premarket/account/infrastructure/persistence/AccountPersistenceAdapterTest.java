@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
 
-import io.syeony.premarket.InfrastructureTestSupport;
+import io.syeony.premarket.JpaInfraTestSupport;
 import io.syeony.premarket.account.domain.model.Account;
 import io.syeony.premarket.account.domain.model.vo.Address;
 import io.syeony.premarket.account.domain.model.vo.MemberId;
@@ -20,7 +20,7 @@ import io.syeony.premarket.support.common.EntityStatus;
 	AccountPersistenceAdapter.class,
 	AccountMapper.class
 })
-class AccountPersistenceAdapterTest extends InfrastructureTestSupport {
+class AccountPersistenceAdapterTest extends JpaInfraTestSupport {
 
 	@Autowired
 	private AccountPersistenceAdapter accountPersistenceAdapter;
