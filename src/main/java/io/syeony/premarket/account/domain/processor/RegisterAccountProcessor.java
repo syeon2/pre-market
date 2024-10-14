@@ -16,27 +16,28 @@ public class RegisterAccountProcessor {
 	private final AccountReader accountReader;
 	private final PasswordEncryptor passwordEncryptor;
 
-	public MemberId register(Account account) {
-		ensureEmailIsUnique(account.getEmail());
-		ensurePhoneNumberIsUnique(account.getPhoneNumber());
+	public MemberId register(final Account account) {
+		checkEmailIsUnique(account.getEmail());
+		checkPhoneNumberIsUnique(account.getPhoneNumber());
 
+		String encodedPassword = encryptPassword(account.getPassword().rawPassword());
 		return accountRepository.save(
-			account.registerWithEncryptedPassword(encryptPassword(account)));
+			account.registerWithEncryptedPassword(encodedPassword));
 	}
 
-	private void ensureEmailIsUnique(String email) {
+	private void checkEmailIsUnique(final String email) {
 		if (accountReader.existsByEmail(email)) {
 			throw new DuplicatedEmailException(email);
 		}
 	}
 
-	private void ensurePhoneNumberIsUnique(String phoneNumber) {
+	private void checkPhoneNumberIsUnique(final String phoneNumber) {
 		if (accountReader.existsByPhoneNumber(phoneNumber)) {
 			throw new DuplicatedPhoneNumberException(phoneNumber);
 		}
 	}
 
-	private String encryptPassword(Account account) {
-		return passwordEncryptor.encrypt(account.getPassword().rawPassword());
+	private String encryptPassword(final String rawPassword) {
+		return passwordEncryptor.encrypt(rawPassword);
 	}
 }

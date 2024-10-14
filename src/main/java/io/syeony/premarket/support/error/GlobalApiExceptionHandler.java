@@ -8,14 +8,24 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import io.syeony.premarket.support.common.ApiResult;
 import io.syeony.premarket.support.error.exception.DuplicatedEmailException;
 import io.syeony.premarket.support.error.exception.DuplicatedPhoneNumberException;
+import io.syeony.premarket.support.error.exception.InValidVerificationCodeException;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @ControllerAdvice
-public class GlobalApiExceptionHandler {
+public final class GlobalApiExceptionHandler {
+
+	@ExceptionHandler(value = InValidVerificationCodeException.class)
+	private ResponseEntity<ApiResult<Void>> handleInValidVerificationCodeException(
+		InValidVerificationCodeException exception) {
+		log.error("InValidVerificationCodeException", exception);
+		return ResponseEntity
+			.status(exception.getHttpStatus())
+			.body(ApiResult.error(exception.getMessage()));
+	}
 
 	@ExceptionHandler(value = DuplicatedEmailException.class)
-	public ResponseEntity<ApiResult<Void>> handleDuplicatedEmailException(DuplicatedEmailException exception) {
+	private ResponseEntity<ApiResult<Void>> handleDuplicatedEmailException(DuplicatedEmailException exception) {
 		log.error("DuplicatedEmailException", exception);
 		return ResponseEntity
 			.status(exception.getHttpStatus())
@@ -23,7 +33,7 @@ public class GlobalApiExceptionHandler {
 	}
 
 	@ExceptionHandler(value = DuplicatedPhoneNumberException.class)
-	public ResponseEntity<ApiResult<Void>> handleDuplicatedPhoneNumberException(
+	private ResponseEntity<ApiResult<Void>> handleDuplicatedPhoneNumberException(
 		DuplicatedPhoneNumberException exception) {
 		log.error("DuplicatedPhoneNumberException", exception);
 		return ResponseEntity
@@ -37,5 +47,21 @@ public class GlobalApiExceptionHandler {
 		return ResponseEntity
 			.badRequest()
 			.body(ApiResult.error("Invalid argument"));
+	}
+
+	@ExceptionHandler(RuntimeException.class)
+	private ResponseEntity<ApiResult<?>> handleRuntimeException(RuntimeException exception) {
+		log.error("RuntimeException", exception);
+		return ResponseEntity
+			.badRequest()
+			.body(ApiResult.error(exception.getMessage()));
+	}
+
+	@ExceptionHandler(Exception.class)
+	private ResponseEntity<ApiResult<?>> handleException(Exception exception) {
+		log.error("Exception", exception);
+		return ResponseEntity
+			.internalServerError()
+			.body(ApiResult.error("Internal server error"));
 	}
 }

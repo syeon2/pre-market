@@ -20,7 +20,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "member")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class AccountEntity extends BaseEntity {
+public class MemberEntity extends BaseEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -60,7 +60,7 @@ public class AccountEntity extends BaseEntity {
 	private EntityStatus status;
 
 	@Builder
-	private AccountEntity(Long id, String memberId, String email, String password, String name, String phoneNumber,
+	private MemberEntity(Long id, String memberId, String email, String password, String name, String phoneNumber,
 		String baseAddress, String addressDetail, String zipcode, MemberRole role, EntityStatus status) {
 		this.id = id;
 		this.memberId = memberId;

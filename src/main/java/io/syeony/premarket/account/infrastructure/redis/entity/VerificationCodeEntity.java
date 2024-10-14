@@ -10,11 +10,11 @@ import lombok.Getter;
 public class VerificationCodeEntity {
 
 	@Id
-	private String email;
+	private String toEmail;
 	private String code;
 
-	public VerificationCodeEntity(String email, String code) {
-		this.email = email;
+	public VerificationCodeEntity(String toEmail, String code) {
+		this.toEmail = toEmail;
 		this.code = code;
 	}
 }

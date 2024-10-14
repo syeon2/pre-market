@@ -13,7 +13,7 @@ import io.syeony.premarket.account.domain.model.vo.Address;
 import io.syeony.premarket.account.domain.model.vo.MemberId;
 import io.syeony.premarket.account.domain.model.vo.MemberRole;
 import io.syeony.premarket.account.domain.model.vo.Password;
-import io.syeony.premarket.account.infrastructure.persistence.entity.AccountEntity;
+import io.syeony.premarket.account.infrastructure.persistence.entity.MemberEntity;
 import io.syeony.premarket.support.common.EntityStatus;
 
 @Import({
@@ -89,8 +89,8 @@ class AccountPersistenceAdapterTest extends JpaInfraTestSupport {
 		assertThat(result).isFalse();
 	}
 
-	private AccountEntity createAccountEntity(String email, String phoneNumber) {
-		return AccountEntity.builder()
+	private MemberEntity createAccountEntity(String email, String phoneNumber) {
+		return MemberEntity.builder()
 			.memberId("memberId")
 			.email(email)
 			.password("encryptedPassword")

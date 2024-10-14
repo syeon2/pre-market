@@ -3,13 +3,13 @@ package io.syeony.premarket.account.infrastructure.persistence;
 import org.springframework.stereotype.Component;
 
 import io.syeony.premarket.account.domain.model.Account;
-import io.syeony.premarket.account.infrastructure.persistence.entity.AccountEntity;
+import io.syeony.premarket.account.infrastructure.persistence.entity.MemberEntity;
 
 @Component
 public class AccountMapper {
 
-	public AccountEntity toEntity(Account domain) {
-		return AccountEntity.builder()
+	public MemberEntity toEntity(final Account domain) {
+		return MemberEntity.builder()
 			.memberId(domain.getMemberId().value())
 			.email(domain.getEmail())
 			.password(domain.getPassword().encryptPassword())

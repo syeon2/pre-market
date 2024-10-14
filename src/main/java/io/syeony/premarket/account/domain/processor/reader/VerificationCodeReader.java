@@ -1,8 +1,10 @@
 package io.syeony.premarket.account.domain.processor.reader;
 
+import java.util.Optional;
+
 import io.syeony.premarket.account.domain.model.VerificationCode;
 
 public interface VerificationCodeReader {
 
-	VerificationCode findByEmail(String email);
+	Optional<VerificationCode> findByToEmail(String email);
 }

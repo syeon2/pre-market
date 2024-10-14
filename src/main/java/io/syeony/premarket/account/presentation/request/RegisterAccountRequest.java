@@ -58,7 +58,7 @@ public record RegisterAccountRequest(
 			.rawPassword(password)
 			.name(name)
 			.phoneNumber(phoneNumber)
-			.address(new AddressDto(address.baseAddress, address().addressDetail, address().zipcode))
+			.address(new AddressDto(address.baseAddress, address.addressDetail, address.zipcode))
 			.build();
 	}
 }

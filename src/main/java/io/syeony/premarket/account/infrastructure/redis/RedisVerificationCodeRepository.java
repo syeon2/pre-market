@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import io.syeony.premarket.account.infrastructure.redis.entity.VerificationCodeEntity;
 
 @Repository
-public interface VerificationCodeRepository extends CrudRepository<VerificationCodeEntity, Long> {
+public interface RedisVerificationCodeRepository extends CrudRepository<VerificationCodeEntity, Long> {
 
-	Optional<VerificationCodeEntity> findByEmail(String email);
+	Optional<VerificationCodeEntity> findByToEmail(String email);
 }

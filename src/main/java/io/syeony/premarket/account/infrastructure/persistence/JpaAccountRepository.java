@@ -4,12 +4,12 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import io.syeony.premarket.account.infrastructure.persistence.entity.AccountEntity;
+import io.syeony.premarket.account.infrastructure.persistence.entity.MemberEntity;
 
-public interface JpaAccountRepository extends JpaRepository<AccountEntity, Long> {
+public interface JpaAccountRepository extends JpaRepository<MemberEntity, Long> {
 
-	Optional<AccountEntity> findByEmail(String email);
+	Optional<MemberEntity> findByEmail(String email);
 
-	Optional<AccountEntity> findByPhoneNumber(String phoneNumber);
+	Optional<MemberEntity> findByPhoneNumber(String phoneNumber);
 }
 

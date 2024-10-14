@@ -7,13 +7,15 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import io.syeony.premarket.account.domain.processor.RegisterAccountProcessor;
+import io.syeony.premarket.account.domain.processor.VerificationCodeVerifier;
 
 @Import({
 	RegisterAccountProcessor.class,
-	DelegatePasswordEncoder.class
+	DelegatePasswordEncoder.class,
+	VerificationCodeVerifier.class,
 })
 @Configuration
-public class AccountConfiguration {
+public class AccountModuleConfiguration {
 
 	@Bean
 	public PasswordEncoder passwordEncoder() {

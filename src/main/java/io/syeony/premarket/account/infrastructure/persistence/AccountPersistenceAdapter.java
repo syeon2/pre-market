@@ -6,7 +6,7 @@ import io.syeony.premarket.account.domain.model.Account;
 import io.syeony.premarket.account.domain.model.vo.MemberId;
 import io.syeony.premarket.account.domain.processor.reader.AccountReader;
 import io.syeony.premarket.account.domain.processor.repository.AccountRepository;
-import io.syeony.premarket.account.infrastructure.persistence.entity.AccountEntity;
+import io.syeony.premarket.account.infrastructure.persistence.entity.MemberEntity;
 import lombok.RequiredArgsConstructor;
 
 @Repository
@@ -17,19 +17,19 @@ public class AccountPersistenceAdapter implements AccountRepository, AccountRead
 	private final AccountMapper accountMapper;
 
 	@Override
-	public MemberId save(Account account) {
-		AccountEntity savedEntity = accountRepository.save(accountMapper.toEntity(account));
+	public MemberId save(final Account account) {
+		MemberEntity savedEntity = accountRepository.save(accountMapper.toEntity(account));
 
 		return MemberId.of(savedEntity.getMemberId());
 	}
 
 	@Override
-	public boolean existsByEmail(String email) {
+	public boolean existsByEmail(final String email) {
 		return accountRepository.findByEmail(email).isPresent();
 	}
 
 	@Override
-	public boolean existsByPhoneNumber(String phoneNumber) {
+	public boolean existsByPhoneNumber(final String phoneNumber) {
 		return accountRepository.findByPhoneNumber(phoneNumber).isPresent();
 	}
 }

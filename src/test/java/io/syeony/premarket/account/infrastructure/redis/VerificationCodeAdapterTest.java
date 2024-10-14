@@ -2,6 +2,8 @@ package io.syeony.premarket.account.infrastructure.redis;
 
 import static org.assertj.core.api.Assertions.*;
 
+import java.util.Optional;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,44 +13,45 @@ import io.syeony.premarket.RedisInfraTestSupport;
 import io.syeony.premarket.account.domain.model.VerificationCode;
 import io.syeony.premarket.account.infrastructure.redis.entity.VerificationCodeEntity;
 
-@Import({VerificationCodeAdapter.class})
+@Import({VerificationCodeAdapter.class, VerificationCodeMapper.class})
 class VerificationCodeAdapterTest extends RedisInfraTestSupport {
 
 	@Autowired
 	private VerificationCodeAdapter verificationCodeAdapter;
 
 	@Autowired
-	private VerificationCodeRepository verificationCodeRepository;
+	private RedisVerificationCodeRepository redisVerificationCodeRepository;
 
 	@Test
 	@DisplayName(value = "Find verification code by email")
-	void findByEmail_shouldReturnVerificationCode() {
+	void findByToEmail_shouldReturnVerificationCode() {
 		// given
-		String email = "waterkite94@gmail.com";
+		String toEmail = "waterkite94@gmail.com";
 		String verificationCode = "verificationCode";
 
-		verificationCodeRepository.save(new VerificationCodeEntity(email, verificationCode));
+		redisVerificationCodeRepository.save(new VerificationCodeEntity(toEmail, verificationCode));
 
 		// when
-		VerificationCode findVerificationCode = verificationCodeAdapter.findByEmail(email);
+		Optional<VerificationCode> findCodeOptional = verificationCodeAdapter.findByToEmail(toEmail);
 
 		// then
-		assertThat(findVerificationCode.value()).isEqualTo(verificationCode);
+		assertThat(findCodeOptional).isPresent();
+		assertThat(findCodeOptional.get().getCode()).isEqualTo(verificationCode);
 	}
 
 	@Test
 	@DisplayName(value = "Cant find verification code by wrong email")
-	void findByEmail_shouldReturnNull() {
+	void findByToEmail_shouldReturnNull() {
 		// given
-		String email = "waterkite94@gmail.com";
+		String toEmail = "waterkite94@gmail.com";
 		String verificationCode = "verificationCode";
 
-		verificationCodeRepository.save(new VerificationCodeEntity(email, verificationCode));
+		redisVerificationCodeRepository.save(new VerificationCodeEntity(toEmail, verificationCode));
 
 		// when
-		VerificationCode findVerificationCode = verificationCodeAdapter.findByEmail("another@gmail.com");
+		Optional<VerificationCode> findCodeOptional = verificationCodeAdapter.findByToEmail("another@gmail.com");
 
 		// then
-		assertThat(findVerificationCode.value()).isNull();
+		assertThat(findCodeOptional).isNotPresent();
 	}
 }
