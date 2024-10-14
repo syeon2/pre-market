@@ -11,4 +11,8 @@ public class VerificationCodeMapper {
 	public VerificationCode toDomain(VerificationCodeEntity entity) {
 		return VerificationCode.of(entity.getToEmail(), entity.getCode());
 	}
+
+	public VerificationCodeEntity toEntity(VerificationCode domain) {
+		return new VerificationCodeEntity(domain.getToEmail(), domain.getCode());
+	}
 }
