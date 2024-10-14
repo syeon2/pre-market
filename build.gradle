@@ -42,9 +42,10 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 
     // Infrastructure
-    implementation 'org.springframework.boot:spring-boot-starter-mail'
     runtimeOnly 'com.h2database:h2'
     runtimeOnly 'com.mysql:mysql-connector-j'
+    implementation 'org.springframework.boot:spring-boot-starter-mail'
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 
     // Util
     annotationProcessor 'org.projectlombok:lombok'
@@ -54,6 +55,7 @@ dependencies {
     // Test
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.boot:spring-boot-testcontainers'
 
     // Docs
     asciidoctorExt 'org.springframework.restdocs:spring-restdocs-asciidoctor'
