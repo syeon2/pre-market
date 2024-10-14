@@ -26,15 +26,13 @@ public final class VerificationCode {
 		return new VerificationCode(toEmail, code);
 	}
 
-	public static VerificationCode createVerificationCode(final String toEmail) {
+	public static VerificationCode issueVerificationCode(final String toEmail) {
 		return VerificationCode.of(toEmail, generateCode());
 	}
 
 	public boolean isValid(final String code) {
 		return this.code != null && this.code.equals(code);
 	}
-
-	public static final String SUBJECT = "회원 가입을 위한 인증번호입니다.";
 
 	private static String generateCode() {
 		return IntStream.range(0, CODE_LENGTH)

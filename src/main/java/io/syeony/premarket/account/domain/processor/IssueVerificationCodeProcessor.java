@@ -5,12 +5,14 @@ import io.syeony.premarket.account.domain.processor.repository.VerificationCodeR
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class SendVerificationCodeProcessor {
+public class IssueVerificationCodeProcessor {
 
 	private final VerificationCodeRepository verificationCodeRepository;
 
-	public VerificationCode save(final String toEmail) {
-		return verificationCodeRepository.save(
-			VerificationCode.createVerificationCode(toEmail));
+	public VerificationCode issue(final String toEmail) {
+		VerificationCode verificationCode = VerificationCode.issueVerificationCode(toEmail);
+		verificationCodeRepository.save(verificationCode);
+
+		return verificationCode;
 	}
 }

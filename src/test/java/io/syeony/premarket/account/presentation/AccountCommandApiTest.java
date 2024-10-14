@@ -16,8 +16,8 @@ import org.springframework.restdocs.payload.JsonFieldType;
 import io.syeony.premarket.ControllerTestSupport;
 import io.syeony.premarket.account.application.AccountFacade;
 import io.syeony.premarket.account.domain.model.vo.MemberId;
+import io.syeony.premarket.account.presentation.request.IssueVerificationRequest;
 import io.syeony.premarket.account.presentation.request.RegisterAccountRequest;
-import io.syeony.premarket.account.presentation.request.SendVerificationEmailRequest;
 
 class AccountCommandApiTest extends ControllerTestSupport {
 
@@ -70,7 +70,7 @@ class AccountCommandApiTest extends ControllerTestSupport {
 	@DisplayName(value = "Send verification code when toEmail field is provided")
 	void sendVerificationCodeApi() throws Exception {
 		// given
-		SendVerificationEmailRequest request = new SendVerificationEmailRequest("waterkite94@gmail.com");
+		IssueVerificationRequest request = new IssueVerificationRequest("waterkite94@gmail.com");
 
 		// when // then
 		mockMvc.perform(

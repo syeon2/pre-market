@@ -4,5 +4,5 @@ import io.syeony.premarket.account.domain.model.VerificationCode;
 
 public interface VerificationCodeRepository {
 
-	VerificationCode save(VerificationCode verificationCode);
+	void save(VerificationCode verificationCode);
 }

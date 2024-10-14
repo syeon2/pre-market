@@ -26,15 +26,16 @@ class VerificationCodeAdapterTest extends RedisInfraTestSupport {
 	@DisplayName(value = "Save verification code")
 	void saveVerificationCode() {
 		// given
-		VerificationCode verificationCode = VerificationCode.createVerificationCode("waterkite94@gmail.com");
+		String email = "waterkite94@gmail.com";
+		VerificationCode verificationCode = VerificationCode.issueVerificationCode(email);
 
 		// when
-		VerificationCode savedVerificationCode = verificationCodeAdapter.save(verificationCode);
+		verificationCodeAdapter.save(verificationCode);
 
 		// then
-		assertThat(savedVerificationCode).isNotNull();
-		assertThat(savedVerificationCode.getCode()).isEqualTo(verificationCode.getCode());
-		assertThat(savedVerificationCode.getToEmail()).isEqualTo(verificationCode.getToEmail());
+		Optional<VerificationCodeEntity> findCodeOptional = redisVerificationCodeRepository.findByToEmail(email);
+		assertThat(findCodeOptional.isPresent()).isTrue();
+		assertThat(findCodeOptional.get().getCode()).isEqualTo(verificationCode.getCode());
 	}
 
 	@Test

@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.syeony.premarket.account.application.AccountFacade;
+import io.syeony.premarket.account.presentation.request.IssueVerificationRequest;
 import io.syeony.premarket.account.presentation.request.RegisterAccountRequest;
-import io.syeony.premarket.account.presentation.request.SendVerificationEmailRequest;
 import io.syeony.premarket.account.presentation.response.RegisterAccountResponse;
 import io.syeony.premarket.support.common.ApiResult;
 import jakarta.validation.Valid;
@@ -38,10 +38,10 @@ public final class AccountCommandApi {
 	}
 
 	@PostMapping("/v1/accounts/email-verification")
-	public ResponseEntity<Void> sendVerificationEmail(
-		@RequestBody @Valid SendVerificationEmailRequest request
+	public ResponseEntity<Void> issueVerificationCode(
+		@RequestBody @Valid IssueVerificationRequest request
 	) {
-		accountFacade.sendVerificationCode(request.toEmail());
+		accountFacade.issueVerification(request.toEmail());
 
 		return ResponseEntity
 			.status(HttpStatus.ACCEPTED)

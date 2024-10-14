@@ -13,32 +13,32 @@ import io.syeony.premarket.UnitTestSupport;
 import io.syeony.premarket.account.domain.model.VerificationCode;
 import io.syeony.premarket.account.domain.processor.repository.VerificationCodeRepository;
 
-class SendVerificationCodeProcessorTest extends UnitTestSupport {
+class IssueVerificationCodeProcessorTest extends UnitTestSupport {
 
 	@InjectMocks
-	private SendVerificationCodeProcessor sendVerificationCodeProcessor;
+	private IssueVerificationCodeProcessor issueVerificationCodeProcessor;
 
 	@Mock
 	private VerificationCodeRepository verificationCodeRepository = mock(VerificationCodeRepository.class);
 
 	@BeforeEach
 	void setUp() {
-		sendVerificationCodeProcessor = new SendVerificationCodeProcessor(verificationCodeRepository);
+		issueVerificationCodeProcessor = new IssueVerificationCodeProcessor(verificationCodeRepository);
 	}
 
 	@Test
 	@DisplayName(value = "Save verification code and return verification code generated this method")
-	void save_verificationCode() {
+	void issue_verificationCode() {
 		// given
 		String toEmail = "waterkite94@gmail.com";
-		VerificationCode verificationCode = VerificationCode.createVerificationCode(toEmail);
-		when(verificationCodeRepository.save(any(VerificationCode.class))).thenReturn(verificationCode);
+		VerificationCode verificationCode = VerificationCode.issueVerificationCode(toEmail);
 
 		// when
-		VerificationCode result = sendVerificationCodeProcessor.save(toEmail);
+		issueVerificationCodeProcessor.issue(toEmail);
 
 		// then
-		assertThat(result).isEqualTo(verificationCode);
+		assertThat(verificationCode.getToEmail()).isEqualTo(toEmail);
+		assertThat(verificationCode.getCode()).isNotNull();
 		verify(verificationCodeRepository, times(1)).save(any(VerificationCode.class));
 	}
 }
