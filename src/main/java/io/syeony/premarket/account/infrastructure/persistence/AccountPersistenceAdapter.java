@@ -1,5 +1,7 @@
 package io.syeony.premarket.account.infrastructure.persistence;
 
+import java.util.Optional;
+
 import org.springframework.stereotype.Repository;
 
 import io.syeony.premarket.account.domain.model.Account;
@@ -31,5 +33,11 @@ public class AccountPersistenceAdapter implements AccountRepository, AccountRead
 	@Override
 	public boolean existsByPhoneNumber(final String phoneNumber) {
 		return accountRepository.findByPhoneNumber(phoneNumber).isPresent();
+	}
+
+	@Override
+	public Optional<Account> findByEmail(String email) {
+		Optional<MemberEntity> entity = accountRepository.findByEmail(email);
+		return entity.map(accountMapper::toDomain);
 	}
 }

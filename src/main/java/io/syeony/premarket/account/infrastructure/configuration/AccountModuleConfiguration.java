@@ -4,8 +4,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import io.syeony.premarket.account.domain.processor.IssueVerificationCodeProcessor;
 import io.syeony.premarket.account.domain.processor.RegisterAccountProcessor;
@@ -17,7 +15,7 @@ import io.syeony.premarket.account.infrastructure.smpt.SmtpMailDispatcher;
 	RegisterAccountProcessor.class,
 	DelegatePasswordEncoder.class,
 	VerificationCodeVerifier.class,
-	IssueVerificationCodeProcessor.class,
+	IssueVerificationCodeProcessor.class
 })
 @Configuration
 public class AccountModuleConfiguration {
@@ -25,10 +23,5 @@ public class AccountModuleConfiguration {
 	@Bean
 	public MailDispatcher mailDispatcher(JavaMailSender mailSender) {
 		return new SmtpMailDispatcher(mailSender);
-	}
-
-	@Bean
-	public PasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
 	}
 }
