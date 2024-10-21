@@ -1,7 +1,7 @@
 package io.syeony.premarket.account.domain.processor;
 
 import io.syeony.premarket.account.domain.processor.reader.VerificationCodeReader;
-import io.syeony.premarket.support.error.exception.InValidVerificationCodeException;
+import io.syeony.premarket.support.error.exception.InvalidVerificationCodeException;
 import io.syeony.premarket.support.error.exception.VerificationCodeNotFoundException;
 import lombok.RequiredArgsConstructor;
 
@@ -15,7 +15,7 @@ public final class VerificationCodeVerifier {
 			.orElseThrow(() -> new VerificationCodeNotFoundException(email));
 
 		if (!findCode.isValid(verificationCode)) {
-			throw new InValidVerificationCodeException(verificationCode);
+			throw new InvalidVerificationCodeException(verificationCode);
 		}
 	}
 }

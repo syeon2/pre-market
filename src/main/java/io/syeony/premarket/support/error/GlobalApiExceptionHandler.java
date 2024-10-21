@@ -2,22 +2,31 @@ package io.syeony.premarket.support.error;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindException;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import io.syeony.premarket.support.common.ApiResult;
 import io.syeony.premarket.support.error.exception.DuplicatedEmailException;
 import io.syeony.premarket.support.error.exception.DuplicatedPhoneNumberException;
-import io.syeony.premarket.support.error.exception.InValidVerificationCodeException;
+import io.syeony.premarket.support.error.exception.InvalidCredentialsException;
+import io.syeony.premarket.support.error.exception.InvalidVerificationCodeException;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@ControllerAdvice
+@RestControllerAdvice
 public final class GlobalApiExceptionHandler {
 
-	@ExceptionHandler(value = InValidVerificationCodeException.class)
+	@ExceptionHandler(value = InvalidCredentialsException.class)
+	private ResponseEntity<ApiResult<Void>> handlerInvalidCredentialsException(InvalidCredentialsException exception) {
+		log.error("InvalidCredentialsException", exception);
+		return ResponseEntity
+			.status(exception.getHttpStatus())
+			.body(ApiResult.error(exception.getMessage()));
+	}
+
+	@ExceptionHandler(value = InvalidVerificationCodeException.class)
 	private ResponseEntity<ApiResult<Void>> handleInValidVerificationCodeException(
-		InValidVerificationCodeException exception) {
+		InvalidVerificationCodeException exception) {
 		log.error("InValidVerificationCodeException", exception);
 		return ResponseEntity
 			.status(exception.getHttpStatus())

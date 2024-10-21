@@ -6,7 +6,7 @@ import org.springframework.data.redis.core.RedisHash;
 import lombok.Getter;
 
 @Getter
-@RedisHash(value = "account:code", timeToLive = 300)
+@RedisHash(value = "account:code")
 public class VerificationCodeEntity {
 
 	@Id

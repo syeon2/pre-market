@@ -10,7 +10,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.syeony.premarket.account.application.AccountFacade;
 import io.syeony.premarket.account.presentation.request.IssueVerificationRequest;
+import io.syeony.premarket.account.presentation.request.LoginRequest;
 import io.syeony.premarket.account.presentation.request.RegisterAccountRequest;
+import io.syeony.premarket.account.presentation.request.RenewTokensRequest;
+import io.syeony.premarket.account.presentation.response.AuthorizeTokenResponse;
 import io.syeony.premarket.account.presentation.response.RegisterAccountResponse;
 import io.syeony.premarket.support.common.ApiResult;
 import jakarta.validation.Valid;
@@ -47,4 +50,29 @@ public final class AccountCommandApi {
 			.status(HttpStatus.ACCEPTED)
 			.build();
 	}
+
+	@PostMapping("/v1/accounts/login")
+	public ResponseEntity<ApiResult<AuthorizeTokenResponse>> loginAccount(
+		@RequestBody @Valid LoginRequest request
+	) {
+		var token = accountFacade.authenticateAccount(request.email(), request.password());
+
+		return ResponseEntity
+			.ok()
+			.body(
+				ApiResult.ok(new AuthorizeTokenResponse(token.accessToken(), token.refreshToken())));
+	}
+
+	@PostMapping("/v1/accounts/refresh-token")
+	public ResponseEntity<ApiResult<AuthorizeTokenResponse>> renewToken(
+		@RequestBody @Valid RenewTokensRequest request
+	) {
+		var token = accountFacade.authenticateRefreshToken(request.email(), request.refreshToken());
+
+		return ResponseEntity
+			.ok()
+			.body(
+				ApiResult.ok(new AuthorizeTokenResponse(token.accessToken(), token.refreshToken())));
+	}
+
 }

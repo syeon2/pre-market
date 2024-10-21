@@ -1,4 +1,4 @@
-package io.syeony.premarket.support.security.login;
+package io.syeony.premarket.account.infrastructure.security.login;
 
 import java.util.ArrayList;
 
@@ -6,25 +6,25 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
-import io.syeony.premarket.account.domain.model.Account;
-import io.syeony.premarket.account.domain.processor.reader.AccountReader;
+import io.syeony.premarket.account.infrastructure.persistence.JpaAccountRepository;
+import io.syeony.premarket.account.infrastructure.persistence.entity.MemberEntity;
 import lombok.RequiredArgsConstructor;
 
-@Component
+@Repository
 @RequiredArgsConstructor
-public class LoginAccountService implements UserDetailsService {
+public class UserDetailServiceImpl implements UserDetailsService {
 
-	private final AccountReader accountReader;
+	private final JpaAccountRepository jpaAccountRepository;
 
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-		Account account = accountReader.findByEmail(email)
+		MemberEntity account = jpaAccountRepository.findByEmail(email)
 			.orElseThrow(() -> new UsernameNotFoundException(email));
 
 		return new User(
-			account.getEmail(), account.getPassword().encryptPassword(),
+			account.getEmail(), account.getPassword(),
 			true, true, true, true, new ArrayList<>());
 	}
 }

@@ -1,21 +1,22 @@
-package io.syeony.premarket.support.security;
+package io.syeony.premarket.account.infrastructure.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import io.syeony.premarket.support.security.filter.AuthenticationFilter;
+import io.syeony.premarket.account.infrastructure.security.filter.JwtAuthorizationFilter;
 import lombok.RequiredArgsConstructor;
 
 @Configuration
@@ -23,27 +24,22 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class SecurityConfiguration {
 
+	private final JwtAuthorizationFilter jwtAuthorizationFilter;
 	private final UserDetailsService userDetailsService;
-	private final TokenProvider tokenProvider;
+	private final PasswordEncoder passwordEncoder;
 
 	@Bean
 	protected SecurityFilterChain configure(HttpSecurity http) throws Exception {
-		AuthenticationManagerBuilder authenticationManagerBuilder =
-			http.getSharedObject(AuthenticationManagerBuilder.class);
-		AuthenticationManager authenticationManager = authenticationManagerBuilder.build();
-
-		AuthenticationFilter authenticationFilter
-			= new AuthenticationFilter(authenticationManager, userDetailsService, tokenProvider);
-		authenticationFilter.setFilterProcessesUrl("/api/v1/account/login");
-
 		http
 			.csrf(AbstractHttpConfigurer::disable)
 			.httpBasic(AbstractHttpConfigurer::disable)
 			.formLogin(AbstractHttpConfigurer::disable)
 			.authorizeHttpRequests(authRequest ->
-				authRequest.anyRequest().permitAll())
-			.authenticationManager(authenticationManager)
-			.addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class)
+				authRequest
+					.requestMatchers("/api/v1/accounts/**").permitAll()
+					.anyRequest().authenticated())
+			.authenticationProvider(authenticationProvider())
+			.addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class)
 			.headers(header -> header.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable))
 			.logout(logout -> logout
 				.logoutSuccessUrl("/api/v1/account/login")
@@ -55,7 +51,16 @@ public class SecurityConfiguration {
 	}
 
 	@Bean
-	public PasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
+	public AuthenticationProvider authenticationProvider() {
+		DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
+		authenticationProvider.setUserDetailsService(userDetailsService);
+		authenticationProvider.setPasswordEncoder(passwordEncoder);
+		return authenticationProvider;
+	}
+
+	@Bean
+	public AuthenticationManager authenticationManager(
+		AuthenticationConfiguration authenticationConfiguration) throws Exception {
+		return authenticationConfiguration.getAuthenticationManager();
 	}
 }

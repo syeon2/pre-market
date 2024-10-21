@@ -15,9 +15,12 @@ import org.springframework.restdocs.payload.JsonFieldType;
 
 import io.syeony.premarket.ControllerTestSupport;
 import io.syeony.premarket.account.application.AccountFacade;
+import io.syeony.premarket.account.domain.model.AuthorizationToken;
 import io.syeony.premarket.account.domain.model.vo.MemberId;
 import io.syeony.premarket.account.presentation.request.IssueVerificationRequest;
+import io.syeony.premarket.account.presentation.request.LoginRequest;
 import io.syeony.premarket.account.presentation.request.RegisterAccountRequest;
+import io.syeony.premarket.account.presentation.request.RenewTokensRequest;
 
 class AccountCommandApiTest extends ControllerTestSupport {
 
@@ -86,7 +89,71 @@ class AccountCommandApiTest extends ControllerTestSupport {
 					fieldWithPath("to_email").type(JsonFieldType.STRING).description("전송할 이메일")
 				)
 			));
+	}
 
+	@Test
+	@DisplayName(value = "Login account when email and password field are provided")
+	void loginApi() throws Exception {
+		// given
+		LoginRequest request = new LoginRequest("waterkite94@gmail.com", "rawPassword");
+
+		given(accountFacade.authenticateAccount(request.email(), request.password()))
+			.willReturn(new AuthorizationToken("access_token_value", "refresh_token_value"));
+
+		// when // then
+		mockMvc.perform(
+				post("/api/v1/accounts/login")
+					.content(objectMapper.writeValueAsString(request))
+					.contentType(MediaType.APPLICATION_JSON)
+			).andDo(print())
+			.andExpect(status().isOk())
+			.andDo(document("account-login",
+				preprocessRequest(prettyPrint()),
+				preprocessResponse(prettyPrint()),
+				requestFields(
+					fieldWithPath("email").type(JsonFieldType.STRING).description("이메일"),
+					fieldWithPath("password").type(JsonFieldType.STRING).description("비밀번호")
+				),
+				responseFields(
+					fieldWithPath("code").type(JsonFieldType.NUMBER).description("상태 코드"),
+					fieldWithPath("message").type(JsonFieldType.STRING).description("메시지"),
+					fieldWithPath("data.access_token").type(JsonFieldType.STRING).description("Access Token"),
+					fieldWithPath("data.refresh_token").type(JsonFieldType.STRING).description("Refresh Token")
+				)
+			));
+	}
+
+	@Test
+	@DisplayName(value = "Renew tokens when email and refresh token field are provided")
+	void renewTokenApi() throws Exception {
+		// given
+		RenewTokensRequest request =
+			new RenewTokensRequest("waterkite94@gmail.com", "refresh_token_value");
+
+		given(accountFacade.authenticateRefreshToken(request.email(), request.refreshToken()))
+			.willReturn(new AuthorizationToken("access_token_value", "refresh_token_value"));
+
+		// when // then
+		mockMvc.perform(
+				post("/api/v1/accounts/refresh-token")
+					.content(objectMapper.writeValueAsString(request))
+					.contentType(MediaType.APPLICATION_JSON)
+			).andDo(print())
+			.andExpect(status().isOk())
+			.andDo(document("account-renew-token",
+				preprocessRequest(prettyPrint()),
+				preprocessResponse(prettyPrint()),
+				requestFields(
+					fieldWithPath("email").type(JsonFieldType.STRING).description("이메일"),
+					fieldWithPath("refresh_token").type(JsonFieldType.STRING).description("비밀번호")
+				),
+				responseFields(
+					fieldWithPath("code").type(JsonFieldType.NUMBER).description("상태 코드"),
+					fieldWithPath("message").type(JsonFieldType.STRING).description("메시지"),
+					fieldWithPath("data.access_token").type(JsonFieldType.STRING).description("Access Token"),
+					fieldWithPath("data.refresh_token").type(JsonFieldType.STRING).description("Refresh Token")
+				)
+			));
 	}
 
 	private RegisterAccountRequest createRegisterAccountRequest() {
