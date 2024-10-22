@@ -43,14 +43,14 @@ class RegisterItemProcessorTest extends UnitTestSupport {
 
 		Long itemId = 1L;
 		given(accountReader.existsByMemberId(memberId)).willReturn(true);
-		given(itemRepository.registerItem(any(Item.class))).willReturn(itemId);
+		given(itemRepository.register(any(Item.class))).willReturn(itemId);
 
 		// when
 		Long savedItemId = registerItemProcessor.registerItem(item);
 
 		// then
 		verify(accountReader, times(1)).existsByMemberId(memberId);
-		verify(itemRepository, times(1)).registerItem(any(Item.class));
+		verify(itemRepository, times(1)).register(any(Item.class));
 		assertThat(itemId).isEqualTo(savedItemId);
 	}
 

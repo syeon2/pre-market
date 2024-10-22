@@ -16,6 +16,6 @@ public class RegisterItemProcessor {
 		if (!accountReader.existsByMemberId(item.getMemberId().value())) {
 			throw new InvalidCredentialsException("Invalid member id");
 		}
-		return itemRepository.registerItem(item.initializeForRegister());
+		return itemRepository.register(item.initializeForRegister());
 	}
 }

@@ -4,6 +4,6 @@ import io.syeony.premarket.item.domain.model.Item;
 
 public interface ItemRepository {
 
-	Long registerItem(Item item);
+	Long register(Item item);
 
 }

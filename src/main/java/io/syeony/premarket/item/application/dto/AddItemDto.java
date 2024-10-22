@@ -2,6 +2,7 @@ package io.syeony.premarket.item.application.dto;
 
 import java.time.LocalDateTime;
 
+import io.syeony.premarket.account.domain.model.vo.MemberId;
 import io.syeony.premarket.item.domain.model.Cost;
 import io.syeony.premarket.item.domain.model.Item;
 import io.syeony.premarket.item.domain.model.ItemType;
@@ -25,6 +26,7 @@ public record AddItemDto(
 			.introduction(introduction)
 			.itemType(itemType)
 			.preOrderSchedule(preOrderSchedule)
+			.memberId(new MemberId(memberId))
 			.build();
 	}
 
