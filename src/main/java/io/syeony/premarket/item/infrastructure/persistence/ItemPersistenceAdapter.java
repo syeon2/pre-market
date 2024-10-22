@@ -19,4 +19,9 @@ public class ItemPersistenceAdapter implements ItemRepository {
 		ItemEntity savedItem = itemRepository.save(itemMapper.toEntity(item));
 		return savedItem.getId();
 	}
+
+	@Override
+	public void deactivate(Item item) {
+		
+	}
 }

@@ -6,4 +6,6 @@ public interface ItemRepository {
 
 	Long register(Item item);
 
+	void deactivate(Item item);
+
 }

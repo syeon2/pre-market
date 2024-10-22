@@ -57,4 +57,24 @@ public class Item {
 	private String generateItemId() {
 		return UUID.randomUUID().toString();
 	}
+
+	public boolean verifyMemberId(String memberId) {
+		return this.memberId.value().equals(memberId);
+	}
+
+	public Item deactivateStatus() {
+		return Item.builder()
+			.id(id)
+			.itemId(itemId)
+			.name(name)
+			.cost(cost)
+			.stock(stock)
+			.introduction(introduction)
+			.itemType(itemType)
+			.preOrderSchedule(preOrderSchedule)
+			.memberId(memberId)
+			.auditTimestamps(auditTimestamps)
+			.status(EntityStatus.DELETED)
+			.build();
+	}
 }
