@@ -37,7 +37,12 @@ public class AccountPersistenceAdapter implements AccountRepository, AccountRead
 
 	@Override
 	public Optional<Account> findByEmail(String email) {
-		Optional<MemberEntity> entity = accountRepository.findByEmail(email);
-		return entity.map(accountMapper::toDomain);
+		return accountRepository.findByEmail(email)
+			.map(accountMapper::toDomain);
+	}
+
+	@Override
+	public boolean existsByMemberId(String memberId) {
+		return accountRepository.findByMemberId(memberId).isPresent();
 	}
 }

@@ -2,8 +2,8 @@ package io.syeony.premarket.item.persentation.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public record AddItemResponse(
+public record RegisterItemResponse(
 	@JsonProperty(value = "item_id")
-	Integer itemId
+	Long itemId
 ) {
 }

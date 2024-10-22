@@ -1,5 +1,7 @@
 package io.syeony.premarket.item.persentation.request;
 
+import java.time.LocalDateTime;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -12,7 +14,12 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
-public record AddItemRequest(
+public record RegisterItemRequest(
+
+	@JsonProperty(value = "member_id")
+	@NotBlank(message = "The member id is required")
+	String memberId,
+
 	@NotBlank(message = "The name field is required")
 	String name,
 
@@ -39,18 +46,24 @@ public record AddItemRequest(
 ) {
 	public AddItemDto toDto() {
 		return AddItemDto.builder()
+			.memberId(memberId)
 			.name(name)
-			.cost(new AddItemDto.Cost(costRequest.price, costRequest.discount))
+			.costDto(new AddItemDto.CostDto(costRequest.price, costRequest.discount))
 			.stock(stock)
 			.introduction(introduction)
 			.itemType(itemTypeRequest.toDto())
-			.preOrderSchedule(preOrderScheduleRequest != null ? new AddItemDto.PreOrderSchedule(
+			.preOrderSchedule(toLocalDateTime())
+			.build();
+	}
+
+	private LocalDateTime toLocalDateTime() {
+		return preOrderScheduleRequest == null ? null :
+			LocalDateTime.of(
 				preOrderScheduleRequest.year,
 				preOrderScheduleRequest.month,
 				preOrderScheduleRequest.date,
 				preOrderScheduleRequest.hour,
-				preOrderScheduleRequest.minute) : null)
-			.build();
+				preOrderScheduleRequest.minute);
 	}
 
 	public record CostRequest(

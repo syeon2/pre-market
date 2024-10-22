@@ -11,5 +11,7 @@ public interface JpaAccountRepository extends JpaRepository<MemberEntity, Long> 
 	Optional<MemberEntity> findByEmail(String email);
 
 	Optional<MemberEntity> findByPhoneNumber(String phoneNumber);
+
+	Optional<MemberEntity> findByMemberId(String memberId);
 }
 

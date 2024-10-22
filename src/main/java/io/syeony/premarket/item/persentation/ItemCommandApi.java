@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.syeony.premarket.item.application.ItemFacade;
-import io.syeony.premarket.item.persentation.request.AddItemRequest;
-import io.syeony.premarket.item.persentation.response.AddItemResponse;
+import io.syeony.premarket.item.persentation.request.RegisterItemRequest;
+import io.syeony.premarket.item.persentation.response.RegisterItemResponse;
 import io.syeony.premarket.support.common.ApiResult;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -26,12 +26,12 @@ public class ItemCommandApi {
 	private final ItemFacade itemFacade;
 
 	@PostMapping("/v1/items")
-	public ResponseEntity<ApiResult<AddItemResponse>> addItem(
-		@RequestBody @Valid AddItemRequest request
+	public ResponseEntity<ApiResult<RegisterItemResponse>> registerItem(
+		@RequestBody @Valid RegisterItemRequest request
 	) {
-		var itemId = itemFacade.addItem(request.toDto());
+		var itemId = itemFacade.registerItem(request.toDto());
 		return ResponseEntity
 			.ok()
-			.body(ApiResult.ok(new AddItemResponse(itemId)));
+			.body(ApiResult.ok(new RegisterItemResponse(itemId)));
 	}
 }
