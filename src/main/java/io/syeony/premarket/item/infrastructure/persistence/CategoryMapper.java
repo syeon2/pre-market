@@ -13,4 +13,11 @@ public class CategoryMapper {
 			.name(category.getName())
 			.build();
 	}
+
+	public Category toDomain(CategoryEntity entity) {
+		return Category.builder()
+			.id(entity.getId())
+			.name(entity.getName())
+			.build();
+	}
 }
