@@ -15,4 +15,8 @@ public class ItemFacade {
 	public Long registerItem(AddItemDto itemDto) {
 		return registerItemProcessor.registerItem(itemDto.toDomain());
 	}
+
+	public void deactivateItem(String memberId, String itemId) {
+		
+	}
 }

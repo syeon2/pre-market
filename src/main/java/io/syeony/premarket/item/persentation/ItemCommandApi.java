@@ -2,12 +2,14 @@ package io.syeony.premarket.item.persentation;
 
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.syeony.premarket.item.application.ItemFacade;
+import io.syeony.premarket.item.persentation.request.DeactivateItemRequest;
 import io.syeony.premarket.item.persentation.request.RegisterItemRequest;
 import io.syeony.premarket.item.persentation.response.RegisterItemResponse;
 import io.syeony.premarket.support.common.ApiResult;
@@ -33,5 +35,15 @@ public class ItemCommandApi {
 		return ResponseEntity
 			.ok()
 			.body(ApiResult.ok(new RegisterItemResponse(itemId)));
+	}
+
+	@DeleteMapping("/v1/items")
+	public ResponseEntity<ApiResult<Void>> deactivateItem(
+		@RequestBody @Valid DeactivateItemRequest request
+	) {
+		itemFacade.deactivateItem(request.memberId(), request.itemId());
+		return ResponseEntity
+			.ok()
+			.build();
 	}
 }

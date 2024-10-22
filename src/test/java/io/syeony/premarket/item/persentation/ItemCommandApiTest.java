@@ -16,6 +16,7 @@ import org.springframework.restdocs.payload.JsonFieldType;
 
 import io.syeony.premarket.ControllerTestSupport;
 import io.syeony.premarket.item.application.ItemFacade;
+import io.syeony.premarket.item.persentation.request.DeactivateItemRequest;
 import io.syeony.premarket.item.persentation.request.RegisterItemRequest;
 
 class ItemCommandApiTest extends ControllerTestSupport {
@@ -64,6 +65,29 @@ class ItemCommandApiTest extends ControllerTestSupport {
 					fieldWithPath("code").type(JsonFieldType.NUMBER).description("상태 코드"),
 					fieldWithPath("message").type(JsonFieldType.STRING).description("메시지"),
 					fieldWithPath("data.item_id").type(JsonFieldType.NUMBER).description("상품 번호")
+				)
+			));
+	}
+
+	@Test
+	@DisplayName(value = "Deactivate item successfully when all required fields are provided")
+	void deactivateItemApi() throws Exception {
+		// given
+		DeactivateItemRequest request = new DeactivateItemRequest("memberId", "itemId");
+
+		// when // then
+		mockMvc.perform(
+				delete("/api/v1/items")
+					.content(objectMapper.writeValueAsString(request))
+					.contentType(MediaType.APPLICATION_JSON)
+			).andDo(print())
+			.andExpect(status().isOk())
+			.andDo(document("item-deactivate",
+				preprocessRequest(prettyPrint()),
+				preprocessResponse(prettyPrint()),
+				requestFields(
+					fieldWithPath("member_id").type(JsonFieldType.STRING).description("회원 아이디"),
+					fieldWithPath("item_id").type(JsonFieldType.STRING).description("상품 아이디")
 				)
 			));
 	}
