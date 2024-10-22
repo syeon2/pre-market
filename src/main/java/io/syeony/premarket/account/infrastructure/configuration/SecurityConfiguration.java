@@ -35,9 +35,7 @@ public class SecurityConfiguration {
 			.httpBasic(AbstractHttpConfigurer::disable)
 			.formLogin(AbstractHttpConfigurer::disable)
 			.authorizeHttpRequests(authRequest ->
-				authRequest
-					.requestMatchers("/api/v1/accounts/**").permitAll()
-					.anyRequest().authenticated())
+				authRequest.anyRequest().permitAll())
 			.authenticationProvider(authenticationProvider())
 			.addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class)
 			.headers(header -> header.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable))

@@ -1,7 +1,10 @@
 package io.syeony.premarket.support.error;
 
+import java.util.stream.Collectors;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindException;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -53,9 +56,13 @@ public final class GlobalApiExceptionHandler {
 	@ExceptionHandler(BindException.class)
 	private ResponseEntity<ApiResult<?>> handleBind(BindException exception) {
 		log.error("BindException", exception);
+		String collect = exception.getAllErrors().stream()
+			.map(ObjectError::getDefaultMessage)
+			.collect(Collectors.joining(", ", "[", "]"));
+
 		return ResponseEntity
 			.badRequest()
-			.body(ApiResult.error("Invalid argument"));
+			.body(ApiResult.error(collect));
 	}
 
 	@ExceptionHandler(RuntimeException.class)
