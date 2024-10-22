@@ -5,6 +5,7 @@ import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.*;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
+import static org.springframework.restdocs.request.RequestDocumentation.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 
 import org.junit.jupiter.api.DisplayName;
@@ -44,6 +45,27 @@ class CategoryCommandApiTest extends ControllerTestSupport {
 				preprocessResponse(prettyPrint()),
 				requestFields(
 					fieldWithPath("name").type(JsonFieldType.STRING).description("카테고리 이름")
+				)
+			));
+	}
+
+	@Test
+	@DisplayName(value = "Delete category successfully when the category id path parameter is provided")
+	void deleteCategory() throws Exception {
+		// given
+		long categoryId = 1L;
+
+		// when // then
+		mockMvc.perform(
+				delete("/api/v1/categories/{category_id}", categoryId)
+					.contentType(MediaType.APPLICATION_JSON)
+					.param("category_id", Long.toString(categoryId))
+			).andDo(print())
+			.andDo(document("category-delete",
+				preprocessRequest(prettyPrint()),
+				preprocessResponse(prettyPrint()),
+				pathParameters(
+					parameterWithName("category_id").description("카테고리 아이디")
 				)
 			));
 	}
