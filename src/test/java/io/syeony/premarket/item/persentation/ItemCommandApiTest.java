@@ -16,7 +16,9 @@ import org.springframework.restdocs.payload.JsonFieldType;
 
 import io.syeony.premarket.ControllerTestSupport;
 import io.syeony.premarket.item.application.ItemFacade;
+import io.syeony.premarket.item.persentation.request.CostRequest;
 import io.syeony.premarket.item.persentation.request.DeactivateItemRequest;
+import io.syeony.premarket.item.persentation.request.EditItemRequest;
 import io.syeony.premarket.item.persentation.request.RegisterItemRequest;
 
 class ItemCommandApiTest extends ControllerTestSupport {
@@ -93,9 +95,44 @@ class ItemCommandApiTest extends ControllerTestSupport {
 			));
 	}
 
+	@Test
+	@DisplayName(value = "Edit item information successfully when all required fields are provied")
+	void editItem() throws Exception {
+		// given
+		String itemId = "itemId";
+		EditItemRequest request = createEditItemRequest();
+
+		// when // then
+		mockMvc.perform(
+				put("/api/v1/items/{itemId}/info", itemId)
+					.param("itemId", itemId)
+					.content(objectMapper.writeValueAsString(request))
+					.contentType(MediaType.APPLICATION_JSON)
+			).andDo(print())
+			.andExpect(status().isOk())
+			.andDo(document("item-edit",
+				preprocessRequest(prettyPrint()),
+				preprocessResponse(prettyPrint()),
+				requestFields(
+					fieldWithPath("name").type(JsonFieldType.STRING).description("상품 이름"),
+					fieldWithPath("cost.price").type(JsonFieldType.NUMBER).description("상품 정가"),
+					fieldWithPath("cost.discount").type(JsonFieldType.NUMBER).description("상품 할인금액"),
+					fieldWithPath("stock").type(JsonFieldType.NUMBER).description("상품 재고"),
+					fieldWithPath("introduction").type(JsonFieldType.STRING).description("상품 설명"),
+					fieldWithPath("category_id").type(JsonFieldType.NUMBER).description("상품 카테고리 고유번호"),
+					fieldWithPath("member_id").type(JsonFieldType.STRING).description("회원 아이디")
+				)
+			));
+	}
+
+	private EditItemRequest createEditItemRequest() {
+		return new EditItemRequest("changeName", new CostRequest(20000, 2000), 20,
+			"changeIntro", 2L, "memberId");
+	}
+
 	private static @NotNull RegisterItemRequest createRegisterItemRequest(String memberId) {
 		return new RegisterItemRequest(memberId, "itemA",
-			new RegisterItemRequest.CostRequest(10000, 1000),
+			new CostRequest(10000, 1000),
 			10,
 			"hello introduce",
 			RegisterItemRequest.ItemTypeRequest.PRE_ORDER,

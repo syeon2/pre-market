@@ -88,4 +88,16 @@ public class ItemEntity extends BaseEntity {
 	public void changeStatusToDelete(EntityStatus status) {
 		this.status = status;
 	}
+
+	public void changeItemInfo(
+		String name, Integer price, Integer discount,
+		Integer stock, String introduction, Long categoryId
+	) {
+		this.name = name;
+		this.price = price;
+		this.discount = discount;
+		this.stock = stock;
+		this.introduction = introduction;
+		this.categoryId = categoryId;
+	}
 }

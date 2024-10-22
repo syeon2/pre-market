@@ -23,3 +23,15 @@ include::{snippets}/item-deactivate/request-fields.adoc[]
 
 include::{snippets}/item-deactivate/http-response.adoc[]
 include::{snippets}/item-deactivate/response-body.adoc[]
+
+[[Edit-Item-API]]
+=== Edit Item API
+
+==== API Request
+
+include::{snippets}/item-edit/http-request.adoc[]
+include::{snippets}/item-edit/request-fields.adoc[]
+
+==== API Response
+
+include::{snippets}/item-edit/http-response.adoc[]

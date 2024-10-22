@@ -2,6 +2,7 @@ package io.syeony.premarket.item.infrastructure.persistence;
 
 import static org.assertj.core.api.Assertions.*;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.junit.jupiter.api.DisplayName;
@@ -58,6 +59,62 @@ class ItemPersistenceAdapterTest extends JpaInfraTestSupport {
 		Optional<ItemEntity> findItemOptional = itemRepository.findById(savedItem.getId());
 		assertThat(findItemOptional.isPresent()).isTrue();
 		assertThat(findItemOptional.get().getStatus()).isEqualTo(EntityStatus.DELETED);
+	}
+
+	@Test
+	@DisplayName(value = "Change item information")
+	void changeItemInformation() {
+		// given
+		String itemId = "itemId";
+		ItemEntity entity = createItemEntity("memberId", itemId);
+		itemRepository.save(entity);
+
+		String changeName = "changeName";
+		int changePrice = 20000;
+		int changeDiscount = 200;
+		int changeStock = 20;
+		String changeIntroduction = "changeIntroduction";
+		long changeCategoryId = 2L;
+		Item editItem = createEditItemDomain(changeName, changePrice, changeDiscount, changeStock,
+			changeIntroduction, changeCategoryId);
+
+		// when
+		itemPersistenceAdapter.changeItemInfo(itemId, editItem);
+
+		// then
+		List<ItemEntity> findAll = itemRepository.findAll();
+		assertThat(findAll)
+			.extracting("name", "price", "discount", "stock", "introduction", "categoryId")
+			.containsExactlyInAnyOrder(
+				tuple(changeName, changePrice, changeDiscount, changeStock, changeIntroduction, changeCategoryId)
+			);
+	}
+
+	@Test
+	@DisplayName(value = "Find item by item id")
+	void findById() {
+		// given
+		String itemId = "itemId";
+		ItemEntity entity = createItemEntity("memberId", itemId);
+		itemRepository.save(entity);
+
+		// when
+		Optional<Item> findItemOptional = itemPersistenceAdapter.findByItemId(itemId);
+
+		// then
+		assertThat(findItemOptional.isPresent()).isTrue();
+		assertThat(findItemOptional.get().getItemId()).isEqualTo(itemId);
+	}
+
+	private Item createEditItemDomain(String changeName, int changePrice, int changeDiscount, int changeStock,
+		String changeIntroduction, long changeCategoryId) {
+		return Item.builder()
+			.name(changeName)
+			.cost(new Cost(changePrice, changeDiscount))
+			.stock(changeStock)
+			.introduction(changeIntroduction)
+			.categoryId(changeCategoryId)
+			.build();
 	}
 
 	private Item createDeactivateItemDomain(String memberId, String itemId) {

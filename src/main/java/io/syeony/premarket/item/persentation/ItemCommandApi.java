@@ -3,13 +3,16 @@ package io.syeony.premarket.item.persentation;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.syeony.premarket.item.application.ItemFacade;
 import io.syeony.premarket.item.persentation.request.DeactivateItemRequest;
+import io.syeony.premarket.item.persentation.request.EditItemRequest;
 import io.syeony.premarket.item.persentation.request.RegisterItemRequest;
 import io.syeony.premarket.item.persentation.response.RegisterItemResponse;
 import io.syeony.premarket.support.common.ApiResult;
@@ -45,5 +48,14 @@ public class ItemCommandApi {
 		return ResponseEntity
 			.ok()
 			.build();
+	}
+
+	@PutMapping("/v1/items/{itemId}/info")
+	public ResponseEntity<ApiResult<Void>> editItem(
+		@PathVariable String itemId,
+		@RequestBody EditItemRequest request
+	) {
+		itemFacade.editItem(itemId, request.memberId(), request.toDto());
+		return ResponseEntity.ok().build();
 	}
 }

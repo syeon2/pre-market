@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import io.syeony.premarket.item.application.dto.AddItemDto;
+import io.syeony.premarket.item.application.dto.RegisterItemDto;
 import io.syeony.premarket.item.domain.model.ItemType;
 import jakarta.annotation.Nullable;
 import jakarta.validation.Valid;
@@ -48,11 +48,11 @@ public record RegisterItemRequest(
 	@NotNull(message = "The category id field is required")
 	Long categoryId
 ) {
-	public AddItemDto toDto() {
-		return AddItemDto.builder()
+	public RegisterItemDto toDto() {
+		return RegisterItemDto.builder()
 			.memberId(memberId)
 			.name(name)
-			.costDto(new AddItemDto.CostDto(costRequest.price, costRequest.discount))
+			.costDto(new RegisterItemDto.CostDto(costRequest.price(), costRequest.discount()))
 			.stock(stock)
 			.introduction(introduction)
 			.itemType(itemTypeRequest.toDto())
@@ -69,17 +69,6 @@ public record RegisterItemRequest(
 				preOrderScheduleRequest.date,
 				preOrderScheduleRequest.hour,
 				preOrderScheduleRequest.minute);
-	}
-
-	public record CostRequest(
-		@Min(value = 1, message = "The price field can't be less than 1")
-		@NotNull(message = "The price field is required")
-		Integer price,
-
-		@Min(value = 0, message = "The discount field can't be less than 0")
-		@NotNull(message = "The discount field is required")
-		Integer discount
-	) {
 	}
 
 	public record PreOrderScheduleRequest(

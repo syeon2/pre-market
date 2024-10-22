@@ -30,6 +30,19 @@ public class ItemPersistenceAdapter implements ItemRepository, ItemReader {
 	}
 
 	@Override
+	public void changeItemInfo(String itemId, Item item) {
+		itemRepository.findByItemId(itemId)
+			.ifPresent(entity -> entity.changeItemInfo(
+				item.getName(),
+				item.getCost().getPrice(),
+				item.getCost().getDiscount(),
+				item.getStock(),
+				item.getIntroduction(),
+				item.getCategoryId()
+			));
+	}
+
+	@Override
 	public Optional<Item> findByItemId(String itemId) {
 		return itemRepository.findByItemId(itemId)
 			.map(itemMapper::toDomain);

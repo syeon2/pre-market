@@ -8,4 +8,5 @@ public interface ItemRepository {
 
 	void deactivate(Item item);
 
+	void changeItemInfo(String itemId, Item item);
 }
