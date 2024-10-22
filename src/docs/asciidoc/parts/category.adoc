@@ -1,0 +1,11 @@
+[[Create-Category-API]]
+=== Create Category API
+
+==== API Request
+
+include::{snippets}/category-create/http-request.adoc[]
+include::{snippets}/category-create/request-fields.adoc[]
+
+==== API Response
+
+include::{snippets}/category-create/http-response.adoc[]
