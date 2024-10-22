@@ -79,6 +79,7 @@ class ItemPersistenceAdapterTest extends JpaInfraTestSupport {
 			.preOrderSchedule(null)
 			.memberId(new MemberId("memberId"))
 			.status(EntityStatus.ALIVE)
+			.categoryId(1L)
 			.build();
 	}
 

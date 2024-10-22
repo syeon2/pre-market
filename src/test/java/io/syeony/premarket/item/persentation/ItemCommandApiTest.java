@@ -59,7 +59,8 @@ class ItemCommandApiTest extends ControllerTestSupport {
 					fieldWithPath("pre_order_schedule.month").type(JsonFieldType.NUMBER).description("예약 주문 월"),
 					fieldWithPath("pre_order_schedule.date").type(JsonFieldType.NUMBER).description("예약 주문 일"),
 					fieldWithPath("pre_order_schedule.hour").type(JsonFieldType.NUMBER).description("예약 주문 시간"),
-					fieldWithPath("pre_order_schedule.minute").type(JsonFieldType.NUMBER).description("예약 주문 분")
+					fieldWithPath("pre_order_schedule.minute").type(JsonFieldType.NUMBER).description("예약 주문 분"),
+					fieldWithPath("category_id").type(JsonFieldType.NUMBER).description("카테고리 고유번호")
 				),
 				responseFields(
 					fieldWithPath("code").type(JsonFieldType.NUMBER).description("상태 코드"),
@@ -98,6 +99,8 @@ class ItemCommandApiTest extends ControllerTestSupport {
 			10,
 			"hello introduce",
 			RegisterItemRequest.ItemTypeRequest.PRE_ORDER,
-			new RegisterItemRequest.PreOrderScheduleRequest(2024, 10, 20, 22, 28));
+			new RegisterItemRequest.PreOrderScheduleRequest(2024, 10, 20, 22, 28),
+			1L
+		);
 	}
 }

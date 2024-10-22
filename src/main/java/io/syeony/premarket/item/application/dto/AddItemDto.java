@@ -16,7 +16,8 @@ public record AddItemDto(
 	Integer stock,
 	String introduction,
 	ItemType itemType,
-	LocalDateTime preOrderSchedule
+	LocalDateTime preOrderSchedule,
+	Long categoryId
 ) {
 	public Item toDomain() {
 		return Item.builder()
@@ -27,6 +28,7 @@ public record AddItemDto(
 			.itemType(itemType)
 			.preOrderSchedule(preOrderSchedule)
 			.memberId(new MemberId(memberId))
+			.categoryId(categoryId)
 			.build();
 	}
 

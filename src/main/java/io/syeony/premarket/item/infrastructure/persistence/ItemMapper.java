@@ -23,7 +23,7 @@ public class ItemMapper {
 			.preOrderSchedule(item.getPreOrderSchedule())
 			.memberId(item.getMemberId().value())
 			.status(item.getStatus())
-			.categoryId(1L)
+			.categoryId(item.getCategoryId())
 			.build();
 	}
 
@@ -40,6 +40,7 @@ public class ItemMapper {
 			.memberId(new MemberId(entity.getMemberId()))
 			.auditTimestamps(new AuditTimestamps(entity.getCreatedAt(), entity.getUpdatedAt()))
 			.status(entity.getStatus())
+			.categoryId(entity.getCategoryId())
 			.build();
 	}
 }

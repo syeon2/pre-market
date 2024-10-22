@@ -42,7 +42,11 @@ public record RegisterItemRequest(
 	@Valid
 	@Nullable
 	@JsonProperty(value = "pre_order_schedule")
-	PreOrderScheduleRequest preOrderScheduleRequest
+	PreOrderScheduleRequest preOrderScheduleRequest,
+
+	@JsonProperty(value = "category_id")
+	@NotNull(message = "The category id field is required")
+	Long categoryId
 ) {
 	public AddItemDto toDto() {
 		return AddItemDto.builder()
@@ -53,6 +57,7 @@ public record RegisterItemRequest(
 			.introduction(introduction)
 			.itemType(itemTypeRequest.toDto())
 			.preOrderSchedule(toLocalDateTime())
+			.categoryId(categoryId)
 			.build();
 	}
 
