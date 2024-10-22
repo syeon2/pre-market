@@ -2,8 +2,11 @@ package io.syeony.premarket.item.infrastructure.persistence;
 
 import org.springframework.stereotype.Component;
 
+import io.syeony.premarket.account.domain.model.vo.MemberId;
+import io.syeony.premarket.item.domain.model.Cost;
 import io.syeony.premarket.item.domain.model.Item;
 import io.syeony.premarket.item.infrastructure.persistence.entity.ItemEntity;
+import io.syeony.premarket.support.common.AuditTimestamps;
 
 @Component
 public class ItemMapper {
@@ -21,6 +24,22 @@ public class ItemMapper {
 			.memberId(item.getMemberId().value())
 			.status(item.getStatus())
 			.categoryId(1L)
+			.build();
+	}
+
+	public Item toDomain(ItemEntity entity) {
+		return Item.builder()
+			.id(entity.getId())
+			.itemId(entity.getItemId())
+			.name(entity.getName())
+			.cost(new Cost(entity.getPrice(), entity.getDiscount()))
+			.stock(entity.getStock())
+			.introduction(entity.getIntroduction())
+			.itemType(entity.getType())
+			.preOrderSchedule(entity.getPreOrderSchedule())
+			.memberId(new MemberId(entity.getMemberId()))
+			.auditTimestamps(new AuditTimestamps(entity.getCreatedAt(), entity.getUpdatedAt()))
+			.status(entity.getStatus())
 			.build();
 	}
 }

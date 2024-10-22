@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import io.syeony.premarket.item.domain.model.ItemType;
+import io.syeony.premarket.support.common.BaseEntity;
 import io.syeony.premarket.support.common.EntityStatus;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -23,7 +24,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "item")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class ItemEntity {
+public class ItemEntity extends BaseEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -82,5 +83,9 @@ public class ItemEntity {
 		this.status = status;
 		this.categoryId = categoryId;
 		this.memberId = memberId;
+	}
+
+	public void changeStatusToDelete(EntityStatus status) {
+		this.status = status;
 	}
 }

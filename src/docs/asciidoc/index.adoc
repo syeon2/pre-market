@@ -13,3 +13,8 @@ endif::[]
 == Account APIs
 
 include::{docdir}/parts/account.adoc[]
+
+[[Item-APIs]]
+== Item APIs
+
+include::{docdir}/parts/item.adoc[]

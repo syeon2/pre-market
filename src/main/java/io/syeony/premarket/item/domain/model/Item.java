@@ -21,12 +21,14 @@ public class Item {
 	private ItemType itemType;
 	private LocalDateTime preOrderSchedule;
 	private MemberId memberId;
+	private Long categoryId;
 	private AuditTimestamps auditTimestamps;
 	private EntityStatus status;
 
 	@Builder
 	private Item(Long id, String itemId, String name, Cost cost, Integer stock, String introduction, ItemType itemType,
-		LocalDateTime preOrderSchedule, MemberId memberId, AuditTimestamps auditTimestamps, EntityStatus status) {
+		LocalDateTime preOrderSchedule, MemberId memberId, Long categoryId, AuditTimestamps auditTimestamps,
+		EntityStatus status) {
 		this.id = id;
 		this.itemId = itemId;
 		this.name = name;
@@ -36,6 +38,7 @@ public class Item {
 		this.itemType = itemType;
 		this.preOrderSchedule = preOrderSchedule;
 		this.memberId = memberId;
+		this.categoryId = categoryId;
 		this.auditTimestamps = auditTimestamps;
 		this.status = status;
 	}
@@ -50,6 +53,7 @@ public class Item {
 			.itemType(itemType)
 			.preOrderSchedule(preOrderSchedule)
 			.memberId(memberId)
+			.categoryId(categoryId)
 			.status(EntityStatus.ALIVE)
 			.build();
 	}
@@ -64,16 +68,8 @@ public class Item {
 
 	public Item deactivateStatus() {
 		return Item.builder()
-			.id(id)
 			.itemId(itemId)
-			.name(name)
-			.cost(cost)
-			.stock(stock)
-			.introduction(introduction)
-			.itemType(itemType)
-			.preOrderSchedule(preOrderSchedule)
 			.memberId(memberId)
-			.auditTimestamps(auditTimestamps)
 			.status(EntityStatus.DELETED)
 			.build();
 	}

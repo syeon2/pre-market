@@ -1,0 +1,25 @@
+[[Register-Item-API]]
+=== Register Item API
+
+==== API Request
+
+include::{snippets}/item-add/http-request.adoc[]
+include::{snippets}/item-add/request-fields.adoc[]
+
+==== API Response
+
+include::{snippets}/item-add/http-response.adoc[]
+include::{snippets}/item-add/response-fields.adoc[]
+
+[[Deactivate-Item-API]]
+=== Deactivate Item API
+
+==== API Request
+
+include::{snippets}/item-deactivate/http-request.adoc[]
+include::{snippets}/item-deactivate/request-fields.adoc[]
+
+==== API Response
+
+include::{snippets}/item-deactivate/http-response.adoc[]
+include::{snippets}/item-deactivate/response-body.adoc[]

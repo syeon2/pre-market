@@ -1,14 +1,50 @@
 [[Register-Account-API]]
 === Register Account API
 
-[[API-Request]]
 ==== API Request
 
 include::{snippets}/account-register/http-request.adoc[]
 include::{snippets}/account-register/request-fields.adoc[]
 
-[[Response]]
 ==== API Response
 
 include::{snippets}/account-register/http-response.adoc[]
 include::{snippets}/account-register/response-fields.adoc[]
+
+[[Send-Email-Verification-Code-API]]
+=== Send Email Verification Code API
+
+==== API Request
+
+include::{snippets}/account-email-verification/http-request.adoc[]
+include::{snippets}/account-email-verification/request-fields.adoc[]
+
+==== API Response
+
+include::{snippets}/account-email-verification/http-response.adoc[]
+
+[[Login-Account-API]]
+=== Login Account API
+
+==== API Request
+
+include::{snippets}/account-login/http-request.adoc[]
+include::{snippets}/account-login/request-fields.adoc[]
+
+==== API Response
+
+include::{snippets}/account-login/http-response.adoc[]
+include::{snippets}/account-login/response-fields.adoc[]
+
+[[Renew-Token-API]]
+=== Renew Token API
+
+==== API Request
+
+include::{snippets}/account-renew-token/http-request.adoc[]
+include::{snippets}/account-renew-token/request-fields.adoc[]
+
+==== API Response
+
+include::{snippets}/account-renew-token/http-response.adoc[]
+include::{snippets}/account-renew-token/response-fields.adoc[]
