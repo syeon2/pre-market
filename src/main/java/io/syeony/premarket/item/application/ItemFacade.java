@@ -32,7 +32,7 @@ public class ItemFacade {
 	}
 
 	@Transactional
-	public void editItem(String itemId, Item itemDomain) {
+	public void editItem(final String itemId, final Item itemDomain) {
 		editItemProcessor.edit(itemId, itemDomain);
 	}
 

@@ -47,9 +47,9 @@ public class ItemCommandApi {
 		return ResponseEntity.ok().build();
 	}
 
-	@PutMapping("/v1/items/{itemId}/info")
+	@PutMapping("/v1/items/{item_id}/info")
 	public ResponseEntity<ApiResult<Void>> editItem(
-		@PathVariable String itemId,
+		@PathVariable("item_id") String itemId,
 		@RequestBody EditItemRequest request
 	) {
 		itemFacade.editItem(itemId, request.toDomain());

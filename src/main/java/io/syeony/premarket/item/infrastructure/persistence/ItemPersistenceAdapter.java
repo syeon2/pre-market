@@ -35,12 +35,9 @@ public class ItemPersistenceAdapter implements ItemWriter, ItemReader {
 	public void changeItemInfo(String itemId, Item item) {
 		itemRepository.findByItemId(itemId)
 			.ifPresent(entity -> entity.changeItemInfo(
-				item.getItemName(),
-				item.getCost().getPrice(),
-				item.getCost().getDiscount(),
-				item.getStock(),
-				item.getIntroduction(),
-				item.getCategory().getNo()
+				item.getItemName(), item.getCost().getPrice(),
+				item.getCost().getDiscount(), item.getStock(),
+				item.getIntroduction(), item.getCategory().getNo()
 			));
 	}
 

@@ -12,8 +12,9 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 public record EditItemRequest(
+	@JsonProperty(value = "item_name")
 	@NotBlank(message = "The name field is required")
-	String name,
+	String itemName,
 
 	@Valid
 	@JsonProperty(value = "cost")
@@ -37,7 +38,7 @@ public record EditItemRequest(
 ) {
 	public Item toDomain() {
 		return Item.builder()
-			.itemName(name)
+			.itemName(itemName)
 			.cost(cost.toDomain())
 			.stock(stock)
 			.introduction(introduction)

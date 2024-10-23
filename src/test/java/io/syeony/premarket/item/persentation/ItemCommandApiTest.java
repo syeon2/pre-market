@@ -51,7 +51,7 @@ class ItemCommandApiTest extends ControllerTestSupport {
 				preprocessRequest(prettyPrint()),
 				preprocessResponse(prettyPrint()),
 				requestFields(
-					fieldWithPath("name").type(JsonFieldType.STRING).description("상품 이름"),
+					fieldWithPath("item_name").type(JsonFieldType.STRING).description("상품 이름"),
 					fieldWithPath("cost.price").type(JsonFieldType.NUMBER).description("상품 가격"),
 					fieldWithPath("cost.discount").type(JsonFieldType.NUMBER).description("상품 할인 금액"),
 					fieldWithPath("stock").type(JsonFieldType.NUMBER).description("상품 재고"),
@@ -81,7 +81,7 @@ class ItemCommandApiTest extends ControllerTestSupport {
 
 		// when // then
 		mockMvc.perform(
-				patch("/api/v1/items")
+				patch("/api/v1/items/deactivate")
 					.content(objectMapper.writeValueAsString(request))
 					.contentType(MediaType.APPLICATION_JSON)
 			).andDo(print())
@@ -105,8 +105,7 @@ class ItemCommandApiTest extends ControllerTestSupport {
 
 		// when // then
 		mockMvc.perform(
-				put("/api/v1/items/{itemId}/info", itemId)
-					.param("itemId", itemId)
+				put("/api/v1/items/{item_id}/info", itemId)
 					.content(objectMapper.writeValueAsString(request))
 					.contentType(MediaType.APPLICATION_JSON)
 			).andDo(print())
@@ -115,7 +114,7 @@ class ItemCommandApiTest extends ControllerTestSupport {
 				preprocessRequest(prettyPrint()),
 				preprocessResponse(prettyPrint()),
 				requestFields(
-					fieldWithPath("name").type(JsonFieldType.STRING).description("상품 이름"),
+					fieldWithPath("item_name").type(JsonFieldType.STRING).description("상품 이름"),
 					fieldWithPath("cost.price").type(JsonFieldType.NUMBER).description("상품 정가"),
 					fieldWithPath("cost.discount").type(JsonFieldType.NUMBER).description("상품 할인금액"),
 					fieldWithPath("stock").type(JsonFieldType.NUMBER).description("상품 재고"),

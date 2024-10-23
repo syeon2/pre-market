@@ -16,7 +16,7 @@ public class EditItemProcessor {
 		Item findItem = itemReader.findByItemId(itemId)
 			.orElseThrow(() -> new IllegalArgumentException("Invalid item id"));
 
-		if (findItem.verifyMemberId(item.getSeller().getMemberId())) {
+		if (!findItem.verifyMemberId(item.getSeller().getMemberId())) {
 			throw new InvalidCredentialsException("Invalid member id");
 		}
 

@@ -16,14 +16,17 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
+@Builder
 @Entity
 @Table(name = "item")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class ItemEntity extends BaseEntity {
 
 	@Id
@@ -66,24 +69,6 @@ public class ItemEntity extends BaseEntity {
 
 	@Column(name = "member_id", columnDefinition = "varchar(60)", nullable = false)
 	private String memberId;
-
-	@Builder
-	private ItemEntity(Long id, String itemId, String name, Integer price, Integer discount, Integer stock,
-		String introduction, ItemType type, LocalDateTime preOrderSchedule, EntityStatus status, Long categoryId,
-		String memberId) {
-		this.id = id;
-		this.itemId = itemId;
-		this.name = name;
-		this.price = price;
-		this.discount = discount;
-		this.stock = stock;
-		this.introduction = introduction;
-		this.type = type;
-		this.preOrderSchedule = preOrderSchedule;
-		this.status = status;
-		this.categoryId = categoryId;
-		this.memberId = memberId;
-	}
 
 	public void changeStatusToDelete(EntityStatus status) {
 		this.status = status;
