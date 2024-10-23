@@ -3,8 +3,10 @@ package io.syeony.premarket.item.domain.model;
 import io.syeony.premarket.support.common.AuditTimestamps;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
+@NoArgsConstructor
 public class Category {
 
 	private Long id;

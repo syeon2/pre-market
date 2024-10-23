@@ -2,8 +2,6 @@ package io.syeony.premarket.item.persentation.response;
 
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import io.syeony.premarket.item.domain.model.Category;
 import lombok.Getter;
 
@@ -23,11 +21,4 @@ public class RetrieveCategoriesResponse {
 		return new RetrieveCategoriesResponse(response);
 	}
 
-	public record CategoryResponse(
-		@JsonProperty(value = "category_id")
-		Long categoryId,
-
-		String name
-	) {
-	}
 }

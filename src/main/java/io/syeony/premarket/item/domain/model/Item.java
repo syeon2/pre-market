@@ -8,8 +8,10 @@ import io.syeony.premarket.support.common.AuditTimestamps;
 import io.syeony.premarket.support.common.EntityStatus;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
+@NoArgsConstructor
 public class Item {
 
 	private Long id;
@@ -21,13 +23,13 @@ public class Item {
 	private ItemType itemType;
 	private LocalDateTime preOrderSchedule;
 	private MemberId memberId;
-	private Long categoryId;
+	private Category category;
 	private AuditTimestamps auditTimestamps;
 	private EntityStatus status;
 
 	@Builder
 	private Item(Long id, String itemId, String name, Cost cost, Integer stock, String introduction, ItemType itemType,
-		LocalDateTime preOrderSchedule, MemberId memberId, Long categoryId, AuditTimestamps auditTimestamps,
+		LocalDateTime preOrderSchedule, MemberId memberId, Category category, AuditTimestamps auditTimestamps,
 		EntityStatus status) {
 		this.id = id;
 		this.itemId = itemId;
@@ -38,7 +40,7 @@ public class Item {
 		this.itemType = itemType;
 		this.preOrderSchedule = preOrderSchedule;
 		this.memberId = memberId;
-		this.categoryId = categoryId;
+		this.category = category;
 		this.auditTimestamps = auditTimestamps;
 		this.status = status;
 	}
@@ -53,7 +55,7 @@ public class Item {
 			.itemType(itemType)
 			.preOrderSchedule(preOrderSchedule)
 			.memberId(memberId)
-			.categoryId(categoryId)
+			.category(category)
 			.status(EntityStatus.ALIVE)
 			.build();
 	}

@@ -1,8 +1,10 @@
 package io.syeony.premarket.item.domain.model;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
+@NoArgsConstructor
 public class Cost {
 
 	private Integer price;

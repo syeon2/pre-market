@@ -12,6 +12,7 @@ import org.springframework.context.annotation.Import;
 
 import io.syeony.premarket.JpaInfraTestSupport;
 import io.syeony.premarket.account.domain.model.vo.MemberId;
+import io.syeony.premarket.item.domain.model.Category;
 import io.syeony.premarket.item.domain.model.Cost;
 import io.syeony.premarket.item.domain.model.Item;
 import io.syeony.premarket.item.domain.model.ItemType;
@@ -92,7 +93,7 @@ class ItemPersistenceAdapterTest extends JpaInfraTestSupport {
 
 	@Test
 	@DisplayName(value = "Find item by item id")
-	void findById() {
+	void findByItemId() {
 		// given
 		String itemId = "itemId";
 		ItemEntity entity = createItemEntity("memberId", itemId);
@@ -113,7 +114,7 @@ class ItemPersistenceAdapterTest extends JpaInfraTestSupport {
 			.cost(new Cost(changePrice, changeDiscount))
 			.stock(changeStock)
 			.introduction(changeIntroduction)
-			.categoryId(changeCategoryId)
+			.category(Category.builder().id(changeCategoryId).build())
 			.build();
 	}
 
@@ -136,7 +137,7 @@ class ItemPersistenceAdapterTest extends JpaInfraTestSupport {
 			.preOrderSchedule(null)
 			.memberId(new MemberId("memberId"))
 			.status(EntityStatus.ALIVE)
-			.categoryId(1L)
+			.category(Category.builder().id(1L).build())
 			.build();
 	}
 

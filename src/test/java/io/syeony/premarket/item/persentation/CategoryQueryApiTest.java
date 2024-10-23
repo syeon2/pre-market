@@ -47,7 +47,7 @@ class CategoryQueryApiTest extends ControllerTestSupport {
 				responseFields(
 					fieldWithPath("code").type(JsonFieldType.NUMBER).description("상태 코드"),
 					fieldWithPath("message").type(JsonFieldType.STRING).description("메시지"),
-					fieldWithPath("data.categories[].category_id").type(JsonFieldType.NUMBER).description("카테고리 고유번호"),
+					fieldWithPath("data.categories[].id").type(JsonFieldType.NUMBER).description("카테고리 고유번호"),
 					fieldWithPath("data.categories[].name").type(JsonFieldType.STRING).description("카테고리 이름")
 				)
 			));

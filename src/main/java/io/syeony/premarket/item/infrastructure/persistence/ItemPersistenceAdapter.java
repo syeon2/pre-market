@@ -2,6 +2,8 @@ package io.syeony.premarket.item.infrastructure.persistence;
 
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import io.syeony.premarket.item.domain.model.Item;
@@ -38,7 +40,7 @@ public class ItemPersistenceAdapter implements ItemWriter, ItemReader {
 				item.getCost().getDiscount(),
 				item.getStock(),
 				item.getIntroduction(),
-				item.getCategoryId()
+				item.getCategory().getId()
 			));
 	}
 
@@ -46,5 +48,10 @@ public class ItemPersistenceAdapter implements ItemWriter, ItemReader {
 	public Optional<Item> findByItemId(String itemId) {
 		return itemRepository.findByItemId(itemId)
 			.map(itemMapper::toDomain);
+	}
+
+	@Override
+	public Page<Item> findItemsByMemberId(String memberId, Pageable pageable) {
+		return itemRepository.findItemsByMemberId(memberId, pageable);
 	}
 }

@@ -1,5 +1,6 @@
 package io.syeony.premarket.item.application.dto;
 
+import io.syeony.premarket.item.domain.model.Category;
 import io.syeony.premarket.item.domain.model.Cost;
 import io.syeony.premarket.item.domain.model.Item;
 import lombok.Builder;
@@ -18,7 +19,7 @@ public record EditItemDto(
 			.cost(new Cost(costDto.price, costDto.discount))
 			.stock(stock)
 			.introduction(introduction)
-			.categoryId(categoryId)
+			.category(Category.builder().id(categoryId).build())
 			.build();
 	}
 
