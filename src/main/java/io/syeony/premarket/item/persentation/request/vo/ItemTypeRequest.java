@@ -18,9 +18,10 @@ public enum ItemTypeRequest {
 	}
 
 	public ItemType toDomain() {
-		return switch (this) {
-			case PRE_ORDER -> ItemType.PRE_ORDER;
-			default -> ItemType.NORMAL_ORDER;
-		};
+		if (this.equals(PRE_ORDER)) {
+			return ItemType.PRE_ORDER;
+		}
+		
+		return ItemType.NORMAL_ORDER;
 	}
 }

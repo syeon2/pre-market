@@ -23,7 +23,7 @@ public class ItemFacade {
 
 	@Transactional
 	public Long registerItem(final Item itemDomain) {
-		return registerItemProcessor.registerItem(itemDomain);
+		return registerItemProcessor.register(itemDomain);
 	}
 
 	@Transactional

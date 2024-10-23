@@ -12,7 +12,10 @@ public class RegisterItemProcessor {
 	private final ItemWriter itemWriter;
 	private final AccountReader accountReader;
 
-	public Long registerItem(Item item) {
+	public Long register(Item item) {
+		if (!item.validateItem()) {
+			throw new IllegalArgumentException("Invalid item (type and preSchedule)");
+		}
 		if (!accountReader.existsByMemberId(item.getSeller().getMemberId())) {
 			throw new InvalidCredentialsException("Invalid member id");
 		}

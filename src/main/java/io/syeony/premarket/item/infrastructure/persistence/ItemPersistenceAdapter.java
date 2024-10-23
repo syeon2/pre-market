@@ -20,7 +20,7 @@ public class ItemPersistenceAdapter implements ItemWriter, ItemReader {
 	private final ItemMapper itemMapper;
 
 	@Override
-	public Long register(Item item) {
+	public Long register(final Item item) {
 		ItemEntity savedItem = itemRepository.save(itemMapper.toEntity(item));
 		return savedItem.getId();
 	}
