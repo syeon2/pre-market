@@ -14,4 +14,6 @@ public interface ItemReader {
 	Page<Item> findItemsByMemberId(String memberId, Pageable pageable);
 
 	Page<Item> findItemsByCategoryId(Long categoryId, Pageable pageable);
+
+	Item retrieveItemDetailByItemId(Long itemId);
 }

@@ -59,4 +59,9 @@ public class ItemPersistenceAdapter implements ItemWriter, ItemReader {
 	public Page<Item> findItemsByCategoryId(Long categoryId, Pageable pageable) {
 		return itemRepository.findItemsByCategoryId(categoryId, pageable);
 	}
+
+	@Override
+	public Item retrieveItemDetailByItemId(Long itemId) {
+		return itemRepository.findItemDetailByItemId(itemId);
+	}
 }

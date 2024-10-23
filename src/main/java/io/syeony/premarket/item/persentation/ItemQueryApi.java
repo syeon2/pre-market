@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import io.syeony.premarket.item.application.ItemFacade;
 import io.syeony.premarket.item.domain.model.Item;
 import io.syeony.premarket.item.persentation.response.RetrieveCategoryItemResponse;
+import io.syeony.premarket.item.persentation.response.RetrieveItemDetailResponse;
 import io.syeony.premarket.item.persentation.response.RetrieveRegisteredItemResponse;
 import io.syeony.premarket.support.common.ApiResult;
 import lombok.RequiredArgsConstructor;
@@ -50,5 +51,16 @@ public class ItemQueryApi {
 		return ResponseEntity
 			.ok()
 			.body(ApiResult.ok(RetrieveCategoryItemResponse.from(items)));
+	}
+
+	@GetMapping("/v1/items/{itemId}")
+	public ResponseEntity<ApiResult<RetrieveItemDetailResponse>> retrieveItemDetail(
+		@PathVariable Long itemId
+	) {
+		Item item = itemFacade.retrieveItemDetail(itemId);
+
+		return ResponseEntity
+			.ok()
+			.body(ApiResult.ok(RetrieveItemDetailResponse.from(item)));
 	}
 }

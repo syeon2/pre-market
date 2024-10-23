@@ -117,4 +117,31 @@ public class ItemRepositoryImpl implements ItemRepositoryCustom {
 		return new PageImpl<>(contentQuery.fetch(), pageable, totalItemCount);
 	}
 
+	@Override
+	public Item findItemDetailByItemId(Long itemId) {
+		return queryFactory.select(Projections.fields(Item.class,
+				QItemEntity.itemEntity.id,
+				QItemEntity.itemEntity.name,
+				Projections.fields(Cost.class,
+					QItemEntity.itemEntity.price,
+					QItemEntity.itemEntity.discount
+				).as("cost"),
+				QItemEntity.itemEntity.introduction,
+				QItemEntity.itemEntity.preOrderSchedule,
+				Projections.fields(AuditTimestamps.class,
+					QItemEntity.itemEntity.createdAt
+				).as("auditTimestamps"),
+				Projections.fields(Seller.class,
+					QMemberEntity.memberEntity.memberId,
+					QMemberEntity.memberEntity.name
+				).as("seller")
+			)).from(QItemEntity.itemEntity)
+			.leftJoin(QMemberEntity.memberEntity)
+			.on(QItemEntity.itemEntity.memberId.eq(QMemberEntity.memberEntity.memberId))
+			.where(
+				QItemEntity.itemEntity.id.eq(itemId),
+				QItemEntity.itemEntity.status.eq(EntityStatus.ALIVE)
+			).fetchOne();
+	}
+
 }
