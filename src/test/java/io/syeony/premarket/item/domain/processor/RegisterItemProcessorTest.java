@@ -87,7 +87,7 @@ class RegisterItemProcessorTest extends UnitTestSupport {
 
 	private Item createItemDomain(String memberId, ItemType itemType, LocalDateTime preOrderSchedule) {
 		return Item.builder()
-			.name("itemA")
+			.itemName("itemA")
 			.cost(new Cost(10000, 100))
 			.stock(10)
 			.introduction("hello")

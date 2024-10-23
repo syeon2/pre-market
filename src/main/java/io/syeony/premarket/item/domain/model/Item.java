@@ -5,17 +5,21 @@ import java.util.UUID;
 
 import io.syeony.premarket.support.common.AuditTimestamps;
 import io.syeony.premarket.support.common.EntityStatus;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class Item {
 
-	private Long id;
+	private Long itemNo;
 	private String itemId;
-	private String name;
+	private String itemName;
 	private Cost cost;
 	private Integer stock;
 	private String introduction;
@@ -26,28 +30,10 @@ public class Item {
 	private AuditTimestamps auditTimestamps;
 	private EntityStatus status;
 
-	@Builder
-	private Item(Long id, String itemId, String name, Cost cost, Integer stock, String introduction, ItemType itemType,
-		LocalDateTime preOrderSchedule, Seller seller, Category category, AuditTimestamps auditTimestamps,
-		EntityStatus status) {
-		this.id = id;
-		this.itemId = itemId;
-		this.name = name;
-		this.cost = cost;
-		this.stock = stock;
-		this.introduction = introduction;
-		this.itemType = itemType;
-		this.preOrderSchedule = preOrderSchedule;
-		this.seller = seller;
-		this.category = category;
-		this.auditTimestamps = auditTimestamps;
-		this.status = status;
-	}
-
 	public Item initializeForRegister() {
 		return Item.builder()
 			.itemId(generateItemId())
-			.name(name)
+			.itemName(itemName)
 			.cost(cost)
 			.stock(stock)
 			.introduction(introduction)
@@ -70,7 +56,6 @@ public class Item {
 	public Item deactivateStatus() {
 		return Item.builder()
 			.itemId(itemId)
-			.seller(seller)
 			.status(EntityStatus.DELETED)
 			.build();
 	}

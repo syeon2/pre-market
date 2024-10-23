@@ -27,8 +27,8 @@ public class ItemFacade {
 	}
 
 	@Transactional
-	public void deactivateItem(String memberId, String itemId) {
-		deactivateItemProcessor.deactivateItem(memberId, itemId);
+	public void deactivateItem(final String sellerId, final String itemId) {
+		deactivateItemProcessor.deactivate(sellerId, itemId);
 	}
 
 	@Transactional

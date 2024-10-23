@@ -32,8 +32,8 @@ public record RetrieveCategoryItemResponse(
 ) {
 	public static RetrieveCategoryItemResponse from(Item item) {
 		return new RetrieveCategoryItemResponse(
-			item.getId(),
-			item.getName(),
+			item.getItemNo(),
+			item.getItemName(),
 			CostResponse.from(item.getCost()),
 			item.isPreOrderType(),
 			item.getStock(),

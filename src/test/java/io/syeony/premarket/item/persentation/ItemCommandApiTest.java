@@ -81,7 +81,7 @@ class ItemCommandApiTest extends ControllerTestSupport {
 
 		// when // then
 		mockMvc.perform(
-				put("/api/v1/items")
+				patch("/api/v1/items")
 					.content(objectMapper.writeValueAsString(request))
 					.contentType(MediaType.APPLICATION_JSON)
 			).andDo(print())

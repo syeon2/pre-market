@@ -15,7 +15,7 @@ public class ItemMapper {
 	public ItemEntity toEntity(Item item) {
 		return ItemEntity.builder()
 			.itemId(item.getItemId())
-			.name(item.getName())
+			.name(item.getItemName())
 			.price(item.getCost().getPrice())
 			.discount(item.getCost().getDiscount())
 			.stock(item.getStock())
@@ -30,9 +30,9 @@ public class ItemMapper {
 
 	public Item toDomain(ItemEntity entity) {
 		return Item.builder()
-			.id(entity.getId())
+			.itemNo(entity.getId())
 			.itemId(entity.getItemId())
-			.name(entity.getName())
+			.itemName(entity.getName())
 			.cost(new Cost(entity.getPrice(), entity.getDiscount()))
 			.stock(entity.getStock())
 			.introduction(entity.getIntroduction())

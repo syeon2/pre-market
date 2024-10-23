@@ -110,7 +110,7 @@ class ItemPersistenceAdapterTest extends JpaInfraTestSupport {
 	private Item createEditItemDomain(String changeName, int changePrice, int changeDiscount, int changeStock,
 		String changeIntroduction, long changeCategoryId) {
 		return Item.builder()
-			.name(changeName)
+			.itemName(changeName)
 			.cost(new Cost(changePrice, changeDiscount))
 			.stock(changeStock)
 			.introduction(changeIntroduction)
@@ -129,7 +129,7 @@ class ItemPersistenceAdapterTest extends JpaInfraTestSupport {
 	private Item createItemDomain() {
 		return Item.builder()
 			.itemId("itemId")
-			.name("itemA")
+			.itemName("itemA")
 			.cost(new Cost(10000, 100))
 			.stock(10)
 			.introduction("hello")

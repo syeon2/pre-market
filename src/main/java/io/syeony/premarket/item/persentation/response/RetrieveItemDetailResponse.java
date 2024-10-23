@@ -37,8 +37,8 @@ public record RetrieveItemDetailResponse(
 ) {
 	public static RetrieveItemDetailResponse from(Item item) {
 		return new RetrieveItemDetailResponse(
-			item.getId(),
-			item.getName(),
+			item.getItemNo(),
+			item.getItemName(),
 			CostResponse.from(item.getCost()),
 			item.isPreOrderType(),
 			item.getIntroduction(),

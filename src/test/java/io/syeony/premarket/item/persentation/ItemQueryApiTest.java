@@ -107,8 +107,8 @@ class ItemQueryApiTest extends ControllerTestSupport {
 
 	private Item createItemDomain() {
 		return Item.builder()
-			.id(1L)
-			.name("itemA")
+			.itemNo(1L)
+			.itemName("itemA")
 			.cost(new Cost(10000, 100))
 			.stock(10)
 			.itemType(ItemType.PRE_ORDER)

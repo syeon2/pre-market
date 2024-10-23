@@ -37,7 +37,7 @@ public record EditItemRequest(
 ) {
 	public Item toDomain() {
 		return Item.builder()
-			.name(name)
+			.itemName(name)
 			.cost(cost.toDomain())
 			.stock(stock)
 			.introduction(introduction)

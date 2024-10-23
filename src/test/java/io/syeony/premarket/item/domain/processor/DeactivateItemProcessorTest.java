@@ -38,7 +38,7 @@ class DeactivateItemProcessorTest extends UnitTestSupport {
 
 	@Test
 	@DisplayName(value = "Change item state to delete")
-	void deactivateItem() {
+	void deactivate() {
 		// given
 		String memberId = "memberId";
 		String itemId = "itemId";
@@ -47,7 +47,7 @@ class DeactivateItemProcessorTest extends UnitTestSupport {
 		given(itemReader.findByItemId(itemId)).willReturn(Optional.of(item));
 
 		// when
-		processor.deactivateItem(memberId, itemId);
+		processor.deactivate(memberId, itemId);
 
 		// then
 		verify(itemReader, times(1)).findByItemId(itemId);
@@ -56,7 +56,7 @@ class DeactivateItemProcessorTest extends UnitTestSupport {
 
 	@Test
 	@DisplayName(value = "Should throw IllegalArgumentException when the item id is not valid")
-	void deactivateItem_shouldThrowIllegalArgumentException() {
+	void deactivate_shouldThrowIllegalArgumentException() {
 		// given
 		String memberId = "memberId";
 		String itemId = "itemId";
@@ -64,13 +64,13 @@ class DeactivateItemProcessorTest extends UnitTestSupport {
 		given(itemReader.findByItemId(itemId)).willReturn(Optional.empty());
 
 		// when // then
-		assertThatThrownBy(() -> processor.deactivateItem(memberId, itemId))
+		assertThatThrownBy(() -> processor.deactivate(memberId, itemId))
 			.isInstanceOf(IllegalArgumentException.class);
 	}
 
 	@Test
 	@DisplayName(value = "Should throw InvalidCredentialException when the member id is not valid")
-	void deactivateItem_shouldThrowInvalidCredentialException() {
+	void deactivate_shouldThrowInvalidCredentialException() {
 		// given
 		String memberId = "memberId";
 		String itemId = "itemId";
@@ -79,14 +79,14 @@ class DeactivateItemProcessorTest extends UnitTestSupport {
 		given(itemReader.findByItemId(itemId)).willReturn(Optional.of(item));
 
 		// when // then
-		assertThatThrownBy(() -> processor.deactivateItem(memberId, itemId))
+		assertThatThrownBy(() -> processor.deactivate(memberId, itemId))
 			.isInstanceOf(InvalidCredentialsException.class);
 	}
 
 	private Item createItemDomain(String memberId, String itemId) {
 		return Item.builder()
 			.itemId(itemId)
-			.name("itemA")
+			.itemName("itemA")
 			.cost(new Cost(10000, 100))
 			.stock(10)
 			.introduction("hello")

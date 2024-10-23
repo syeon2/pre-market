@@ -12,16 +12,16 @@ public class DeactivateItemProcessor {
 	private final ItemReader itemReader;
 	private final ItemWriter itemWriter;
 
-	public void deactivateItem(String memberId, String itemId) {
+	public void deactivate(String sellerId, String itemId) {
 		Item item = itemReader.findByItemId(itemId).orElseThrow(() ->
 			new IllegalArgumentException("Invalid item id: " + itemId));
-		validateItem(item, memberId);
+		verifyItem(item, sellerId);
 		itemWriter.deactivate(item.deactivateStatus());
 	}
 
-	private void validateItem(Item item, String memberId) {
-		if (!item.verifyMemberId(memberId)) {
-			throw new InvalidCredentialsException("Invalid member id: " + memberId);
+	private void verifyItem(Item item, String sellerId) {
+		if (!item.verifyMemberId(sellerId)) {
+			throw new InvalidCredentialsException("Invalid member id: " + sellerId);
 		}
 	}
 }

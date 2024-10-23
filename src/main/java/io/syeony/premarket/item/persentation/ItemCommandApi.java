@@ -2,6 +2,7 @@ package io.syeony.premarket.item.persentation;
 
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -38,7 +39,7 @@ public class ItemCommandApi {
 			.body(ApiResult.ok(new RegisterItemResponse(itemId)));
 	}
 
-	@PutMapping("/v1/items")
+	@PatchMapping("/v1/items/deactivate")
 	public ResponseEntity<ApiResult<Void>> deactivateItem(
 		@RequestBody @Valid DeactivateItemRequest request
 	) {

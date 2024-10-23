@@ -38,8 +38,8 @@ public record RetrieveRegisteredItemResponse(
 ) {
 	public static RetrieveRegisteredItemResponse from(Item item) {
 		return new RetrieveRegisteredItemResponse(
-			item.getId(),
-			item.getName(),
+			item.getItemNo(),
+			item.getItemName(),
 			CostResponse.from(item.getCost()),
 			ItemTypeResponse.from(item.getItemType()),
 			convertToPreOrderSchedule(item.getPreOrderSchedule()),

@@ -53,7 +53,7 @@ public record RegisterItemRequest(
 ) {
 	public Item toDomain() {
 		return Item.builder()
-			.name(itemName)
+			.itemName(itemName)
 			.cost(cost.toDomain())
 			.stock(stock)
 			.introduction(introduction)
