@@ -74,4 +74,8 @@ public class Item {
 			.status(EntityStatus.DELETED)
 			.build();
 	}
+
+	public boolean isPreOrderType() {
+		return itemType == ItemType.PRE_ORDER;
+	}
 }

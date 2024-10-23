@@ -3,6 +3,7 @@ package io.syeony.premarket.item.persentation.response;
 import java.util.List;
 
 import io.syeony.premarket.item.domain.model.Category;
+import io.syeony.premarket.item.persentation.response.vo.CategoryResponse;
 import lombok.Getter;
 
 @Getter

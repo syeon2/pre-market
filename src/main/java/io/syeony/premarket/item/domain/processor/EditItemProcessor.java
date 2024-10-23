@@ -12,11 +12,11 @@ public class EditItemProcessor {
 	private final ItemWriter itemWriter;
 	private final ItemReader itemReader;
 
-	public void edit(String itemId, String memberId, Item item) {
+	public void edit(String itemId, Item item) {
 		Item findItem = itemReader.findByItemId(itemId)
 			.orElseThrow(() -> new IllegalArgumentException("Invalid item id"));
 
-		if (!findItem.verifyMemberId(memberId)) {
+		if (!findItem.verifyMemberId(item.getSeller().getMemberId())) {
 			throw new InvalidCredentialsException("Invalid member id");
 		}
 

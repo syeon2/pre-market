@@ -24,6 +24,10 @@ public class Category {
 		return new Category(no, name, auditTimestamps);
 	}
 
+	public static Category initNo(Long no) {
+		return new Category(no, null, null);
+	}
+
 	public static Category initializeForCreate(String name) {
 		return Category.builder().name(name).build();
 	}

@@ -2,7 +2,6 @@ package io.syeony.premarket.item.persentation;
 
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -34,20 +33,17 @@ public class ItemCommandApi {
 	public ResponseEntity<ApiResult<RegisterItemResponse>> registerItem(
 		@RequestBody @Valid RegisterItemRequest request
 	) {
-		var itemId = itemFacade.registerItem(request.toDto());
-		return ResponseEntity
-			.ok()
+		var itemId = itemFacade.registerItem(request.toDomain());
+		return ResponseEntity.ok()
 			.body(ApiResult.ok(new RegisterItemResponse(itemId)));
 	}
 
-	@DeleteMapping("/v1/items")
+	@PutMapping("/v1/items")
 	public ResponseEntity<ApiResult<Void>> deactivateItem(
 		@RequestBody @Valid DeactivateItemRequest request
 	) {
-		itemFacade.deactivateItem(request.memberId(), request.itemId());
-		return ResponseEntity
-			.ok()
-			.build();
+		itemFacade.deactivateItem(request.sellerId(), request.itemId());
+		return ResponseEntity.ok().build();
 	}
 
 	@PutMapping("/v1/items/{itemId}/info")
@@ -55,7 +51,7 @@ public class ItemCommandApi {
 		@PathVariable String itemId,
 		@RequestBody EditItemRequest request
 	) {
-		itemFacade.editItem(itemId, request.memberId(), request.toDto());
+		itemFacade.editItem(itemId, request.toDomain());
 		return ResponseEntity.ok().build();
 	}
 }

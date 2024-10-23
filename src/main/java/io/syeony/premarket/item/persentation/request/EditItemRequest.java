@@ -2,7 +2,10 @@ package io.syeony.premarket.item.persentation.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import io.syeony.premarket.item.application.dto.EditItemDto;
+import io.syeony.premarket.item.domain.model.Category;
+import io.syeony.premarket.item.domain.model.Item;
+import io.syeony.premarket.item.domain.model.Seller;
+import io.syeony.premarket.item.persentation.request.vo.CostRequest;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
@@ -24,21 +27,22 @@ public record EditItemRequest(
 	@NotBlank(message = "The introduction field is required")
 	String introduction,
 
-	@JsonProperty(value = "category_id")
-	@NotNull(message = "The category id field is required")
-	Long categoryId,
+	@JsonProperty(value = "category_no")
+	@NotNull(message = "The category no field is required")
+	Long categoryNo,
 
-	@JsonProperty(value = "member_id")
-	@NotBlank(message = "The member id is required")
-	String memberId
+	@JsonProperty(value = "seller_id")
+	@NotBlank(message = "The seller id is required")
+	String sellerId
 ) {
-	public EditItemDto toDto() {
-		return EditItemDto.builder()
+	public Item toDomain() {
+		return Item.builder()
 			.name(name)
-			.costDto(new EditItemDto.CostDto(cost.price(), cost.discount()))
+			.cost(cost.toDomain())
 			.stock(stock)
 			.introduction(introduction)
-			.categoryId(categoryId)
+			.category(Category.initNo(categoryNo))
+			.seller(Seller.initId(sellerId))
 			.build();
 	}
 }

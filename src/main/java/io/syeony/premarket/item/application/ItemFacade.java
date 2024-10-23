@@ -5,8 +5,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import io.syeony.premarket.item.application.dto.EditItemDto;
-import io.syeony.premarket.item.application.dto.RegisterItemDto;
 import io.syeony.premarket.item.domain.model.Item;
 import io.syeony.premarket.item.domain.processor.DeactivateItemProcessor;
 import io.syeony.premarket.item.domain.processor.EditItemProcessor;
@@ -24,8 +22,8 @@ public class ItemFacade {
 	private final ItemReader itemReader;
 
 	@Transactional
-	public Long registerItem(RegisterItemDto itemDto) {
-		return registerItemProcessor.registerItem(itemDto.toDomain());
+	public Long registerItem(final Item itemDomain) {
+		return registerItemProcessor.registerItem(itemDomain);
 	}
 
 	@Transactional
@@ -34,8 +32,8 @@ public class ItemFacade {
 	}
 
 	@Transactional
-	public void editItem(String itemId, String memberId, EditItemDto itemDto) {
-		editItemProcessor.edit(itemId, memberId, itemDto.toDomain());
+	public void editItem(String itemId, Item itemDomain) {
+		editItemProcessor.edit(itemId, itemDomain);
 	}
 
 	@Transactional(readOnly = true)

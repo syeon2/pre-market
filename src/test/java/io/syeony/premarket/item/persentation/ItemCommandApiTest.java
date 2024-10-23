@@ -8,7 +8,6 @@ import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
@@ -16,10 +15,12 @@ import org.springframework.restdocs.payload.JsonFieldType;
 
 import io.syeony.premarket.ControllerTestSupport;
 import io.syeony.premarket.item.application.ItemFacade;
-import io.syeony.premarket.item.persentation.request.CostRequest;
 import io.syeony.premarket.item.persentation.request.DeactivateItemRequest;
 import io.syeony.premarket.item.persentation.request.EditItemRequest;
 import io.syeony.premarket.item.persentation.request.RegisterItemRequest;
+import io.syeony.premarket.item.persentation.request.vo.CostRequest;
+import io.syeony.premarket.item.persentation.request.vo.ItemTypeRequest;
+import io.syeony.premarket.item.persentation.request.vo.PreOrderScheduleRequest;
 
 class ItemCommandApiTest extends ControllerTestSupport {
 
@@ -36,7 +37,7 @@ class ItemCommandApiTest extends ControllerTestSupport {
 		// given
 		RegisterItemRequest request = createRegisterItemRequest("memberId");
 
-		given(itemFacade.registerItem(request.toDto())).willReturn(1L);
+		given(itemFacade.registerItem(request.toDomain())).willReturn(1L);
 
 		// when // then
 		mockMvc.perform(
@@ -45,12 +46,11 @@ class ItemCommandApiTest extends ControllerTestSupport {
 					.contentType(MediaType.APPLICATION_JSON)
 			).andDo(print())
 			.andExpect(status().isOk())
-			.andExpect(jsonPath("$.data.item_id").isNumber())
+			.andExpect(jsonPath("$.data.item_no").isNumber())
 			.andDo(document("item-add",
 				preprocessRequest(prettyPrint()),
 				preprocessResponse(prettyPrint()),
 				requestFields(
-					fieldWithPath("member_id").type(JsonFieldType.STRING).description("회원 아이디"),
 					fieldWithPath("name").type(JsonFieldType.STRING).description("상품 이름"),
 					fieldWithPath("cost.price").type(JsonFieldType.NUMBER).description("상품 가격"),
 					fieldWithPath("cost.discount").type(JsonFieldType.NUMBER).description("상품 할인 금액"),
@@ -62,12 +62,13 @@ class ItemCommandApiTest extends ControllerTestSupport {
 					fieldWithPath("pre_order_schedule.date").type(JsonFieldType.NUMBER).description("예약 주문 일"),
 					fieldWithPath("pre_order_schedule.hour").type(JsonFieldType.NUMBER).description("예약 주문 시간"),
 					fieldWithPath("pre_order_schedule.minute").type(JsonFieldType.NUMBER).description("예약 주문 분"),
-					fieldWithPath("category_id").type(JsonFieldType.NUMBER).description("카테고리 고유번호")
+					fieldWithPath("seller_id").type(JsonFieldType.STRING).description("판매 회원 아이디"),
+					fieldWithPath("category_no").type(JsonFieldType.NUMBER).description("카테고리 고유번호")
 				),
 				responseFields(
 					fieldWithPath("code").type(JsonFieldType.NUMBER).description("상태 코드"),
 					fieldWithPath("message").type(JsonFieldType.STRING).description("메시지"),
-					fieldWithPath("data.item_id").type(JsonFieldType.NUMBER).description("상품 번호")
+					fieldWithPath("data.item_no").type(JsonFieldType.NUMBER).description("상품 번호")
 				)
 			));
 	}
@@ -76,11 +77,11 @@ class ItemCommandApiTest extends ControllerTestSupport {
 	@DisplayName(value = "Deactivate item successfully when all required fields are provided")
 	void deactivateItemApi() throws Exception {
 		// given
-		DeactivateItemRequest request = new DeactivateItemRequest("memberId", "itemId");
+		DeactivateItemRequest request = new DeactivateItemRequest("sellerId", "itemId");
 
 		// when // then
 		mockMvc.perform(
-				delete("/api/v1/items")
+				put("/api/v1/items")
 					.content(objectMapper.writeValueAsString(request))
 					.contentType(MediaType.APPLICATION_JSON)
 			).andDo(print())
@@ -89,7 +90,7 @@ class ItemCommandApiTest extends ControllerTestSupport {
 				preprocessRequest(prettyPrint()),
 				preprocessResponse(prettyPrint()),
 				requestFields(
-					fieldWithPath("member_id").type(JsonFieldType.STRING).description("회원 아이디"),
+					fieldWithPath("seller_id").type(JsonFieldType.STRING).description("판매 회원 아이디"),
 					fieldWithPath("item_id").type(JsonFieldType.STRING).description("상품 아이디")
 				)
 			));
@@ -119,8 +120,8 @@ class ItemCommandApiTest extends ControllerTestSupport {
 					fieldWithPath("cost.discount").type(JsonFieldType.NUMBER).description("상품 할인금액"),
 					fieldWithPath("stock").type(JsonFieldType.NUMBER).description("상품 재고"),
 					fieldWithPath("introduction").type(JsonFieldType.STRING).description("상품 설명"),
-					fieldWithPath("category_id").type(JsonFieldType.NUMBER).description("상품 카테고리 고유번호"),
-					fieldWithPath("member_id").type(JsonFieldType.STRING).description("회원 아이디")
+					fieldWithPath("category_no").type(JsonFieldType.NUMBER).description("상품 카테고리 고유번호"),
+					fieldWithPath("seller_id").type(JsonFieldType.STRING).description("판매 회원 아이디")
 				)
 			));
 	}
@@ -130,13 +131,14 @@ class ItemCommandApiTest extends ControllerTestSupport {
 			"changeIntro", 2L, "memberId");
 	}
 
-	private static @NotNull RegisterItemRequest createRegisterItemRequest(String memberId) {
-		return new RegisterItemRequest(memberId, "itemA",
+	private RegisterItemRequest createRegisterItemRequest(String memberId) {
+		return new RegisterItemRequest("itemA",
 			new CostRequest(10000, 1000),
 			10,
 			"hello introduce",
-			RegisterItemRequest.ItemTypeRequest.PRE_ORDER,
-			new RegisterItemRequest.PreOrderScheduleRequest(2024, 10, 20, 22, 28),
+			ItemTypeRequest.PRE_ORDER,
+			new PreOrderScheduleRequest(2025, 10, 24, 23, 49),
+			memberId,
 			1L
 		);
 	}

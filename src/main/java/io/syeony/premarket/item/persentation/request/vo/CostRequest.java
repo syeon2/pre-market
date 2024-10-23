@@ -1,5 +1,6 @@
-package io.syeony.premarket.item.persentation.request;
+package io.syeony.premarket.item.persentation.request.vo;
 
+import io.syeony.premarket.item.domain.model.Cost;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 
@@ -12,4 +13,7 @@ public record CostRequest(
 	@NotNull(message = "The discount field is required")
 	Integer discount
 ) {
+	public Cost toDomain() {
+		return Cost.of(price, discount);
+	}
 }

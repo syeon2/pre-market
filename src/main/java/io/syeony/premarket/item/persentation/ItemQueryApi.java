@@ -16,6 +16,7 @@ import io.syeony.premarket.item.persentation.response.RetrieveCategoryItemRespon
 import io.syeony.premarket.item.persentation.response.RetrieveItemDetailResponse;
 import io.syeony.premarket.item.persentation.response.RetrieveRegisteredItemResponse;
 import io.syeony.premarket.support.common.ApiResult;
+import io.syeony.premarket.support.common.PageConverter;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -31,26 +32,20 @@ public class ItemQueryApi {
 
 	@GetMapping("/v1/members/{memberId}/registered_items")
 	public ResponseEntity<ApiResult<Page<RetrieveRegisteredItemResponse>>> retrieveRegisteredItems(
-		@PathVariable String memberId,
-		Pageable pageable
+		@PathVariable String memberId, Pageable pageable
 	) {
 		Page<Item> items = itemFacade.retrieveRegisteredItems(memberId, pageable);
-
-		return ResponseEntity
-			.ok()
-			.body(ApiResult.ok(RetrieveRegisteredItemResponse.from(items)));
+		return ResponseEntity.ok()
+			.body(ApiResult.ok(PageConverter.convert(items, RetrieveRegisteredItemResponse::from)));
 	}
 
 	@GetMapping("/v1/items")
 	public ResponseEntity<ApiResult<Page<RetrieveCategoryItemResponse>>> retrieveCategoryItems(
-		@RequestParam(value = "category_id") Long categoryId,
-		Pageable pageable
+		@RequestParam(value = "category_id") Long categoryId, Pageable pageable
 	) {
 		Page<Item> items = itemFacade.retrieveCategoryItems(categoryId, pageable);
-
-		return ResponseEntity
-			.ok()
-			.body(ApiResult.ok(RetrieveCategoryItemResponse.from(items)));
+		return ResponseEntity.ok()
+			.body(ApiResult.ok(PageConverter.convert(items, RetrieveCategoryItemResponse::from)));
 	}
 
 	@GetMapping("/v1/items/{itemId}")
@@ -58,9 +53,7 @@ public class ItemQueryApi {
 		@PathVariable Long itemId
 	) {
 		Item item = itemFacade.retrieveItemDetail(itemId);
-
-		return ResponseEntity
-			.ok()
+		return ResponseEntity.ok()
 			.body(ApiResult.ok(RetrieveItemDetailResponse.from(item)));
 	}
 }

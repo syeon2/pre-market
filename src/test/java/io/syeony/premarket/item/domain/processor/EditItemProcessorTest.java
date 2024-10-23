@@ -45,7 +45,7 @@ class EditItemProcessorTest extends UnitTestSupport {
 		given(itemReader.findByItemId(itemId)).willReturn(Optional.of(item));
 
 		// when
-		editItemProcessor.edit(itemId, memberId, item);
+		editItemProcessor.edit(itemId, item);
 
 		// then
 		verify(itemReader, times(1)).findByItemId(itemId);
@@ -63,7 +63,7 @@ class EditItemProcessorTest extends UnitTestSupport {
 		given(itemReader.findByItemId(itemId)).willReturn(Optional.empty());
 
 		// when // then
-		assertThatThrownBy(() -> editItemProcessor.edit(itemId, memberId, item))
+		assertThatThrownBy(() -> editItemProcessor.edit(itemId, item))
 			.isInstanceOf(IllegalArgumentException.class);
 	}
 
@@ -72,20 +72,20 @@ class EditItemProcessorTest extends UnitTestSupport {
 	void edit_shouldThrowInvalidCredentialsException_whenMemberIdIsWrong() {
 		// given
 		String itemId = "itemId";
-		String memberId = "memberId";
-		Item item = createItemDomain("differentMemberId");
+		Item item = createItemDomain("memberId");
+		Item diiferItem = createItemDomain("differentMemberId");
 
 		given(itemReader.findByItemId(itemId)).willReturn(Optional.of(item));
 
 		// when // then
-		assertThatThrownBy(() -> editItemProcessor.edit(itemId, memberId, item))
+		assertThatThrownBy(() -> editItemProcessor.edit(itemId, diiferItem))
 			.isInstanceOf(InvalidCredentialsException.class);
 	}
 
-	private Item createItemDomain(String memberId) {
+	private Item createItemDomain(String sellerId) {
 		return Item
 			.builder()
-			.seller(Seller.builder().memberId(memberId).build())
+			.seller(Seller.initId(sellerId))
 			.build();
 	}
 }

@@ -14,4 +14,8 @@ public class Cost {
 		this.price = price;
 		this.discount = discount;
 	}
+
+	public static Cost of(Integer price, Integer discount) {
+		return new Cost(price, discount);
+	}
 }

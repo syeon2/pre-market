@@ -1,16 +1,15 @@
 package io.syeony.premarket.item.persentation.response;
 
 import java.time.LocalDateTime;
-import java.util.List;
-
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import io.syeony.premarket.item.domain.model.Item;
-import io.syeony.premarket.item.domain.model.ItemType;
+import io.syeony.premarket.item.persentation.response.vo.CategoryResponse;
+import io.syeony.premarket.item.persentation.response.vo.CostResponse;
+import io.syeony.premarket.item.persentation.response.vo.ItemTypeResponse;
+import io.syeony.premarket.item.persentation.response.vo.PreOrderScheduleResponse;
 
 public record RetrieveRegisteredItemResponse(
 	@JsonProperty(value = "item_no")
@@ -19,6 +18,7 @@ public record RetrieveRegisteredItemResponse(
 	@JsonProperty(value = "item_name")
 	String itemName,
 
+	@JsonProperty(value = "cost")
 	CostResponse cost,
 
 	@JsonProperty(value = "item_type")
@@ -36,40 +36,20 @@ public record RetrieveRegisteredItemResponse(
 	@JsonProperty(value = "category")
 	CategoryResponse category
 ) {
-	public static Page<RetrieveRegisteredItemResponse> from(Page<Item> items) {
-		List<RetrieveRegisteredItemResponse> response = items.getContent().stream()
-			.map(domain -> new RetrieveRegisteredItemResponse(
-				domain.getId(),
-				domain.getName(),
-				new CostResponse(domain.getCost().getPrice(), domain.getCost().getDiscount()),
-				ItemTypeResponse.from(domain.getItemType()),
-				new PreOrderScheduleResponse(
-					domain.getPreOrderSchedule().getYear(),
-					domain.getPreOrderSchedule().getMonthValue(),
-					domain.getPreOrderSchedule().getDayOfMonth(),
-					domain.getPreOrderSchedule().getHour(),
-					domain.getPreOrderSchedule().getMinute()
-				),
-				domain.getStock(),
-				domain.getAuditTimestamps().getCreatedAt(),
-				new CategoryResponse(
-					domain.getCategory().getNo(),
-					domain.getCategory().getName())
-			))
-			.toList();
-
-		return new PageImpl<>(response, items.getPageable(), items.getTotalPages());
+	public static RetrieveRegisteredItemResponse from(Item item) {
+		return new RetrieveRegisteredItemResponse(
+			item.getId(),
+			item.getName(),
+			CostResponse.from(item.getCost()),
+			ItemTypeResponse.from(item.getItemType()),
+			convertToPreOrderSchedule(item.getPreOrderSchedule()),
+			item.getStock(),
+			item.getAuditTimestamps().getCreatedAt(),
+			CategoryResponse.from(item.getCategory())
+		);
 	}
 
-	public enum ItemTypeResponse {
-		PRE_ORDER,
-		NORMAL_ORDER;
-
-		public static ItemTypeResponse from(ItemType itemType) {
-			return switch (itemType) {
-				case PRE_ORDER -> PRE_ORDER;
-				default -> NORMAL_ORDER;
-			};
-		}
+	private static PreOrderScheduleResponse convertToPreOrderSchedule(LocalDateTime schedule) {
+		return schedule == null ? null : PreOrderScheduleResponse.from(schedule);
 	}
 }

@@ -8,14 +8,22 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Seller {
 
-	private String memberNo;
+	private Long memberNo;
 	private String memberId;
 	private String name;
 
 	@Builder
-	public Seller(String memberNo, String memberId, String name) {
+	public Seller(Long memberNo, String memberId, String name) {
 		this.memberNo = memberNo;
 		this.memberId = memberId;
 		this.name = name;
+	}
+
+	public static Seller of(Long memberNo, String memberId, String name) {
+		return new Seller(memberNo, memberId, name);
+	}
+
+	public static Seller initId(String memberId) {
+		return new Seller(null, memberId, null);
 	}
 }
