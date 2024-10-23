@@ -34,9 +34,8 @@ public final class AccountCommandApi {
 	public ResponseEntity<ApiResult<RegisterAccountResponse>> register(
 		@RequestBody @Valid RegisterAccountRequest request
 	) {
-		var memberId = accountFacade.register(request.toRegisterAccountDto(), request.verificationCode());
-		return ResponseEntity
-			.status(HttpStatus.CREATED)
+		var memberId = accountFacade.register(request.toDomain(), request.verificationCode());
+		return ResponseEntity.status(HttpStatus.CREATED)
 			.body(ApiResult.created(new RegisterAccountResponse(memberId.value())));
 	}
 
@@ -45,10 +44,7 @@ public final class AccountCommandApi {
 		@RequestBody @Valid IssueVerificationRequest request
 	) {
 		accountFacade.issueVerification(request.toEmail());
-
-		return ResponseEntity
-			.status(HttpStatus.ACCEPTED)
-			.build();
+		return ResponseEntity.status(HttpStatus.ACCEPTED).build();
 	}
 
 	@PostMapping("/v1/accounts/login")
@@ -56,11 +52,8 @@ public final class AccountCommandApi {
 		@RequestBody @Valid LoginRequest request
 	) {
 		var token = accountFacade.authenticateAccount(request.email(), request.password());
-
-		return ResponseEntity
-			.ok()
-			.body(
-				ApiResult.ok(new AuthorizeTokenResponse(token.accessToken(), token.refreshToken())));
+		return ResponseEntity.ok()
+			.body(ApiResult.ok(new AuthorizeTokenResponse(token.accessToken(), token.refreshToken())));
 	}
 
 	@PostMapping("/v1/accounts/refresh-token")
@@ -68,11 +61,8 @@ public final class AccountCommandApi {
 		@RequestBody @Valid RenewTokensRequest request
 	) {
 		var token = accountFacade.authenticateRefreshToken(request.email(), request.refreshToken());
-
-		return ResponseEntity
-			.ok()
-			.body(
-				ApiResult.ok(new AuthorizeTokenResponse(token.accessToken(), token.refreshToken())));
+		return ResponseEntity.ok()
+			.body(ApiResult.ok(new AuthorizeTokenResponse(token.accessToken(), token.refreshToken())));
 	}
 
 }

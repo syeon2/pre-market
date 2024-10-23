@@ -4,7 +4,7 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import io.syeony.premarket.account.application.dto.RegisterAccountDto;
+import io.syeony.premarket.account.domain.model.Account;
 import io.syeony.premarket.account.domain.model.AuthorizationToken;
 import io.syeony.premarket.account.domain.model.RefreshTokenEvent;
 import io.syeony.premarket.account.domain.model.VerificationCode;
@@ -29,9 +29,9 @@ public class AccountFacade {
 	private final ApplicationEventPublisher publisher;
 
 	@Transactional
-	public MemberId register(final RegisterAccountDto accountDto, final String verificationCode) {
-		verificationCodeVerifier.verify(accountDto.email(), verificationCode);
-		return registerAccountProcessor.register(accountDto.toDomain());
+	public MemberId register(final Account accountDomain, final String verificationCode) {
+		verificationCodeVerifier.verify(accountDomain.getEmail(), verificationCode);
+		return registerAccountProcessor.register(accountDomain);
 	}
 
 	@Transactional

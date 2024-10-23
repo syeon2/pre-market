@@ -21,6 +21,7 @@ import io.syeony.premarket.account.presentation.request.IssueVerificationRequest
 import io.syeony.premarket.account.presentation.request.LoginRequest;
 import io.syeony.premarket.account.presentation.request.RegisterAccountRequest;
 import io.syeony.premarket.account.presentation.request.RenewTokensRequest;
+import io.syeony.premarket.account.presentation.request.vo.AddressRequest;
 
 class AccountCommandApiTest extends ControllerTestSupport {
 
@@ -37,7 +38,7 @@ class AccountCommandApiTest extends ControllerTestSupport {
 		// given
 		RegisterAccountRequest request = createRegisterAccountRequest();
 
-		given(accountFacade.register(request.toRegisterAccountDto(), request.verificationCode()))
+		given(accountFacade.register(request.toDomain(), request.verificationCode()))
 			.willReturn(new MemberId("memberId"));
 
 		// when // then
@@ -162,7 +163,7 @@ class AccountCommandApiTest extends ControllerTestSupport {
 			"rawPassword",
 			"suyeon",
 			"00011112222",
-			new RegisterAccountRequest.Address("address1", "address2", "zipcode"),
+			new AddressRequest("address1", "address2", "zipcode"),
 			"000111"
 		);
 	}
