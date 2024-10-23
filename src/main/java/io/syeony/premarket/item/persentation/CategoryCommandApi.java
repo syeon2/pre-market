@@ -21,7 +21,7 @@ import lombok.RequiredArgsConstructor;
 	consumes = MediaType.APPLICATION_JSON_VALUE
 )
 @RequiredArgsConstructor
-public class CategoryCommandApi {
+public final class CategoryCommandApi {
 
 	private final CategoryFacade categoryFacade;
 

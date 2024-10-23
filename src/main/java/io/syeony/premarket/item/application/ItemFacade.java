@@ -37,13 +37,13 @@ public class ItemFacade {
 	}
 
 	@Transactional(readOnly = true)
-	public Page<Item> retrieveRegisteredItems(String memberId, Pageable pageable) {
+	public Page<Item> findRegisteredItems(final String memberId, Pageable pageable) {
 		return itemReader.findItemsByMemberId(memberId, pageable);
 	}
 
 	@Transactional(readOnly = true)
-	public Page<Item> retrieveCategoryItems(Long categoryId, Pageable pageable) {
-		return itemReader.findItemsByCategoryId(categoryId, pageable);
+	public Page<Item> retrieveCategoryItems(Long categoryNo, Pageable pageable) {
+		return itemReader.findItemsByCategoryNo(categoryNo, pageable);
 	}
 
 	@Transactional(readOnly = true)

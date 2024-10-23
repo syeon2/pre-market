@@ -19,8 +19,8 @@ public record RetrieveCategoryItemResponse(
 	@JsonProperty(value = "cost")
 	CostResponse cost,
 
-	@JsonProperty(value = "is_pre_order_item")
-	Boolean isPreOrderItem,
+	@JsonProperty(value = "is_pre_order")
+	Boolean isPreOrder,
 
 	Integer stock,
 

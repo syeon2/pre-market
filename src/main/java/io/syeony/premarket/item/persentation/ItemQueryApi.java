@@ -26,33 +26,33 @@ import lombok.RequiredArgsConstructor;
 	consumes = MediaType.APPLICATION_JSON_VALUE
 )
 @RequiredArgsConstructor
-public class ItemQueryApi {
+public final class ItemQueryApi {
 
 	private final ItemFacade itemFacade;
 
 	@GetMapping("/v1/members/{memberId}/registered_items")
-	public ResponseEntity<ApiResult<Page<RetrieveRegisteredItemResponse>>> retrieveRegisteredItems(
+	public ResponseEntity<ApiResult<Page<RetrieveRegisteredItemResponse>>> findRegisteredItems(
 		@PathVariable String memberId, Pageable pageable
 	) {
-		Page<Item> items = itemFacade.retrieveRegisteredItems(memberId, pageable);
+		Page<Item> items = itemFacade.findRegisteredItems(memberId, pageable);
 		return ResponseEntity.ok()
 			.body(ApiResult.ok(PageConverter.convert(items, RetrieveRegisteredItemResponse::from)));
 	}
 
 	@GetMapping("/v1/items")
-	public ResponseEntity<ApiResult<Page<RetrieveCategoryItemResponse>>> retrieveCategoryItems(
-		@RequestParam(value = "category_id") Long categoryId, Pageable pageable
+	public ResponseEntity<ApiResult<Page<RetrieveCategoryItemResponse>>> findCategoryItems(
+		@RequestParam(value = "category_no") Long categoryNo, Pageable pageable
 	) {
-		Page<Item> items = itemFacade.retrieveCategoryItems(categoryId, pageable);
+		Page<Item> items = itemFacade.retrieveCategoryItems(categoryNo, pageable);
 		return ResponseEntity.ok()
 			.body(ApiResult.ok(PageConverter.convert(items, RetrieveCategoryItemResponse::from)));
 	}
 
-	@GetMapping("/v1/items/{itemId}")
+	@GetMapping("/v1/items/{item_no}")
 	public ResponseEntity<ApiResult<RetrieveItemDetailResponse>> retrieveItemDetail(
-		@PathVariable Long itemId
+		@PathVariable(value = "item_no") Long itemNo
 	) {
-		Item item = itemFacade.retrieveItemDetail(itemId);
+		Item item = itemFacade.retrieveItemDetail(itemNo);
 		return ResponseEntity.ok()
 			.body(ApiResult.ok(RetrieveItemDetailResponse.from(item)));
 	}

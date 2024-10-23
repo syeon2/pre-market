@@ -21,7 +21,7 @@ public enum ItemTypeRequest {
 		if (this.equals(PRE_ORDER)) {
 			return ItemType.PRE_ORDER;
 		}
-		
+
 		return ItemType.NORMAL_ORDER;
 	}
 }

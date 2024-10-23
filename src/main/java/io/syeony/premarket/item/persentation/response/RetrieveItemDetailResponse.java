@@ -20,8 +20,8 @@ public record RetrieveItemDetailResponse(
 	@JsonProperty(value = "cost")
 	CostResponse cost,
 
-	@JsonProperty(value = "is_pre_order_item")
-	Boolean isPreOrderItem,
+	@JsonProperty(value = "is_pre_order")
+	Boolean isPreOrder,
 
 	String introduction,
 

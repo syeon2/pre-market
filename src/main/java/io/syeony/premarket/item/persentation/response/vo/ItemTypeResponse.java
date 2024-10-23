@@ -7,9 +7,9 @@ public enum ItemTypeResponse {
 	NORMAL_ORDER;
 
 	public static ItemTypeResponse from(ItemType itemType) {
-		return switch (itemType) {
-			case PRE_ORDER -> PRE_ORDER;
-			default -> NORMAL_ORDER;
-		};
+		if (itemType == ItemType.PRE_ORDER) {
+			return PRE_ORDER;
+		}
+		return NORMAL_ORDER;
 	}
 }
