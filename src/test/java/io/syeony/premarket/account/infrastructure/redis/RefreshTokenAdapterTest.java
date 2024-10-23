@@ -20,7 +20,7 @@ class RefreshTokenAdapterTest extends RedisInfraTestSupport {
 	private RefreshTokenAdapter refreshTokenAdapter;
 
 	@Autowired
-	private RedisRefreshTokenRepository redisRefreshTokenRepository;
+	private RefreshTokenRepository refreshTokenRepository;
 
 	@Test
 	@DisplayName(value = "Save Refresh token by event listener and find token by email")

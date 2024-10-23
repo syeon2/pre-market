@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import io.syeony.premarket.item.infrastructure.persistence.entity.ItemEntity;
 
-public interface JpaItemRepository extends JpaRepository<ItemEntity, Long> {
+public interface ItemRepository extends JpaRepository<ItemEntity, Long> {
 
 	Optional<ItemEntity> findByItemId(String itemId);
 }

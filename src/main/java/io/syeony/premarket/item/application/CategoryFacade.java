@@ -7,24 +7,24 @@ import org.springframework.transaction.annotation.Transactional;
 
 import io.syeony.premarket.item.domain.model.Category;
 import io.syeony.premarket.item.domain.processor.reader.CategoryReader;
-import io.syeony.premarket.item.domain.processor.repository.CategoryRepository;
+import io.syeony.premarket.item.domain.processor.writer.CategoryWriter;
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
 public class CategoryFacade {
 
-	private final CategoryRepository categoryRepository;
+	private final CategoryWriter categoryWriter;
 	private final CategoryReader categoryReader;
 
 	@Transactional
 	public void createCategory(final String name) {
-		categoryRepository.createCategory(Category.initialize(name));
+		categoryWriter.createCategory(Category.initialize(name));
 	}
 
 	@Transactional
 	public void deleteCategory(final Long categoryId) {
-		categoryRepository.deleteCategory(categoryId);
+		categoryWriter.deleteCategory(categoryId);
 	}
 
 	@Transactional(readOnly = true)

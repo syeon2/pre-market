@@ -6,14 +6,14 @@ import org.springframework.stereotype.Repository;
 
 import io.syeony.premarket.item.domain.model.Category;
 import io.syeony.premarket.item.domain.processor.reader.CategoryReader;
-import io.syeony.premarket.item.domain.processor.repository.CategoryRepository;
+import io.syeony.premarket.item.domain.processor.writer.CategoryWriter;
 import lombok.RequiredArgsConstructor;
 
 @Repository
 @RequiredArgsConstructor
-public class CategoryPersistenceAdapter implements CategoryRepository, CategoryReader {
+public class CategoryPersistenceAdapter implements CategoryWriter, CategoryReader {
 
-	private final JpaCategoryRepository categoryRepository;
+	private final CategoryRepository categoryRepository;
 	private final CategoryMapper categoryMapper;
 
 	@Override

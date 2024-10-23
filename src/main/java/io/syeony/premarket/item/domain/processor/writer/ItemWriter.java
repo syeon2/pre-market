@@ -1,8 +1,8 @@
-package io.syeony.premarket.item.domain.processor.repository;
+package io.syeony.premarket.item.domain.processor.writer;
 
 import io.syeony.premarket.item.domain.model.Item;
 
-public interface ItemRepository {
+public interface ItemWriter {
 
 	Long register(Item item);
 

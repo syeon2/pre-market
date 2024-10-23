@@ -28,7 +28,7 @@ class ItemPersistenceAdapterTest extends JpaInfraTestSupport {
 	private ItemPersistenceAdapter itemPersistenceAdapter;
 
 	@Autowired
-	private JpaItemRepository itemRepository;
+	private ItemRepository itemRepository;
 
 	@Test
 	@DisplayName(value = "Save item and return item id")

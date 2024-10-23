@@ -15,7 +15,7 @@ import io.syeony.premarket.account.domain.processor.reader.AccountReader;
 import io.syeony.premarket.item.domain.model.Cost;
 import io.syeony.premarket.item.domain.model.Item;
 import io.syeony.premarket.item.domain.model.ItemType;
-import io.syeony.premarket.item.domain.processor.repository.ItemRepository;
+import io.syeony.premarket.item.domain.processor.writer.ItemWriter;
 import io.syeony.premarket.support.error.exception.InvalidCredentialsException;
 
 class RegisterItemProcessorTest extends UnitTestSupport {
@@ -24,14 +24,14 @@ class RegisterItemProcessorTest extends UnitTestSupport {
 	private RegisterItemProcessor registerItemProcessor;
 
 	@Mock
-	private ItemRepository itemRepository = mock(ItemRepository.class);
+	private ItemWriter itemWriter = mock(ItemWriter.class);
 
 	@Mock
 	private AccountReader accountReader = mock(AccountReader.class);
 
 	@BeforeEach
 	void setUp() {
-		registerItemProcessor = new RegisterItemProcessor(itemRepository, accountReader);
+		registerItemProcessor = new RegisterItemProcessor(itemWriter, accountReader);
 	}
 
 	@Test
@@ -43,14 +43,14 @@ class RegisterItemProcessorTest extends UnitTestSupport {
 
 		Long itemId = 1L;
 		given(accountReader.existsByMemberId(memberId)).willReturn(true);
-		given(itemRepository.register(any(Item.class))).willReturn(itemId);
+		given(itemWriter.register(any(Item.class))).willReturn(itemId);
 
 		// when
 		Long savedItemId = registerItemProcessor.registerItem(item);
 
 		// then
 		verify(accountReader, times(1)).existsByMemberId(memberId);
-		verify(itemRepository, times(1)).register(any(Item.class));
+		verify(itemWriter, times(1)).register(any(Item.class));
 		assertThat(itemId).isEqualTo(savedItemId);
 	}
 

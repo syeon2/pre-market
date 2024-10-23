@@ -2,14 +2,14 @@ package io.syeony.premarket.item.domain.processor;
 
 import io.syeony.premarket.item.domain.model.Item;
 import io.syeony.premarket.item.domain.processor.reader.ItemReader;
-import io.syeony.premarket.item.domain.processor.repository.ItemRepository;
+import io.syeony.premarket.item.domain.processor.writer.ItemWriter;
 import io.syeony.premarket.support.error.exception.InvalidCredentialsException;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public class EditItemProcessor {
 
-	private final ItemRepository itemRepository;
+	private final ItemWriter itemWriter;
 	private final ItemReader itemReader;
 
 	public void edit(String itemId, String memberId, Item item) {
@@ -20,6 +20,6 @@ public class EditItemProcessor {
 			throw new InvalidCredentialsException("Invalid member id");
 		}
 
-		itemRepository.changeItemInfo(itemId, item);
+		itemWriter.changeItemInfo(itemId, item);
 	}
 }

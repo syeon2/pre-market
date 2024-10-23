@@ -23,7 +23,7 @@ class CategoryPersistenceAdapterTest extends JpaInfraTestSupport {
 	private CategoryPersistenceAdapter categoryPersistenceAdapter;
 
 	@Autowired
-	private JpaCategoryRepository jpaCategoryRepository;
+	private CategoryRepository categoryRepository;
 
 	@Test
 	@DisplayName(value = "Create Category")
@@ -36,7 +36,7 @@ class CategoryPersistenceAdapterTest extends JpaInfraTestSupport {
 		categoryPersistenceAdapter.createCategory(domain);
 
 		// then
-		List<CategoryEntity> findCategories = jpaCategoryRepository.findAll();
+		List<CategoryEntity> findCategories = categoryRepository.findAll();
 		assertThat(findCategories).hasSize(1);
 		assertThat(findCategories.get(0).getName()).isEqualTo(categoryName);
 	}
@@ -46,16 +46,16 @@ class CategoryPersistenceAdapterTest extends JpaInfraTestSupport {
 	void deleteCategory() {
 		// given
 		List<CategoryEntity> entityList = List.of(createCategoryEntity());
-		jpaCategoryRepository.saveAll(entityList);
+		categoryRepository.saveAll(entityList);
 
-		List<CategoryEntity> findCategories = jpaCategoryRepository.findAll();
+		List<CategoryEntity> findCategories = categoryRepository.findAll();
 		assertThat(findCategories).hasSize(entityList.size());
 
 		// when
 		findCategories.forEach(entity -> categoryPersistenceAdapter.deleteCategory(entity.getId()));
 
 		// then
-		assertThat(jpaCategoryRepository.findAll()).hasSize(0);
+		assertThat(categoryRepository.findAll()).hasSize(0);
 	}
 
 	@Test
@@ -63,7 +63,7 @@ class CategoryPersistenceAdapterTest extends JpaInfraTestSupport {
 	void retrieveAll() {
 		// given
 		List<CategoryEntity> entityList = List.of(createCategoryEntity(), createCategoryEntity());
-		jpaCategoryRepository.saveAll(entityList);
+		categoryRepository.saveAll(entityList);
 
 		// when
 		List<Category> categories = categoryPersistenceAdapter.retrieveAll();

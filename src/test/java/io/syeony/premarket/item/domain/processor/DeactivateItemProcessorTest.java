@@ -17,7 +17,7 @@ import io.syeony.premarket.item.domain.model.Cost;
 import io.syeony.premarket.item.domain.model.Item;
 import io.syeony.premarket.item.domain.model.ItemType;
 import io.syeony.premarket.item.domain.processor.reader.ItemReader;
-import io.syeony.premarket.item.domain.processor.repository.ItemRepository;
+import io.syeony.premarket.item.domain.processor.writer.ItemWriter;
 import io.syeony.premarket.support.error.exception.InvalidCredentialsException;
 
 class DeactivateItemProcessorTest extends UnitTestSupport {
@@ -29,11 +29,11 @@ class DeactivateItemProcessorTest extends UnitTestSupport {
 	private ItemReader itemReader = mock(ItemReader.class);
 
 	@Mock
-	private ItemRepository itemRepository = mock(ItemRepository.class);
+	private ItemWriter itemWriter = mock(ItemWriter.class);
 
 	@BeforeEach
 	void setUp() {
-		processor = new DeactivateItemProcessor(itemReader, itemRepository);
+		processor = new DeactivateItemProcessor(itemReader, itemWriter);
 	}
 
 	@Test
@@ -51,7 +51,7 @@ class DeactivateItemProcessorTest extends UnitTestSupport {
 
 		// then
 		verify(itemReader, times(1)).findByItemId(itemId);
-		verify(itemRepository, times(1)).deactivate(any(Item.class));
+		verify(itemWriter, times(1)).deactivate(any(Item.class));
 	}
 
 	@Test

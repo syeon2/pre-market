@@ -15,7 +15,7 @@ import io.syeony.premarket.UnitTestSupport;
 import io.syeony.premarket.account.domain.model.vo.MemberId;
 import io.syeony.premarket.item.domain.model.Item;
 import io.syeony.premarket.item.domain.processor.reader.ItemReader;
-import io.syeony.premarket.item.domain.processor.repository.ItemRepository;
+import io.syeony.premarket.item.domain.processor.writer.ItemWriter;
 import io.syeony.premarket.support.error.exception.InvalidCredentialsException;
 
 class EditItemProcessorTest extends UnitTestSupport {
@@ -24,14 +24,14 @@ class EditItemProcessorTest extends UnitTestSupport {
 	private EditItemProcessor editItemProcessor;
 
 	@Mock
-	private ItemRepository itemRepository = mock(ItemRepository.class);
+	private ItemWriter itemWriter = mock(ItemWriter.class);
 
 	@Mock
 	private ItemReader itemReader = mock(ItemReader.class);
 
 	@BeforeEach
 	void setUp() {
-		editItemProcessor = new EditItemProcessor(itemRepository, itemReader);
+		editItemProcessor = new EditItemProcessor(itemWriter, itemReader);
 	}
 
 	@Test
@@ -49,7 +49,7 @@ class EditItemProcessorTest extends UnitTestSupport {
 
 		// then
 		verify(itemReader, times(1)).findByItemId(itemId);
-		verify(itemRepository, times(1)).changeItemInfo(any(String.class), any(Item.class));
+		verify(itemWriter, times(1)).changeItemInfo(any(String.class), any(Item.class));
 	}
 
 	@Test
