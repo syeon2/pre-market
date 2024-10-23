@@ -42,7 +42,7 @@ public class ItemFacade {
 	}
 
 	@Transactional(readOnly = true)
-	public Page<Item> retrieveCategoryItems(Long categoryNo, Pageable pageable) {
+	public Page<Item> findCategoryItems(Long categoryNo, Pageable pageable) {
 		return itemReader.findItemsByCategoryNo(categoryNo, pageable);
 	}
 

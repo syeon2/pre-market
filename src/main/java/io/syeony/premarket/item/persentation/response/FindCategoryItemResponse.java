@@ -9,7 +9,7 @@ import io.syeony.premarket.item.persentation.response.vo.CostResponse;
 import io.syeony.premarket.item.persentation.response.vo.PreOrderScheduleResponse;
 import io.syeony.premarket.item.persentation.response.vo.SellerResponse;
 
-public record RetrieveCategoryItemResponse(
+public record FindCategoryItemResponse(
 	@JsonProperty(value = "item_no")
 	Long itemNo,
 
@@ -30,8 +30,8 @@ public record RetrieveCategoryItemResponse(
 	@JsonProperty(value = "seller")
 	SellerResponse seller
 ) {
-	public static RetrieveCategoryItemResponse from(Item item) {
-		return new RetrieveCategoryItemResponse(
+	public static FindCategoryItemResponse from(Item item) {
+		return new FindCategoryItemResponse(
 			item.getItemNo(),
 			item.getItemName(),
 			CostResponse.from(item.getCost()),

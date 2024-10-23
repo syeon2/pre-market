@@ -11,7 +11,7 @@ import io.syeony.premarket.item.persentation.response.vo.CostResponse;
 import io.syeony.premarket.item.persentation.response.vo.ItemTypeResponse;
 import io.syeony.premarket.item.persentation.response.vo.PreOrderScheduleResponse;
 
-public record RetrieveRegisteredItemResponse(
+public record FindRegisteredItemResponse(
 	@JsonProperty(value = "item_no")
 	Long itemNo,
 
@@ -36,8 +36,8 @@ public record RetrieveRegisteredItemResponse(
 	@JsonProperty(value = "category")
 	CategoryResponse category
 ) {
-	public static RetrieveRegisteredItemResponse from(Item item) {
-		return new RetrieveRegisteredItemResponse(
+	public static FindRegisteredItemResponse from(Item item) {
+		return new FindRegisteredItemResponse(
 			item.getItemNo(),
 			item.getItemName(),
 			CostResponse.from(item.getCost()),

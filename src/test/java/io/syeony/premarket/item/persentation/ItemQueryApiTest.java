@@ -115,7 +115,7 @@ class ItemQueryApiTest extends ControllerTestSupport {
 		Long categoryNo = 1L;
 		Page<Item> mockPage = new PageImpl<>(List.of(createItemDomain()), PageRequest.of(0, 10), 0);
 
-		given(itemFacade.retrieveCategoryItems(any(), any()))
+		given(itemFacade.findCategoryItems(any(), any()))
 			.willReturn(mockPage);
 
 		// when // then

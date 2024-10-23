@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.syeony.premarket.item.application.ItemFacade;
 import io.syeony.premarket.item.domain.model.Item;
-import io.syeony.premarket.item.persentation.response.RetrieveCategoryItemResponse;
+import io.syeony.premarket.item.persentation.response.FindCategoryItemResponse;
+import io.syeony.premarket.item.persentation.response.FindRegisteredItemResponse;
 import io.syeony.premarket.item.persentation.response.RetrieveItemDetailResponse;
-import io.syeony.premarket.item.persentation.response.RetrieveRegisteredItemResponse;
 import io.syeony.premarket.support.common.ApiResult;
 import io.syeony.premarket.support.common.PageConverter;
 import lombok.RequiredArgsConstructor;
@@ -31,21 +31,21 @@ public final class ItemQueryApi {
 	private final ItemFacade itemFacade;
 
 	@GetMapping("/v1/members/{memberId}/registered_items")
-	public ResponseEntity<ApiResult<Page<RetrieveRegisteredItemResponse>>> findRegisteredItems(
+	public ResponseEntity<ApiResult<Page<FindRegisteredItemResponse>>> findRegisteredItems(
 		@PathVariable String memberId, Pageable pageable
 	) {
 		Page<Item> items = itemFacade.findRegisteredItems(memberId, pageable);
 		return ResponseEntity.ok()
-			.body(ApiResult.ok(PageConverter.convert(items, RetrieveRegisteredItemResponse::from)));
+			.body(ApiResult.ok(PageConverter.convert(items, FindRegisteredItemResponse::from)));
 	}
 
 	@GetMapping("/v1/items")
-	public ResponseEntity<ApiResult<Page<RetrieveCategoryItemResponse>>> findCategoryItems(
+	public ResponseEntity<ApiResult<Page<FindCategoryItemResponse>>> findCategoryItems(
 		@RequestParam(value = "category_no") Long categoryNo, Pageable pageable
 	) {
-		Page<Item> items = itemFacade.retrieveCategoryItems(categoryNo, pageable);
+		Page<Item> items = itemFacade.findCategoryItems(categoryNo, pageable);
 		return ResponseEntity.ok()
-			.body(ApiResult.ok(PageConverter.convert(items, RetrieveCategoryItemResponse::from)));
+			.body(ApiResult.ok(PageConverter.convert(items, FindCategoryItemResponse::from)));
 	}
 
 	@GetMapping("/v1/items/{item_no}")
