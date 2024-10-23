@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import io.syeony.premarket.account.infrastructure.redis.entity.RefreshTokenEntity;
 
 @Repository
-public interface RedisRefreshTokenRepository extends CrudRepository<RefreshTokenEntity, Long> {
+public interface RefreshTokenRepository extends CrudRepository<RefreshTokenEntity, Long> {
 
 	Optional<RefreshTokenEntity> findByEmail(String email);
 }

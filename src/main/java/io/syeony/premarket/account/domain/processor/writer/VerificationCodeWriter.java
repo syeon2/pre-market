@@ -1,8 +1,8 @@
-package io.syeony.premarket.account.domain.processor.repository;
+package io.syeony.premarket.account.domain.processor.writer;
 
 import io.syeony.premarket.account.domain.model.VerificationCode;
 
-public interface VerificationCodeRepository {
+public interface VerificationCodeWriter {
 
 	void save(VerificationCode verificationCode);
 }

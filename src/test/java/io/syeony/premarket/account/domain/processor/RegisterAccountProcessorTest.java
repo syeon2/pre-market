@@ -14,8 +14,8 @@ import io.syeony.premarket.account.domain.model.Account;
 import io.syeony.premarket.account.domain.model.vo.MemberId;
 import io.syeony.premarket.account.domain.model.vo.Password;
 import io.syeony.premarket.account.domain.processor.reader.AccountReader;
-import io.syeony.premarket.account.domain.processor.repository.AccountRepository;
 import io.syeony.premarket.account.domain.processor.util.PasswordEncryptor;
+import io.syeony.premarket.account.domain.processor.writer.AccountWriter;
 import io.syeony.premarket.support.error.exception.DuplicatedEmailException;
 import io.syeony.premarket.support.error.exception.DuplicatedPhoneNumberException;
 
@@ -25,7 +25,7 @@ class RegisterAccountProcessorTest extends UnitTestSupport {
 	private RegisterAccountProcessor registerAccountProcessor;
 
 	@Mock
-	private AccountRepository accountRepository = mock(AccountRepository.class);
+	private AccountWriter accountWriter = mock(AccountWriter.class);
 
 	@Mock
 	private AccountReader accountReader = mock(AccountReader.class);
@@ -35,7 +35,7 @@ class RegisterAccountProcessorTest extends UnitTestSupport {
 
 	@BeforeEach
 	void setUp() {
-		registerAccountProcessor = new RegisterAccountProcessor(accountRepository, accountReader, passwordEncryptor);
+		registerAccountProcessor = new RegisterAccountProcessor(accountWriter, accountReader, passwordEncryptor);
 	}
 
 	@Test
@@ -49,7 +49,7 @@ class RegisterAccountProcessorTest extends UnitTestSupport {
 		when(account.getPassword()).thenReturn(new Password("rawPassword", null));
 		when(passwordEncryptor.encrypt(any())).thenReturn("encryptedPassword");
 		when(account.registerWithEncryptedPassword("encryptedPassword")).thenReturn(account);
-		when(accountRepository.save(account)).thenReturn(new MemberId("new-member-id"));
+		when(accountWriter.save(account)).thenReturn(new MemberId("new-member-id"));
 
 		// when
 		MemberId result = registerAccountProcessor.register(account);
@@ -60,7 +60,7 @@ class RegisterAccountProcessorTest extends UnitTestSupport {
 		verify(accountReader).existsByEmail("waterkite94@gmail.com");
 		verify(accountReader).existsByPhoneNumber("01011112222");
 		verify(passwordEncryptor).encrypt("rawPassword");
-		verify(accountRepository).save(account);
+		verify(accountWriter).save(account);
 	}
 
 	@Test
@@ -78,7 +78,7 @@ class RegisterAccountProcessorTest extends UnitTestSupport {
 
 		verify(accountReader).existsByEmail("waterkite94@gmail.com");
 		verify(accountReader, never()).existsByPhoneNumber(any());
-		verify(accountRepository, never()).save(any());
+		verify(accountWriter, never()).save(any());
 	}
 
 	@Test
@@ -97,7 +97,7 @@ class RegisterAccountProcessorTest extends UnitTestSupport {
 
 		verify(accountReader).existsByEmail("waterkite94@gmail.com");
 		verify(accountReader).existsByPhoneNumber("00011112222");
-		verify(accountRepository, never()).save(any());
+		verify(accountWriter, never()).save(any());
 	}
 
 }

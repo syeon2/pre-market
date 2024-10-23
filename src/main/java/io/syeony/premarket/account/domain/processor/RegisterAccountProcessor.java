@@ -3,8 +3,8 @@ package io.syeony.premarket.account.domain.processor;
 import io.syeony.premarket.account.domain.model.Account;
 import io.syeony.premarket.account.domain.model.vo.MemberId;
 import io.syeony.premarket.account.domain.processor.reader.AccountReader;
-import io.syeony.premarket.account.domain.processor.repository.AccountRepository;
 import io.syeony.premarket.account.domain.processor.util.PasswordEncryptor;
+import io.syeony.premarket.account.domain.processor.writer.AccountWriter;
 import io.syeony.premarket.support.error.exception.DuplicatedEmailException;
 import io.syeony.premarket.support.error.exception.DuplicatedPhoneNumberException;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +12,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class RegisterAccountProcessor {
 
-	private final AccountRepository accountRepository;
+	private final AccountWriter accountWriter;
 	private final AccountReader accountReader;
 	private final PasswordEncryptor passwordEncryptor;
 
@@ -21,7 +21,7 @@ public class RegisterAccountProcessor {
 		checkPhoneNumberIsUnique(account.getPhoneNumber());
 
 		String encodedPassword = encryptPassword(account.getPassword().rawPassword());
-		return accountRepository.save(
+		return accountWriter.save(
 			account.registerWithEncryptedPassword(encodedPassword));
 	}
 

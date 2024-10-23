@@ -26,7 +26,7 @@ class AccountPersistenceAdapterTest extends JpaInfraTestSupport {
 	private AccountPersistenceAdapter accountPersistenceAdapter;
 
 	@Autowired
-	private JpaAccountRepository jpaAccountRepository;
+	private AccountRepository accountRepository;
 
 	@Test
 	@DisplayName(value = "Save account and return MemberId")
@@ -46,7 +46,7 @@ class AccountPersistenceAdapterTest extends JpaInfraTestSupport {
 	void existsByEmail_shouldReturnTrue() {
 		// given
 		String email = "waterkite94@gmail.com";
-		jpaAccountRepository.save(createAccountEntity(email, "00011112222"));
+		accountRepository.save(createAccountEntity(email, "00011112222"));
 
 		// when
 		boolean result = accountPersistenceAdapter.existsByEmail(email);
@@ -70,7 +70,7 @@ class AccountPersistenceAdapterTest extends JpaInfraTestSupport {
 	void existsByPhoneNumber_shouldReturnTrue() {
 		// Given
 		String phoneNumber = "00011112222";
-		jpaAccountRepository.save(createAccountEntity("waterkite94@gmail.com", phoneNumber));
+		accountRepository.save(createAccountEntity("waterkite94@gmail.com", phoneNumber));
 
 		// When
 		boolean result = accountPersistenceAdapter.existsByPhoneNumber(phoneNumber);

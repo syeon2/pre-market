@@ -1,0 +1,77 @@
+[[Register-Item-API]]
+=== Register Item API
+
+==== API Request
+
+include::{snippets}/item-add/http-request.adoc[]
+include::{snippets}/item-add/request-fields.adoc[]
+
+==== API Response
+
+include::{snippets}/item-add/http-response.adoc[]
+include::{snippets}/item-add/response-fields.adoc[]
+
+[[Deactivate-Item-API]]
+=== Deactivate Item API
+
+==== API Request
+
+include::{snippets}/item-deactivate/http-request.adoc[]
+include::{snippets}/item-deactivate/request-fields.adoc[]
+
+==== API Response
+
+include::{snippets}/item-deactivate/http-response.adoc[]
+include::{snippets}/item-deactivate/response-body.adoc[]
+
+[[Edit-Item-API]]
+=== Edit Item API
+
+==== API Request
+
+include::{snippets}/item-edit/http-request.adoc[]
+include::{snippets}/item-edit/request-fields.adoc[]
+
+==== API Response
+
+include::{snippets}/item-edit/http-response.adoc[]
+
+[[Find-Registered-Items-API]]
+=== Find Registered Items API
+
+==== API Request
+
+include::{snippets}/item-find-registered/http-request.adoc[]
+include::{snippets}/item-find-registered/path-parameters.adoc[]
+include::{snippets}/item-find-registered/query-parameters.adoc[]
+
+==== API Response
+
+include::{snippets}/item-find-registered/http-response.adoc[]
+include::{snippets}/item-find-registered/response-fields.adoc[]
+
+[[Find-Category-No-Items-API]]
+=== Find Category No Items API
+
+==== API Request
+
+include::{snippets}/item-find-category-no/http-request.adoc[]
+include::{snippets}/item-find-category-no/query-parameters.adoc[]
+
+==== API Response
+
+include::{snippets}/item-find-category-no/http-response.adoc[]
+include::{snippets}/item-find-category-no/response-fields.adoc[]
+
+[[Retrieve-Item-Detail-API]]
+=== Retrieve Item Detail API
+
+==== API Request
+
+include::{snippets}/item-retrieve-detail/http-request.adoc[]
+include::{snippets}/item-retrieve-detail/path-parameters.adoc[]
+
+==== API Response
+
+include::{snippets}/item-retrieve-detail/http-response.adoc[]
+include::{snippets}/item-retrieve-detail/response-fields.adoc[]

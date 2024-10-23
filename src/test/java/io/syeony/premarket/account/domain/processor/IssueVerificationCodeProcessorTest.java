@@ -11,7 +11,7 @@ import org.mockito.Mock;
 
 import io.syeony.premarket.UnitTestSupport;
 import io.syeony.premarket.account.domain.model.VerificationCode;
-import io.syeony.premarket.account.domain.processor.repository.VerificationCodeRepository;
+import io.syeony.premarket.account.domain.processor.writer.VerificationCodeWriter;
 
 class IssueVerificationCodeProcessorTest extends UnitTestSupport {
 
@@ -19,11 +19,11 @@ class IssueVerificationCodeProcessorTest extends UnitTestSupport {
 	private IssueVerificationCodeProcessor issueVerificationCodeProcessor;
 
 	@Mock
-	private VerificationCodeRepository verificationCodeRepository = mock(VerificationCodeRepository.class);
+	private VerificationCodeWriter verificationCodeWriter = mock(VerificationCodeWriter.class);
 
 	@BeforeEach
 	void setUp() {
-		issueVerificationCodeProcessor = new IssueVerificationCodeProcessor(verificationCodeRepository);
+		issueVerificationCodeProcessor = new IssueVerificationCodeProcessor(verificationCodeWriter);
 	}
 
 	@Test
@@ -39,6 +39,6 @@ class IssueVerificationCodeProcessorTest extends UnitTestSupport {
 		// then
 		assertThat(verificationCode.getToEmail()).isEqualTo(toEmail);
 		assertThat(verificationCode.getCode()).isNotNull();
-		verify(verificationCodeRepository, times(1)).save(any(VerificationCode.class));
+		verify(verificationCodeWriter, times(1)).save(any(VerificationCode.class));
 	}
 }
