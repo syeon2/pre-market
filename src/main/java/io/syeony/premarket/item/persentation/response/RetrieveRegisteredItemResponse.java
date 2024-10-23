@@ -53,7 +53,7 @@ public record RetrieveRegisteredItemResponse(
 				domain.getStock(),
 				domain.getAuditTimestamps().getCreatedAt(),
 				new CategoryResponse(
-					domain.getCategory().getId(),
+					domain.getCategory().getNo(),
 					domain.getCategory().getName())
 			))
 			.toList();

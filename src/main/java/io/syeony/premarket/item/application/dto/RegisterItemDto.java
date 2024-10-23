@@ -29,7 +29,7 @@ public record RegisterItemDto(
 			.itemType(itemType)
 			.preOrderSchedule(preOrderSchedule)
 			.seller(Seller.builder().memberId(memberId).build())
-			.category(Category.builder().id(categoryId).build())
+			.category(Category.builder().no(categoryId).build())
 			.build();
 	}
 

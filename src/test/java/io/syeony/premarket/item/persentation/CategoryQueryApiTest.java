@@ -29,8 +29,8 @@ class CategoryQueryApiTest extends ControllerTestSupport {
 	}
 
 	@Test
-	@DisplayName(value = "Retrieve Categories successfully")
-	void retrieveCategories() throws Exception {
+	@DisplayName(value = "Retrieve all categories successfully")
+	void retrieveAllCategories() throws Exception {
 		// given
 		List<Category> categories = createCategoryList();
 		given(categoryFacade.retrieveAllCategories()).willReturn(categories);
@@ -54,10 +54,6 @@ class CategoryQueryApiTest extends ControllerTestSupport {
 	}
 
 	private List<Category> createCategoryList() {
-		return List.of(
-			Category.builder()
-				.id(1L)
-				.name("categoryA")
-				.build());
+		return List.of(Category.of(1L, "categoryA", null));
 	}
 }

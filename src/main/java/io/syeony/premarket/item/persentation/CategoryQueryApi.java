@@ -23,9 +23,8 @@ public class CategoryQueryApi {
 	private final CategoryFacade categoryFacade;
 
 	@GetMapping("/v1/categories")
-	public ResponseEntity<ApiResult<RetrieveCategoriesResponse>> retrieveCategories() {
-		return ResponseEntity
-			.ok()
+	public ResponseEntity<ApiResult<RetrieveCategoriesResponse>> retrieveAllCategories() {
+		return ResponseEntity.ok()
 			.body(ApiResult.ok(RetrieveCategoriesResponse.from(categoryFacade.retrieveAllCategories())));
 	}
 }

@@ -16,7 +16,7 @@ public class CategoryMapper {
 
 	public Category toDomain(CategoryEntity entity) {
 		return Category.builder()
-			.id(entity.getId())
+			.no(entity.getId())
 			.name(entity.getName())
 			.build();
 	}

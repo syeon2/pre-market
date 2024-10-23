@@ -114,7 +114,7 @@ class ItemPersistenceAdapterTest extends JpaInfraTestSupport {
 			.cost(new Cost(changePrice, changeDiscount))
 			.stock(changeStock)
 			.introduction(changeIntroduction)
-			.category(Category.builder().id(changeCategoryId).build())
+			.category(Category.builder().no(changeCategoryId).build())
 			.build();
 	}
 
@@ -137,7 +137,7 @@ class ItemPersistenceAdapterTest extends JpaInfraTestSupport {
 			.preOrderSchedule(null)
 			.seller(Seller.builder().memberId("memberId").build())
 			.status(EntityStatus.ALIVE)
-			.category(Category.builder().id(1L).build())
+			.category(Category.builder().no(1L).build())
 			.build();
 	}
 

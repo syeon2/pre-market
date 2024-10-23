@@ -15,7 +15,7 @@ public class RetrieveCategoriesResponse {
 
 	public static RetrieveCategoriesResponse from(List<Category> categories) {
 		List<CategoryResponse> response = categories.stream()
-			.map(domain -> new CategoryResponse(domain.getId(), domain.getName()))
+			.map(domain -> new CategoryResponse(domain.getNo(), domain.getName()))
 			.toList();
 
 		return new RetrieveCategoriesResponse(response);

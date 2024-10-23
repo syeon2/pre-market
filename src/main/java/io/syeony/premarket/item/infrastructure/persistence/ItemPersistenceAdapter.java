@@ -40,7 +40,7 @@ public class ItemPersistenceAdapter implements ItemWriter, ItemReader {
 				item.getCost().getDiscount(),
 				item.getStock(),
 				item.getIntroduction(),
-				item.getCategory().getId()
+				item.getCategory().getNo()
 			));
 	}
 

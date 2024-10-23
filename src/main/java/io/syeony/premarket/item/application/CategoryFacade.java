@@ -19,12 +19,12 @@ public class CategoryFacade {
 
 	@Transactional
 	public void createCategory(final String name) {
-		categoryWriter.createCategory(Category.initialize(name));
+		categoryWriter.create(Category.initializeForCreate(name));
 	}
 
 	@Transactional
-	public void deleteCategory(final Long categoryId) {
-		categoryWriter.deleteCategory(categoryId);
+	public void deleteCategory(final Long categoryNo) {
+		categoryWriter.delete(categoryNo);
 	}
 
 	@Transactional(readOnly = true)

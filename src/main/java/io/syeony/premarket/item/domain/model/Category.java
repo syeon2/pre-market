@@ -9,18 +9,22 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Category {
 
-	private Long id;
+	private Long no;
 	private String name;
 	private AuditTimestamps auditTimestamps;
 
 	@Builder
-	private Category(Long id, String name, AuditTimestamps auditTimestamps) {
-		this.id = id;
+	private Category(Long no, String name, AuditTimestamps auditTimestamps) {
+		this.no = no;
 		this.name = name;
 		this.auditTimestamps = auditTimestamps;
 	}
 
-	public static Category initialize(String name) {
+	public static Category of(Long no, String name, AuditTimestamps auditTimestamps) {
+		return new Category(no, name, auditTimestamps);
+	}
+
+	public static Category initializeForCreate(String name) {
 		return Category.builder().name(name).build();
 	}
 }

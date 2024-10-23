@@ -30,18 +30,14 @@ public class CategoryCommandApi {
 		@RequestBody @Valid CreateCategoryRequest request
 	) {
 		categoryFacade.createCategory(request.name());
-		return ResponseEntity
-			.ok()
-			.build();
+		return ResponseEntity.ok().build();
 	}
 
-	@DeleteMapping(value = "/v1/categories/{categoryId}")
+	@DeleteMapping(value = "/v1/categories/{category_no}")
 	public ResponseEntity<Void> deleteCategory(
-		@PathVariable Long categoryId
+		@PathVariable(value = "category_no") Long categoryNo
 	) {
-		categoryFacade.deleteCategory(categoryId);
-		return ResponseEntity
-			.ok()
-			.build();
+		categoryFacade.deleteCategory(categoryNo);
+		return ResponseEntity.ok().build();
 	}
 }

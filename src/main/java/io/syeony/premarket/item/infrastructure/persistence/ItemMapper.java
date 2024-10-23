@@ -24,7 +24,7 @@ public class ItemMapper {
 			.preOrderSchedule(item.getPreOrderSchedule())
 			.memberId(item.getSeller().getMemberId())
 			.status(item.getStatus())
-			.categoryId(item.getCategory().getId())
+			.categoryId(item.getCategory().getNo())
 			.build();
 	}
 
@@ -41,7 +41,7 @@ public class ItemMapper {
 			.seller(Seller.builder().memberId(entity.getMemberId()).build())
 			.auditTimestamps(new AuditTimestamps(entity.getCreatedAt(), entity.getUpdatedAt()))
 			.status(entity.getStatus())
-			.category(Category.builder().id(entity.getCategoryId()).build())
+			.category(Category.builder().no(entity.getCategoryId()).build())
 			.build();
 	}
 }

@@ -17,13 +17,13 @@ public class CategoryPersistenceAdapter implements CategoryWriter, CategoryReade
 	private final CategoryMapper categoryMapper;
 
 	@Override
-	public void createCategory(Category category) {
+	public void create(Category category) {
 		categoryRepository.save(categoryMapper.toEntity(category));
 	}
 
 	@Override
-	public void deleteCategory(Long categoryId) {
-		categoryRepository.deleteById(categoryId);
+	public void delete(Long categoryNo) {
+		categoryRepository.deleteById(categoryNo);
 	}
 
 	@Override

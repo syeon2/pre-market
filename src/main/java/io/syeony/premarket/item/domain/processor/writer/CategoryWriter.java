@@ -4,7 +4,7 @@ import io.syeony.premarket.item.domain.model.Category;
 
 public interface CategoryWriter {
 
-	void createCategory(Category category);
+	void create(Category category);
 
-	void deleteCategory(Long categoryId);
+	void delete(Long categoryNo);
 }

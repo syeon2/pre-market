@@ -27,13 +27,13 @@ class CategoryPersistenceAdapterTest extends JpaInfraTestSupport {
 
 	@Test
 	@DisplayName(value = "Create Category")
-	void createCategory() {
+	void create() {
 		// given
 		String categoryName = "categoryA";
-		Category domain = createCategoryDomain(categoryName);
+		Category domain = createDomain(categoryName);
 
 		// when
-		categoryPersistenceAdapter.createCategory(domain);
+		categoryPersistenceAdapter.create(domain);
 
 		// then
 		List<CategoryEntity> findCategories = categoryRepository.findAll();
@@ -43,16 +43,16 @@ class CategoryPersistenceAdapterTest extends JpaInfraTestSupport {
 
 	@Test
 	@DisplayName(value = "Delete Category")
-	void deleteCategory() {
+	void delete() {
 		// given
-		List<CategoryEntity> entityList = List.of(createCategoryEntity());
+		List<CategoryEntity> entityList = List.of(createEntity());
 		categoryRepository.saveAll(entityList);
 
 		List<CategoryEntity> findCategories = categoryRepository.findAll();
 		assertThat(findCategories).hasSize(entityList.size());
 
 		// when
-		findCategories.forEach(entity -> categoryPersistenceAdapter.deleteCategory(entity.getId()));
+		findCategories.forEach(entity -> categoryPersistenceAdapter.delete(entity.getId()));
 
 		// then
 		assertThat(categoryRepository.findAll()).hasSize(0);
@@ -62,7 +62,7 @@ class CategoryPersistenceAdapterTest extends JpaInfraTestSupport {
 	@DisplayName(value = "Retrieve all categories")
 	void retrieveAll() {
 		// given
-		List<CategoryEntity> entityList = List.of(createCategoryEntity(), createCategoryEntity());
+		List<CategoryEntity> entityList = List.of(createEntity(), createEntity());
 		categoryRepository.saveAll(entityList);
 
 		// when
@@ -72,13 +72,13 @@ class CategoryPersistenceAdapterTest extends JpaInfraTestSupport {
 		assertThat(categories).hasSize(entityList.size());
 	}
 
-	private Category createCategoryDomain(String categoryName) {
+	private Category createDomain(String categoryName) {
 		return Category.builder()
 			.name(categoryName)
 			.build();
 	}
 
-	private CategoryEntity createCategoryEntity() {
+	private CategoryEntity createEntity() {
 		return CategoryEntity.builder()
 			.name("categoryName")
 			.build();

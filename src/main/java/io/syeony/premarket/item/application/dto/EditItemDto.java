@@ -19,7 +19,7 @@ public record EditItemDto(
 			.cost(new Cost(costDto.price, costDto.discount))
 			.stock(stock)
 			.introduction(introduction)
-			.category(Category.builder().id(categoryId).build())
+			.category(Category.builder().no(categoryId).build())
 			.build();
 	}
 
