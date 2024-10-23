@@ -1,0 +1,35 @@
+[[Create-Category-API]]
+=== Create Category API
+
+==== API Request
+
+include::{snippets}/category-create/http-request.adoc[]
+include::{snippets}/category-create/request-fields.adoc[]
+
+==== API Response
+
+include::{snippets}/category-create/http-response.adoc[]
+
+[[Delete-Category-API]]
+=== Delete Category API
+
+=== API Request
+
+include::{snippets}/category-delete/http-request.adoc[]
+include::{snippets}/category-delete/path-parameters.adoc[]
+
+=== API Response
+
+include::{snippets}/category-delete/http-response.adoc[]
+
+[[Retrieve-Category-API]]
+=== Retrieve Category API
+
+=== API Request
+
+include::{snippets}/category-retrieve-all/http-request.adoc[]
+
+=== API Response
+
+include::{snippets}/category-retrieve-all/http-response.adoc[]
+include::{snippets}/category-retrieve-all/response-fields.adoc[]

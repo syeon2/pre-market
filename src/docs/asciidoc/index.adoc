@@ -13,3 +13,13 @@ endif::[]
 == Account APIs
 
 include::{docdir}/parts/account.adoc[]
+
+[[Category-APIs]]
+== Category APIs
+
+include::{docdir}/parts/category.adoc[]
+
+[[Item-APIs]]
+== Item APIs
+
+include::{docdir}/parts/item.adoc[]

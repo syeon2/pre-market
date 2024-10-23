@@ -15,16 +15,16 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class RefreshTokenAdapter implements RefreshTokenReader {
 
-	private final RedisRefreshTokenRepository redisRefreshTokenRepository;
+	private final RefreshTokenRepository refreshTokenRepository;
 
 	@Override
 	public Optional<RefreshToken> findByEmail(String email) {
-		return redisRefreshTokenRepository.findByEmail(email)
+		return refreshTokenRepository.findByEmail(email)
 			.map(token -> new RefreshToken(token.getToken()));
 	}
 
 	@TransactionalEventListener
 	public void handleRefreshToken(RefreshTokenEvent event) {
-		redisRefreshTokenRepository.save(new RefreshTokenEntity(event.email(), event.refreshToken()));
+		refreshTokenRepository.save(new RefreshTokenEntity(event.email(), event.refreshToken()));
 	}
 }

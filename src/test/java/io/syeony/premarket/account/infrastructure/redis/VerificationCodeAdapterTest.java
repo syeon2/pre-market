@@ -20,7 +20,7 @@ class VerificationCodeAdapterTest extends RedisInfraTestSupport {
 	private VerificationCodeAdapter verificationCodeAdapter;
 
 	@Autowired
-	private RedisVerificationCodeRepository redisVerificationCodeRepository;
+	private VerificationCodeRepository verificationCodeRepository;
 
 	@Test
 	@DisplayName(value = "Save verification code")
@@ -33,7 +33,7 @@ class VerificationCodeAdapterTest extends RedisInfraTestSupport {
 		verificationCodeAdapter.save(verificationCode);
 
 		// then
-		Optional<VerificationCodeEntity> findCodeOptional = redisVerificationCodeRepository.findByToEmail(email);
+		Optional<VerificationCodeEntity> findCodeOptional = verificationCodeRepository.findByToEmail(email);
 		assertThat(findCodeOptional.isPresent()).isTrue();
 		assertThat(findCodeOptional.get().getCode()).isEqualTo(verificationCode.getCode());
 	}
@@ -45,7 +45,7 @@ class VerificationCodeAdapterTest extends RedisInfraTestSupport {
 		String toEmail = "waterkite94@gmail.com";
 		String verificationCode = "verificationCode";
 
-		redisVerificationCodeRepository.save(new VerificationCodeEntity(toEmail, verificationCode));
+		verificationCodeRepository.save(new VerificationCodeEntity(toEmail, verificationCode));
 
 		// when
 		Optional<VerificationCode> findCodeOptional = verificationCodeAdapter.findByToEmail(toEmail);
@@ -62,7 +62,7 @@ class VerificationCodeAdapterTest extends RedisInfraTestSupport {
 		String toEmail = "waterkite94@gmail.com";
 		String verificationCode = "verificationCode";
 
-		redisVerificationCodeRepository.save(new VerificationCodeEntity(toEmail, verificationCode));
+		verificationCodeRepository.save(new VerificationCodeEntity(toEmail, verificationCode));
 
 		// when
 		Optional<VerificationCode> findCodeOptional = verificationCodeAdapter.findByToEmail("another@gmail.com");

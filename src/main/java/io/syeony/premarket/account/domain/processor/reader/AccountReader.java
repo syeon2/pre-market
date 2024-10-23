@@ -11,4 +11,6 @@ public interface AccountReader {
 	boolean existsByPhoneNumber(String phoneNumber);
 
 	Optional<Account> findByEmail(String email);
+
+	boolean existsByMemberId(String memberId);
 }

@@ -8,7 +8,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Repository;
 
-import io.syeony.premarket.account.infrastructure.persistence.JpaAccountRepository;
+import io.syeony.premarket.account.infrastructure.persistence.AccountRepository;
 import io.syeony.premarket.account.infrastructure.persistence.entity.MemberEntity;
 import lombok.RequiredArgsConstructor;
 
@@ -16,11 +16,11 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UserDetailServiceImpl implements UserDetailsService {
 
-	private final JpaAccountRepository jpaAccountRepository;
+	private final AccountRepository accountRepository;
 
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-		MemberEntity account = jpaAccountRepository.findByEmail(email)
+		MemberEntity account = accountRepository.findByEmail(email)
 			.orElseThrow(() -> new UsernameNotFoundException(email));
 
 		return new User(
