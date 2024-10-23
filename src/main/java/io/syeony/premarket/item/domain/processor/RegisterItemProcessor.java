@@ -13,7 +13,7 @@ public class RegisterItemProcessor {
 	private final AccountReader accountReader;
 
 	public Long registerItem(Item item) {
-		if (!accountReader.existsByMemberId(item.getMemberId().value())) {
+		if (!accountReader.existsByMemberId(item.getSeller().getMemberId())) {
 			throw new InvalidCredentialsException("Invalid member id");
 		}
 		return itemWriter.register(item.initializeForRegister());

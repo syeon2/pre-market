@@ -12,10 +12,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
 import io.syeony.premarket.UnitTestSupport;
-import io.syeony.premarket.account.domain.model.vo.MemberId;
 import io.syeony.premarket.item.domain.model.Cost;
 import io.syeony.premarket.item.domain.model.Item;
 import io.syeony.premarket.item.domain.model.ItemType;
+import io.syeony.premarket.item.domain.model.Seller;
 import io.syeony.premarket.item.domain.processor.reader.ItemReader;
 import io.syeony.premarket.item.domain.processor.writer.ItemWriter;
 import io.syeony.premarket.support.error.exception.InvalidCredentialsException;
@@ -92,7 +92,7 @@ class DeactivateItemProcessorTest extends UnitTestSupport {
 			.introduction("hello")
 			.itemType(ItemType.NORMAL_ORDER)
 			.preOrderSchedule(null)
-			.memberId(new MemberId(memberId))
+			.seller(Seller.builder().memberId(memberId).build())
 			.build();
 	}
 }

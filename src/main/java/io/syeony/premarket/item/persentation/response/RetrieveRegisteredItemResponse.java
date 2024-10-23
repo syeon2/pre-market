@@ -61,12 +61,6 @@ public record RetrieveRegisteredItemResponse(
 		return new PageImpl<>(response, items.getPageable(), items.getTotalPages());
 	}
 
-	public record CostResponse(
-		Integer price,
-		Integer discount
-	) {
-	}
-
 	public enum ItemTypeResponse {
 		PRE_ORDER,
 		NORMAL_ORDER;
@@ -77,14 +71,5 @@ public record RetrieveRegisteredItemResponse(
 				default -> NORMAL_ORDER;
 			};
 		}
-	}
-
-	public record PreOrderScheduleResponse(
-		Integer year,
-		Integer month,
-		Integer date,
-		Integer hour,
-		Integer minute
-	) {
 	}
 }

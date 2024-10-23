@@ -7,10 +7,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.syeony.premarket.item.application.ItemFacade;
 import io.syeony.premarket.item.domain.model.Item;
+import io.syeony.premarket.item.persentation.response.RetrieveCategoryItemResponse;
 import io.syeony.premarket.item.persentation.response.RetrieveRegisteredItemResponse;
 import io.syeony.premarket.support.common.ApiResult;
 import lombok.RequiredArgsConstructor;
@@ -36,5 +38,17 @@ public class ItemQueryApi {
 		return ResponseEntity
 			.ok()
 			.body(ApiResult.ok(RetrieveRegisteredItemResponse.from(items)));
+	}
+
+	@GetMapping("/v1/items")
+	public ResponseEntity<ApiResult<Page<RetrieveCategoryItemResponse>>> retrieveCategoryItems(
+		@RequestParam(value = "category_id") Long categoryId,
+		Pageable pageable
+	) {
+		Page<Item> items = itemFacade.retrieveCategoryItems(categoryId, pageable);
+
+		return ResponseEntity
+			.ok()
+			.body(ApiResult.ok(RetrieveCategoryItemResponse.from(items)));
 	}
 }

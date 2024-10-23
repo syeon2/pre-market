@@ -42,4 +42,9 @@ public class ItemFacade {
 	public Page<Item> retrieveRegisteredItems(String memberId, Pageable pageable) {
 		return itemReader.findItemsByMemberId(memberId, pageable);
 	}
+
+	@Transactional(readOnly = true)
+	public Page<Item> retrieveCategoryItems(Long categoryId, Pageable pageable) {
+		return itemReader.findItemsByCategoryId(categoryId, pageable);
+	}
 }

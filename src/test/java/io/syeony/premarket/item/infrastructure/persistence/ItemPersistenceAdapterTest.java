@@ -11,11 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
 
 import io.syeony.premarket.JpaInfraTestSupport;
-import io.syeony.premarket.account.domain.model.vo.MemberId;
 import io.syeony.premarket.item.domain.model.Category;
 import io.syeony.premarket.item.domain.model.Cost;
 import io.syeony.premarket.item.domain.model.Item;
 import io.syeony.premarket.item.domain.model.ItemType;
+import io.syeony.premarket.item.domain.model.Seller;
 import io.syeony.premarket.item.infrastructure.persistence.entity.ItemEntity;
 import io.syeony.premarket.support.common.EntityStatus;
 
@@ -122,7 +122,7 @@ class ItemPersistenceAdapterTest extends JpaInfraTestSupport {
 		return Item.builder()
 			.itemId(itemId)
 			.status(EntityStatus.DELETED)
-			.memberId(new MemberId(memberId))
+			.seller(Seller.builder().memberId(memberId).build())
 			.build();
 	}
 
@@ -135,7 +135,7 @@ class ItemPersistenceAdapterTest extends JpaInfraTestSupport {
 			.introduction("hello")
 			.itemType(ItemType.NORMAL_ORDER)
 			.preOrderSchedule(null)
-			.memberId(new MemberId("memberId"))
+			.seller(Seller.builder().memberId("memberId").build())
 			.status(EntityStatus.ALIVE)
 			.category(Category.builder().id(1L).build())
 			.build();

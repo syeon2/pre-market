@@ -2,11 +2,11 @@ package io.syeony.premarket.item.application.dto;
 
 import java.time.LocalDateTime;
 
-import io.syeony.premarket.account.domain.model.vo.MemberId;
 import io.syeony.premarket.item.domain.model.Category;
 import io.syeony.premarket.item.domain.model.Cost;
 import io.syeony.premarket.item.domain.model.Item;
 import io.syeony.premarket.item.domain.model.ItemType;
+import io.syeony.premarket.item.domain.model.Seller;
 import lombok.Builder;
 
 @Builder
@@ -28,7 +28,7 @@ public record RegisterItemDto(
 			.introduction(introduction)
 			.itemType(itemType)
 			.preOrderSchedule(preOrderSchedule)
-			.memberId(new MemberId(memberId))
+			.seller(Seller.builder().memberId(memberId).build())
 			.category(Category.builder().id(categoryId).build())
 			.build();
 	}

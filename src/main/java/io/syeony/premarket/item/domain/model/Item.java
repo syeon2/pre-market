@@ -3,7 +3,6 @@ package io.syeony.premarket.item.domain.model;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-import io.syeony.premarket.account.domain.model.vo.MemberId;
 import io.syeony.premarket.support.common.AuditTimestamps;
 import io.syeony.premarket.support.common.EntityStatus;
 import lombok.Builder;
@@ -22,14 +21,14 @@ public class Item {
 	private String introduction;
 	private ItemType itemType;
 	private LocalDateTime preOrderSchedule;
-	private MemberId memberId;
+	private Seller seller;
 	private Category category;
 	private AuditTimestamps auditTimestamps;
 	private EntityStatus status;
 
 	@Builder
 	private Item(Long id, String itemId, String name, Cost cost, Integer stock, String introduction, ItemType itemType,
-		LocalDateTime preOrderSchedule, MemberId memberId, Category category, AuditTimestamps auditTimestamps,
+		LocalDateTime preOrderSchedule, Seller seller, Category category, AuditTimestamps auditTimestamps,
 		EntityStatus status) {
 		this.id = id;
 		this.itemId = itemId;
@@ -39,7 +38,7 @@ public class Item {
 		this.introduction = introduction;
 		this.itemType = itemType;
 		this.preOrderSchedule = preOrderSchedule;
-		this.memberId = memberId;
+		this.seller = seller;
 		this.category = category;
 		this.auditTimestamps = auditTimestamps;
 		this.status = status;
@@ -54,7 +53,7 @@ public class Item {
 			.introduction(introduction)
 			.itemType(itemType)
 			.preOrderSchedule(preOrderSchedule)
-			.memberId(memberId)
+			.seller(seller)
 			.category(category)
 			.status(EntityStatus.ALIVE)
 			.build();
@@ -65,13 +64,13 @@ public class Item {
 	}
 
 	public boolean verifyMemberId(String memberId) {
-		return this.memberId.value().equals(memberId);
+		return seller.getMemberId().equals(memberId);
 	}
 
 	public Item deactivateStatus() {
 		return Item.builder()
 			.itemId(itemId)
-			.memberId(memberId)
+			.seller(seller)
 			.status(EntityStatus.DELETED)
 			.build();
 	}

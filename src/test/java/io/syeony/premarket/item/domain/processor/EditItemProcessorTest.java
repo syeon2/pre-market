@@ -12,8 +12,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
 import io.syeony.premarket.UnitTestSupport;
-import io.syeony.premarket.account.domain.model.vo.MemberId;
 import io.syeony.premarket.item.domain.model.Item;
+import io.syeony.premarket.item.domain.model.Seller;
 import io.syeony.premarket.item.domain.processor.reader.ItemReader;
 import io.syeony.premarket.item.domain.processor.writer.ItemWriter;
 import io.syeony.premarket.support.error.exception.InvalidCredentialsException;
@@ -85,7 +85,7 @@ class EditItemProcessorTest extends UnitTestSupport {
 	private Item createItemDomain(String memberId) {
 		return Item
 			.builder()
-			.memberId(new MemberId(memberId))
+			.seller(Seller.builder().memberId(memberId).build())
 			.build();
 	}
 }

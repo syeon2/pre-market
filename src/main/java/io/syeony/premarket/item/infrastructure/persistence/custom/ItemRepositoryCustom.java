@@ -8,4 +8,6 @@ import io.syeony.premarket.item.domain.model.Item;
 public interface ItemRepositoryCustom {
 
 	Page<Item> findItemsByMemberId(String memberId, Pageable pageable);
+
+	Page<Item> findItemsByCategoryId(Long categoryId, Pageable pageable);
 }
