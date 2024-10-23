@@ -75,9 +75,9 @@ class ItemPersistenceAdapterTest extends JpaInfraTestSupport {
 		int changeDiscount = 200;
 		int changeStock = 20;
 		String changeIntroduction = "changeIntroduction";
-		long changeCategoryId = 2L;
+		long changeCategoryNo = 2L;
 		Item editItem = createEditItemDomain(changeName, changePrice, changeDiscount, changeStock,
-			changeIntroduction, changeCategoryId);
+			changeIntroduction, changeCategoryNo);
 
 		// when
 		itemPersistenceAdapter.changeItemInfo(itemId, editItem);
@@ -87,7 +87,7 @@ class ItemPersistenceAdapterTest extends JpaInfraTestSupport {
 		assertThat(findAll)
 			.extracting("name", "price", "discount", "stock", "introduction", "categoryId")
 			.containsExactlyInAnyOrder(
-				tuple(changeName, changePrice, changeDiscount, changeStock, changeIntroduction, changeCategoryId)
+				tuple(changeName, changePrice, changeDiscount, changeStock, changeIntroduction, changeCategoryNo)
 			);
 	}
 
@@ -114,7 +114,7 @@ class ItemPersistenceAdapterTest extends JpaInfraTestSupport {
 			.cost(new Cost(changePrice, changeDiscount))
 			.stock(changeStock)
 			.introduction(changeIntroduction)
-			.category(Category.builder().no(changeCategoryId).build())
+			.category(Category.initNo(changeCategoryId))
 			.build();
 	}
 
@@ -137,7 +137,7 @@ class ItemPersistenceAdapterTest extends JpaInfraTestSupport {
 			.preOrderSchedule(null)
 			.seller(Seller.builder().memberId("memberId").build())
 			.status(EntityStatus.ALIVE)
-			.category(Category.builder().no(1L).build())
+			.category(Category.initNo(1L))
 			.build();
 	}
 

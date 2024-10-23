@@ -30,7 +30,7 @@ class CategoryPersistenceAdapterTest extends JpaInfraTestSupport {
 	void create() {
 		// given
 		String categoryName = "categoryA";
-		Category domain = createDomain(categoryName);
+		Category domain = Category.initializeForCreate(categoryName);
 
 		// when
 		categoryPersistenceAdapter.create(domain);
@@ -72,15 +72,7 @@ class CategoryPersistenceAdapterTest extends JpaInfraTestSupport {
 		assertThat(categories).hasSize(entityList.size());
 	}
 
-	private Category createDomain(String categoryName) {
-		return Category.builder()
-			.name(categoryName)
-			.build();
-	}
-
 	private CategoryEntity createEntity() {
-		return CategoryEntity.builder()
-			.name("categoryName")
-			.build();
+		return CategoryEntity.of(null, "categoryName");
 	}
 }

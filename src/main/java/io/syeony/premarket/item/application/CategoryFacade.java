@@ -18,8 +18,8 @@ public class CategoryFacade {
 	private final CategoryReader categoryReader;
 
 	@Transactional
-	public void createCategory(final String name) {
-		categoryWriter.create(Category.initializeForCreate(name));
+	public void createCategory(final String categoryName) {
+		categoryWriter.create(Category.initializeForCreate(categoryName));
 	}
 
 	@Transactional

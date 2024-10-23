@@ -1,34 +1,27 @@
 package io.syeony.premarket.item.domain.model;
 
-import io.syeony.premarket.support.common.AuditTimestamps;
-import lombok.Builder;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class Category {
 
 	private Long no;
 	private String name;
-	private AuditTimestamps auditTimestamps;
 
-	@Builder
-	private Category(Long no, String name, AuditTimestamps auditTimestamps) {
-		this.no = no;
-		this.name = name;
-		this.auditTimestamps = auditTimestamps;
-	}
-
-	public static Category of(Long no, String name, AuditTimestamps auditTimestamps) {
-		return new Category(no, name, auditTimestamps);
+	public static Category of(Long no, String name) {
+		return new Category(no, name);
 	}
 
 	public static Category initNo(Long no) {
-		return new Category(no, null, null);
+		return Category.of(no, null);
 	}
 
 	public static Category initializeForCreate(String name) {
-		return Category.builder().name(name).build();
+		return Category.of(null, name);
 	}
 }

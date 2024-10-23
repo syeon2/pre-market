@@ -29,7 +29,7 @@ class CategoryCommandApiTest extends ControllerTestSupport {
 	}
 
 	@Test
-	@DisplayName(value = "Create category successfully when the name field is provided")
+	@DisplayName(value = "Create category successfully when the category name field is provided")
 	void createCategory() throws Exception {
 		// given
 		CreateCategoryRequest request = new CreateCategoryRequest("categoryA");
@@ -44,13 +44,13 @@ class CategoryCommandApiTest extends ControllerTestSupport {
 				preprocessRequest(prettyPrint()),
 				preprocessResponse(prettyPrint()),
 				requestFields(
-					fieldWithPath("name").type(JsonFieldType.STRING).description("카테고리 이름")
+					fieldWithPath("category_name").type(JsonFieldType.STRING).description("카테고리 이름")
 				)
 			));
 	}
 
 	@Test
-	@DisplayName(value = "Delete category successfully when the category id path parameter is provided")
+	@DisplayName(value = "Delete category successfully when the category no path parameter is provided")
 	void deleteCategory() throws Exception {
 		// given
 		long categoryNo = 1L;
@@ -64,7 +64,7 @@ class CategoryCommandApiTest extends ControllerTestSupport {
 				preprocessRequest(prettyPrint()),
 				preprocessResponse(prettyPrint()),
 				pathParameters(
-					parameterWithName("category_no").description("카테고리 아이디")
+					parameterWithName("category_no").description("카테고리 고유번호")
 				)
 			));
 	}

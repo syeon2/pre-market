@@ -41,7 +41,7 @@ public class ItemMapper {
 			.seller(Seller.builder().memberId(entity.getMemberId()).build())
 			.auditTimestamps(new AuditTimestamps(entity.getCreatedAt(), entity.getUpdatedAt()))
 			.status(entity.getStatus())
-			.category(Category.builder().no(entity.getCategoryId()).build())
+			.category(Category.initNo(entity.getCategoryId()))
 			.build();
 	}
 }

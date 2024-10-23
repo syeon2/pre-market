@@ -9,15 +9,10 @@ import io.syeony.premarket.item.infrastructure.persistence.entity.CategoryEntity
 public class CategoryMapper {
 
 	public CategoryEntity toEntity(Category category) {
-		return CategoryEntity.builder()
-			.name(category.getName())
-			.build();
+		return CategoryEntity.of(null, category.getName());
 	}
 
 	public Category toDomain(CategoryEntity entity) {
-		return Category.builder()
-			.no(entity.getId())
-			.name(entity.getName())
-			.build();
+		return Category.of(entity.getId(), entity.getName());
 	}
 }

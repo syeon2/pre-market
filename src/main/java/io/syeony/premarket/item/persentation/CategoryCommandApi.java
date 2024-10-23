@@ -29,7 +29,7 @@ public class CategoryCommandApi {
 	public ResponseEntity<Void> createCategory(
 		@RequestBody @Valid CreateCategoryRequest request
 	) {
-		categoryFacade.createCategory(request.name());
+		categoryFacade.createCategory(request.categoryName());
 		return ResponseEntity.ok().build();
 	}
 

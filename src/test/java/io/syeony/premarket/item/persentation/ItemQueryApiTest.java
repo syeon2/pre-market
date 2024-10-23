@@ -114,7 +114,7 @@ class ItemQueryApiTest extends ControllerTestSupport {
 			.itemType(ItemType.PRE_ORDER)
 			.preOrderSchedule(LocalDateTime.of(2024, 10, 24, 23, 58))
 			.auditTimestamps(new AuditTimestamps(LocalDateTime.now(), null))
-			.category(Category.builder().no(1L).name("categoryName").build())
+			.category(Category.of(1L, "categoryName"))
 			.build();
 	}
 }
