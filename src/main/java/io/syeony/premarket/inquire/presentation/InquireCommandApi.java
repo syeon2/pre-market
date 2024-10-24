@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.syeony.premarket.inquire.application.InquireFacade;
+import io.syeony.premarket.inquire.presentation.request.CreateInquireCommentRequest;
 import io.syeony.premarket.inquire.presentation.request.CreateInquireRequest;
 import io.syeony.premarket.inquire.presentation.request.DeleteInquireRequest;
 import jakarta.validation.Valid;
@@ -41,6 +42,23 @@ public final class InquireCommandApi {
 		@RequestBody @Valid DeleteInquireRequest request
 	) {
 		inquireFacade.deleteInquire(inquireNo, request.itemNo(), request.memberId());
+		return ResponseEntity.ok().build();
+	}
+
+	@PostMapping("/v1/items/inquires/comment")
+	public ResponseEntity<Void> createInquireComment(
+		@RequestBody @Valid CreateInquireCommentRequest request
+	) {
+		inquireFacade.createInquireComment(request.toDomain());
+		return ResponseEntity.status(HttpStatus.CREATED).build();
+	}
+
+	@DeleteMapping("/v1/items/inquires/{inquire_no}/comment/{comment_no}")
+	public ResponseEntity<Void> deleteInquireComment(
+		@PathVariable(value = "inquire_no") Long inquireNo,
+		@PathVariable(value = "comment_no") Long commentNo
+	) {
+		inquireFacade.deleteInquireComment(inquireNo, commentNo);
 		return ResponseEntity.ok().build();
 	}
 }

@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import io.syeony.premarket.inquire.domain.model.Inquire;
+import io.syeony.premarket.inquire.domain.model.InquireComment;
 import io.syeony.premarket.inquire.domain.processor.reader.InquireReader;
 import io.syeony.premarket.inquire.domain.processor.writer.InquireWriter;
 import io.syeony.premarket.inquire.infrastructure.InquireMapper;
@@ -19,6 +20,7 @@ public class InquirePersistenceAdapter implements InquireReader, InquireWriter {
 
 	private final InquireRepository inquireRepository;
 	private final InquireMapper inquireMapper;
+	private final InquireCommentMapper inquireCommentMapper;
 
 	@Override
 	public void create(final Inquire inquire) {
@@ -28,6 +30,20 @@ public class InquirePersistenceAdapter implements InquireReader, InquireWriter {
 	@Override
 	public void delete(Long inquireNo) {
 		inquireRepository.deleteById(inquireNo);
+	}
+
+	@Override
+	public void createComment(InquireComment comment) {
+		inquireRepository.findById(comment.getInquireNo()).ifPresent(entity -> {
+			entity.addInquireComment(inquireCommentMapper.toEntity(entity, comment));
+		});
+	}
+
+	@Override
+	public void deleteComment(Long inquireNo, Long commentNo) {
+		inquireRepository.findById(inquireNo).ifPresent(entity -> {
+			entity.deleteInquireComment(commentNo);
+		});
 	}
 
 	@Override
@@ -46,5 +62,10 @@ public class InquirePersistenceAdapter implements InquireReader, InquireWriter {
 	@Override
 	public Page<Inquire> findItemInquires(Long itemNo, Pageable pageable) {
 		return inquireRepository.findInquiresByItemNo(itemNo, pageable);
+	}
+
+	@Override
+	public Optional<InquireComment> findCommentByInquireNo(Long inquireNo) {
+		return Optional.empty();
 	}
 }
