@@ -5,6 +5,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import io.syeony.premarket.item.domain.ItemStockHandler;
 import io.syeony.premarket.item.domain.model.Item;
 import io.syeony.premarket.item.domain.processor.DeactivateItemProcessor;
 import io.syeony.premarket.item.domain.processor.EditItemProcessor;
@@ -19,6 +20,7 @@ public class ItemFacade {
 	private final RegisterItemProcessor registerItemProcessor;
 	private final DeactivateItemProcessor deactivateItemProcessor;
 	private final EditItemProcessor editItemProcessor;
+	private final ItemStockHandler itemStockHandler;
 	private final ItemReader itemReader;
 
 	@Transactional
@@ -49,5 +51,15 @@ public class ItemFacade {
 	@Transactional(readOnly = true)
 	public Item retrieveItemDetail(Long itemId) {
 		return itemReader.retrieveItemDetailByItemId(itemId);
+	}
+
+	@Transactional
+	public void deductStock(final Long itemNo, final Integer quantity) {
+		itemStockHandler.deductStock(itemNo, quantity);
+	}
+
+	@Transactional
+	public void increaseStock(Long itemNo, Integer quantity) {
+		itemStockHandler.increaseStock(itemNo, quantity);
 	}
 }
