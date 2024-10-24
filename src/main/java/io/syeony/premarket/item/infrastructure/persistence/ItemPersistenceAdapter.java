@@ -1,5 +1,6 @@
 package io.syeony.premarket.item.infrastructure.persistence;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
@@ -60,6 +61,13 @@ public class ItemPersistenceAdapter implements ItemWriter, ItemReader {
 	@Override
 	public Item retrieveItemDetailByItemId(Long itemId) {
 		return itemRepository.findItemDetailByItemId(itemId);
+	}
+
+	@Override
+	public List<Item> findItemsByNos(List<Long> itemNos) {
+		return itemRepository.findAllById(itemNos).stream()
+			.map(itemMapper::toDomain)
+			.toList();
 	}
 
 }

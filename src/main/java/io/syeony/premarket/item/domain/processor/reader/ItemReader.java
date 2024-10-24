@@ -1,5 +1,6 @@
 package io.syeony.premarket.item.domain.processor.reader;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
@@ -16,4 +17,6 @@ public interface ItemReader {
 	Page<Item> findItemsByCategoryNo(Long categoryId, Pageable pageable);
 
 	Item retrieveItemDetailByItemId(Long itemId);
+
+	List<Item> findItemsByNos(List<Long> itemNos);
 }
