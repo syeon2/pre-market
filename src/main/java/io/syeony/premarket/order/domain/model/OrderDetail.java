@@ -25,8 +25,8 @@ public final class OrderDetail {
 	}
 
 	public OrderDetail initializeForCreate(Integer price, Integer discount) {
-		return new OrderDetail(orderDetailNo, quantity, calculateTotalPrice(price), calculateTotalDiscount(discount),
-			itemNo, orderId);
+		return new OrderDetail(orderDetailNo, quantity, calculateTotalPrice(price),
+			calculateTotalDiscount(discount), itemNo, orderId);
 	}
 
 	public Integer calculateTotalPrice(Integer price) {
@@ -35,5 +35,9 @@ public final class OrderDetail {
 
 	public Integer calculateTotalDiscount(Integer discount) {
 		return quantity * discount;
+	}
+
+	public OrderDetail withOrderId(String orderId) {
+		return OrderDetail.of(orderDetailNo, quantity, totalPrice, totalDiscount, itemNo, orderId);
 	}
 }

@@ -19,16 +19,17 @@ public final class Order {
 	private Long orderNo;
 	private String orderId;
 	private Integer totalPrice;
-	private List<OrderDetail> normalOrderDetails;
-	private OrderDetail preOrderDetail;
 	private String shippingAddress;
 	private String customerId;
 	private OrderStatus status;
 	private AuditTimestamps auditTimestamps;
 
+	/* Normal Order Item */
+	private List<OrderDetail> normalOrderDetails;
+
 	public Order initializeForCreate(List<OrderDetail> orderDetails) {
 		return Order.builder()
-			.orderId(UUID.randomUUID().toString())
+			.orderId(generateUuid())
 			.totalPrice(calculateTotalPrice(orderDetails))
 			.normalOrderDetails(orderDetails)
 			.customerId(customerId)
@@ -37,10 +38,25 @@ public final class Order {
 			.build();
 	}
 
+	public List<Long> extractItemNos() {
+		return normalOrderDetails.stream()
+			.map(OrderDetail::getItemNo)
+			.toList();
+	}
+
+	private Integer calculateTotalPrice(List<OrderDetail> orderDetails) {
+		return orderDetails.stream()
+			.mapToInt(domain -> domain.getTotalPrice() - domain.getTotalDiscount())
+			.sum();
+	}
+
+	/* Pre Order Item */
+	private OrderDetail preOrderDetail;
+
 	public Order initializeForCreate(OrderDetail orderDetail) {
 		return Order.builder()
-			.orderId(UUID.randomUUID().toString())
-			.totalPrice(orderDetail.getTotalPrice() - orderDetail.getTotalDiscount())
+			.orderId(generateUuid())
+			.totalPrice(calculateTotalPrice(orderDetail))
 			.preOrderDetail(orderDetail)
 			.customerId(customerId)
 			.status(OrderStatus.PAYMENT_COMPLETED)
@@ -48,9 +64,11 @@ public final class Order {
 			.build();
 	}
 
-	private Integer calculateTotalPrice(List<OrderDetail> orderDetails) {
-		return orderDetails.stream()
-			.mapToInt(domain -> domain.getTotalPrice() - domain.getTotalDiscount())
-			.sum();
+	private Integer calculateTotalPrice(OrderDetail orderDetail) {
+		return orderDetail.getTotalPrice() - orderDetail.getTotalDiscount();
+	}
+
+	private static String generateUuid() {
+		return UUID.randomUUID().toString();
 	}
 }

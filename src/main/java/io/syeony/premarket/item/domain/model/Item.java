@@ -64,6 +64,10 @@ public class Item {
 		return itemType == ItemType.PRE_ORDER;
 	}
 
+	public boolean isNormalOrderType() {
+		return itemType == ItemType.NORMAL_ORDER;
+	}
+
 	public boolean validateItem() {
 		if (itemType.equals(ItemType.PRE_ORDER) && preOrderSchedule != null) {
 			return true;

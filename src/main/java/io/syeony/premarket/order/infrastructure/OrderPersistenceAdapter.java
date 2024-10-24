@@ -1,7 +1,5 @@
 package io.syeony.premarket.order.infrastructure;
 
-import java.util.List;
-
 import org.springframework.stereotype.Repository;
 
 import io.syeony.premarket.order.domain.model.Order;
@@ -22,20 +20,18 @@ public class OrderPersistenceAdapter implements OrderWriter {
 	private final OrderDetailMapper orderDetailMapper;
 
 	@Override
-	public String create(Order order, List<OrderDetail> orderDetails) {
-		OrderEntity savedOrderEntity = orderRepository.save(orderMapper.toEntity(order));
-		orderDetails.forEach(domain -> {
-			orderDetailRepository.save(orderDetailMapper.toEntity(domain, savedOrderEntity.getOrderId()));
+	public String createNormalOrder(final Order order) {
+		OrderEntity savedEntity = orderRepository.save(orderMapper.toEntity(order));
+		order.getNormalOrderDetails().forEach(domain -> {
+			orderDetailRepository.save(orderDetailMapper.toEntity(domain.withOrderId(savedEntity.getOrderId())));
 		});
-
-		return savedOrderEntity.getOrderId();
+		return savedEntity.getOrderId();
 	}
 
 	@Override
 	public String createPreOrder(Order initializeOrder, OrderDetail orderDetail) {
 		OrderEntity savedOrderEntity = orderRepository.save(orderMapper.toEntity(initializeOrder));
-		orderDetailRepository.save(orderDetailMapper.toEntity(orderDetail, savedOrderEntity.getOrderId()));
-
+		orderDetailRepository.save(orderDetailMapper.toEntity(orderDetail.withOrderId(savedOrderEntity.getOrderId())));
 		return savedOrderEntity.getOrderId();
 	}
 }
