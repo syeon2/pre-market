@@ -4,8 +4,9 @@ import org.hibernate.validator.constraints.Length;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import io.syeony.premarket.account.application.dto.AddressDto;
-import io.syeony.premarket.account.application.dto.RegisterAccountDto;
+import io.syeony.premarket.account.domain.model.Account;
+import io.syeony.premarket.account.domain.model.vo.Password;
+import io.syeony.premarket.account.presentation.request.vo.AddressRequest;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -32,33 +33,19 @@ public record RegisterAccountRequest(
 	@Valid
 	@JsonProperty(value = "address")
 	@NotNull(message = "The address field is required")
-	Address address,
+	AddressRequest addressRequest,
 
 	@JsonProperty(value = "verification_code")
 	@NotBlank(message = "The verification code is required")
 	String verificationCode
 ) {
-	public record Address(
-		@JsonProperty(value = "base_address")
-		@NotBlank(message = "The address1 field is required")
-		String baseAddress,
-
-		@JsonProperty(value = "address_detail")
-		@NotBlank(message = "The address2 field is required")
-		String addressDetail,
-
-		@NotBlank(message = "The zipcode field is required")
-		String zipcode
-	) {
-	}
-
-	public RegisterAccountDto toRegisterAccountDto() {
-		return RegisterAccountDto.builder()
+	public Account toDomain() {
+		return Account.builder()
 			.email(email)
-			.rawPassword(password)
+			.password(new Password(password, null))
 			.name(name)
 			.phoneNumber(phoneNumber)
-			.address(new AddressDto(address.baseAddress, address.addressDetail, address.zipcode))
+			.address(addressRequest.toDomain())
 			.build();
 	}
 }

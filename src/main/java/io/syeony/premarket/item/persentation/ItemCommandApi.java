@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.syeony.premarket.item.application.ItemFacade;
 import io.syeony.premarket.item.persentation.request.DeactivateItemRequest;
+import io.syeony.premarket.item.persentation.request.DeductStockRequest;
 import io.syeony.premarket.item.persentation.request.EditItemRequest;
 import io.syeony.premarket.item.persentation.request.RegisterItemRequest;
 import io.syeony.premarket.item.persentation.response.RegisterItemResponse;
@@ -53,6 +54,24 @@ public final class ItemCommandApi {
 		@RequestBody EditItemRequest request
 	) {
 		itemFacade.editItem(itemId, request.toDomain());
+		return ResponseEntity.ok().build();
+	}
+
+	@PatchMapping("/v1/items/{item_no}/stock/d")
+	public ResponseEntity<Void> deductStock(
+		@PathVariable(value = "item_no") Long itemNo,
+		@RequestBody DeductStockRequest request
+	) {
+		itemFacade.deductStock(itemNo, request.quantity());
+		return ResponseEntity.ok().build();
+	}
+
+	@PatchMapping("/v1/items/{item_no}/stock/i")
+	public ResponseEntity<Void> increaseStock(
+		@PathVariable(value = "item_no") Long itemNo,
+		@RequestBody DeductStockRequest request
+	) {
+		itemFacade.increaseStock(itemNo, request.quantity());
 		return ResponseEntity.ok().build();
 	}
 }
