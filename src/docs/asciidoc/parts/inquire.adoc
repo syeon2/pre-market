@@ -9,3 +9,15 @@ include::{snippets}/inquire-create/request-fields.adoc[]
 ==== API Response
 
 include::{snippets}/inquire-create/http-response.adoc[]
+
+[[Delete-Inquire-API]]
+=== Delete Inquire API
+
+==== API Request
+
+include::{snippets}/inquire-delete/http-request.adoc[]
+include::{snippets}/inquire-delete/request-fields.adoc[]
+
+==== API Response
+
+include::{snippets}/inquire-delete/http-response.adoc[]

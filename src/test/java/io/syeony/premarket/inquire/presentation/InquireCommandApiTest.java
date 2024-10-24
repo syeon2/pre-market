@@ -17,6 +17,7 @@ import org.springframework.restdocs.payload.JsonFieldType;
 import io.syeony.premarket.ControllerTestSupport;
 import io.syeony.premarket.inquire.application.InquireFacade;
 import io.syeony.premarket.inquire.presentation.request.CreateInquireRequest;
+import io.syeony.premarket.inquire.presentation.request.DeleteInquireRequest;
 
 class InquireCommandApiTest extends ControllerTestSupport {
 
@@ -46,6 +47,29 @@ class InquireCommandApiTest extends ControllerTestSupport {
 				preprocessResponse(prettyPrint()),
 				requestFields(
 					fieldWithPath("message").type(JsonFieldType.STRING).description("문의 글"),
+					fieldWithPath("item_no").type(JsonFieldType.NUMBER).description("상품 번호"),
+					fieldWithPath("member_id").type(JsonFieldType.STRING).description("작성자 아이디")
+				)
+			));
+	}
+
+	@Test
+	void deleteInquire() throws Exception {
+		// given
+		Long inquireNo = 1L;
+		DeleteInquireRequest request = new DeleteInquireRequest("memberId", 1L);
+
+		// when // then
+		mockMvc.perform(
+				delete("/api/v1/items/inquires/{inquire_no}", inquireNo)
+					.content(objectMapper.writeValueAsString(request))
+					.contentType(MediaType.APPLICATION_JSON)
+			).andDo(print())
+			.andExpect(status().isOk())
+			.andDo(document("inquire-delete",
+				preprocessRequest(prettyPrint()),
+				preprocessResponse(prettyPrint()),
+				requestFields(
 					fieldWithPath("item_no").type(JsonFieldType.NUMBER).description("상품 번호"),
 					fieldWithPath("member_id").type(JsonFieldType.STRING).description("작성자 아이디")
 				)

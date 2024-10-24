@@ -17,4 +17,8 @@ public class InquireFacade {
 	public void createInquire(final Inquire inquire) {
 		createInquireProcessor.createInquire(inquire);
 	}
+
+	public void deleteInquire(Long inquireNo, Long itemNo, String memberId) {
+
+	}
 }
