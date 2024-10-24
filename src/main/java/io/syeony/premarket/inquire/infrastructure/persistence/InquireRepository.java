@@ -6,4 +6,5 @@ import io.syeony.premarket.inquire.infrastructure.persistence.custom.InquireRepo
 import io.syeony.premarket.inquire.infrastructure.persistence.entity.InquireEntity;
 
 public interface InquireRepository extends JpaRepository<InquireEntity, Long>, InquireRepositoryCustom {
+
 }

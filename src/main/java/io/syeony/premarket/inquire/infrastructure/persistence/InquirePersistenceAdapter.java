@@ -3,6 +3,8 @@ package io.syeony.premarket.inquire.infrastructure.persistence;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import io.syeony.premarket.inquire.domain.model.Inquire;
@@ -39,5 +41,10 @@ public class InquirePersistenceAdapter implements InquireReader, InquireWriter {
 	public Optional<Inquire> findByItemNo(Long inquireNo) {
 		return inquireRepository.findById(inquireNo)
 			.map(inquireMapper::toDomain);
+	}
+
+	@Override
+	public Page<Inquire> findItemInquires(Long itemNo, Pageable pageable) {
+		return inquireRepository.findInquiresByItemNo(itemNo, pageable);
 	}
 }
