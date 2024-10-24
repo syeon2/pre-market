@@ -19,4 +19,6 @@ public interface ItemReader {
 	Item retrieveItemDetailByItemId(Long itemId);
 
 	List<Item> findItemsByNos(List<Long> itemNos);
+
+	Optional<Item> findItemByNo(Long itemNo);
 }

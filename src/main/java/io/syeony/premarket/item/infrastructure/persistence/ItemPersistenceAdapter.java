@@ -70,4 +70,10 @@ public class ItemPersistenceAdapter implements ItemWriter, ItemReader {
 			.toList();
 	}
 
+	@Override
+	public Optional<Item> findItemByNo(Long itemNo) {
+		return itemRepository.findById(itemNo)
+			.map(itemMapper::toDomain);
+	}
+
 }

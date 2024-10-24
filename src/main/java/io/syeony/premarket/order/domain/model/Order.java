@@ -19,7 +19,8 @@ public final class Order {
 	private Long orderNo;
 	private String orderId;
 	private Integer totalPrice;
-	private List<OrderDetail> orderDetails;
+	private List<OrderDetail> normalOrderDetails;
+	private OrderDetail preOrderDetail;
 	private String shippingAddress;
 	private String customerId;
 	private OrderStatus status;
@@ -29,7 +30,18 @@ public final class Order {
 		return Order.builder()
 			.orderId(UUID.randomUUID().toString())
 			.totalPrice(calculateTotalPrice(orderDetails))
-			.orderDetails(orderDetails)
+			.normalOrderDetails(orderDetails)
+			.customerId(customerId)
+			.status(OrderStatus.PAYMENT_COMPLETED)
+			.shippingAddress(shippingAddress)
+			.build();
+	}
+
+	public Order initializeForCreate(OrderDetail orderDetail) {
+		return Order.builder()
+			.orderId(UUID.randomUUID().toString())
+			.totalPrice(orderDetail.getTotalPrice() - orderDetail.getTotalDiscount())
+			.preOrderDetail(orderDetail)
 			.customerId(customerId)
 			.status(OrderStatus.PAYMENT_COMPLETED)
 			.shippingAddress(shippingAddress)
@@ -40,6 +52,5 @@ public final class Order {
 		return orderDetails.stream()
 			.mapToInt(domain -> domain.getTotalPrice() - domain.getTotalDiscount())
 			.sum();
-
 	}
 }

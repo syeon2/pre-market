@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.syeony.premarket.order.application.OrderFacade;
 import io.syeony.premarket.order.presentation.request.CreateOrderRequest;
+import io.syeony.premarket.order.presentation.request.CreatePreOrderRequest;
 import io.syeony.premarket.order.presentation.response.CreateOrderResponse;
 import io.syeony.premarket.support.common.ApiResult;
 import jakarta.validation.Valid;
@@ -35,4 +36,12 @@ public final class OrderCommandApi {
 			.body(ApiResult.ok(new CreateOrderResponse(orderId)));
 	}
 
+	@PostMapping("/v1/orders/pre")
+	public ResponseEntity<ApiResult<String>> createPreOrder(
+		@RequestBody @Valid CreatePreOrderRequest request
+	) {
+		var orderId = orderFacade.createPreOrder(request.toDomain());
+		return ResponseEntity.status(HttpStatus.CREATED)
+			.body(ApiResult.ok(orderId));
+	}
 }
