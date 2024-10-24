@@ -1,0 +1,11 @@
+[[Create-Inquire-API]]
+=== Create Inquire API
+
+==== API Request
+
+include::{snippets}/inquire-create/http-request.adoc[]
+include::{snippets}/inquire-create/request-fields.adoc[]
+
+==== API Response
+
+include::{snippets}/inquire-create/http-response.adoc[]

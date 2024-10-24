@@ -2,9 +2,9 @@ package io.syeony.premarket.inquire.presentation;
 
 import static org.mockito.Mockito.*;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.*;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -32,12 +32,11 @@ class InquireCommandApiTest extends ControllerTestSupport {
 	@DisplayName(value = "Create inquire successfully when them request fields are provided")
 	void createInquire() throws Exception {
 		// given
-		String itemId = "itemId";
-		CreateInquireRequest request = new CreateInquireRequest("comment", "memberId");
+		CreateInquireRequest request = new CreateInquireRequest("message", 1L, "memberId");
 
 		// when // then
 		mockMvc.perform(
-				post("/api/v1/items/{item_id}/inquires", itemId)
+				post("/api/v1/items/inquires")
 					.content(objectMapper.writeValueAsString(request))
 					.contentType(MediaType.APPLICATION_JSON)
 			).andDo(print())
@@ -46,7 +45,8 @@ class InquireCommandApiTest extends ControllerTestSupport {
 				preprocessRequest(prettyPrint()),
 				preprocessResponse(prettyPrint()),
 				requestFields(
-					fieldWithPath("comment").type(JsonFieldType.STRING).description("문의 글"),
+					fieldWithPath("message").type(JsonFieldType.STRING).description("문의 글"),
+					fieldWithPath("item_no").type(JsonFieldType.NUMBER).description("상품 번호"),
 					fieldWithPath("member_id").type(JsonFieldType.STRING).description("작성자 아이디")
 				)
 			));

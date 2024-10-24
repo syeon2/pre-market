@@ -61,4 +61,5 @@ public class ItemPersistenceAdapter implements ItemWriter, ItemReader {
 	public Item retrieveItemDetailByItemId(Long itemId) {
 		return itemRepository.findItemDetailByItemId(itemId);
 	}
+
 }
