@@ -1,6 +1,7 @@
 package io.syeony.premarket.inquire.infrastructure.persistence;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Repository;
 
@@ -23,9 +24,20 @@ public class InquirePersistenceAdapter implements InquireReader, InquireWriter {
 	}
 
 	@Override
+	public void delete(Long inquireNo) {
+		inquireRepository.deleteById(inquireNo);
+	}
+
+	@Override
 	public List<Inquire> findInquiresForToday(final Long itemNo, final String writerId) {
 		return inquireRepository.findItemsForToday(itemNo, writerId).stream()
 			.map(inquireMapper::toDomain)
 			.toList();
+	}
+
+	@Override
+	public Optional<Inquire> findByItemNo(Long inquireNo) {
+		return inquireRepository.findById(inquireNo)
+			.map(inquireMapper::toDomain);
 	}
 }

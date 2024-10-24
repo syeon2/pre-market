@@ -27,4 +27,8 @@ public final class Inquire {
 	public static Inquire initializeForCreate(String message, String memberId, Long itemNo) {
 		return new Inquire(null, message, Writer.of(memberId, null), InquiredItem.of(itemNo, null), null);
 	}
+
+	public boolean validate(Long itemNo, String memberId) {
+		return inquiredItem.getItemNo().equals(itemNo) && writer.getMemberId().equals(memberId);
+	}
 }

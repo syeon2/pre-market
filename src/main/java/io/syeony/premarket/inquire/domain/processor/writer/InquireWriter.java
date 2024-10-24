@@ -5,4 +5,6 @@ import io.syeony.premarket.inquire.domain.model.Inquire;
 public interface InquireWriter {
 
 	void create(Inquire inquire);
+
+	void delete(Long inquireNo);
 }
