@@ -21,7 +21,7 @@ public final class CreateOrderProcessor {
 	private final ItemReader itemReader;
 
 	public String createOrder(final Order order) {
-		List<OrderDetail> orderDetails = createOrderDetails(order.getOrderDetails());
+		List<OrderDetail> orderDetails = createOrderDetails(order.getNormalOrderDetails());
 		Order initializeOrder = order.initializeForCreate(orderDetails);
 
 		return orderWriter.create(initializeOrder, orderDetails);

@@ -30,4 +30,12 @@ public class OrderPersistenceAdapter implements OrderWriter {
 
 		return savedOrderEntity.getOrderId();
 	}
+
+	@Override
+	public String createPreOrder(Order initializeOrder, OrderDetail orderDetail) {
+		OrderEntity savedOrderEntity = orderRepository.save(orderMapper.toEntity(initializeOrder));
+		orderDetailRepository.save(orderDetailMapper.toEntity(orderDetail, savedOrderEntity.getOrderId()));
+
+		return savedOrderEntity.getOrderId();
+	}
 }
