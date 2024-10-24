@@ -20,6 +20,7 @@ public class OrderFacade {
 		return createNormalOrderProcessor.createOrder(order);
 	}
 
+	@Transactional
 	public String createPreOrder(final Order order) {
 		return createPreOrderProcessor.createOrder(order);
 	}

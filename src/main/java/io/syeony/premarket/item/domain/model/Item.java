@@ -74,4 +74,10 @@ public class Item {
 		}
 		return itemType.equals(ItemType.NORMAL_ORDER) && preOrderSchedule == null;
 	}
+
+	public boolean isPreOrderAvailable() {
+		return itemType == ItemType.PRE_ORDER
+			&& preOrderSchedule != null
+			&& preOrderSchedule.isAfter(LocalDateTime.now());
+	}
 }

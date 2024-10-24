@@ -37,14 +37,14 @@ public final class CreateNormalOrderProcessor {
 
 	private OrderDetail initializeOrderDetail(OrderDetail orderDetail, Map<Long, Item> itemMap) {
 		var findItem = itemMap.get(orderDetail.getItemNo());
-		validateOrderType(findItem);
+		validateItem(findItem);
 
 		return orderDetail.initializeForCreate(
 			findItem.getCost().getPrice(),
 			findItem.getCost().getDiscount());
 	}
 
-	private void validateOrderType(Item findItem) {
+	private void validateItem(Item findItem) {
 		if (!findItem.isNormalOrderType()) {
 			throw new IllegalArgumentException("The order type must be NORMAL_ORDER");
 		}
