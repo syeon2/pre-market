@@ -41,9 +41,9 @@ public class InquirePersistenceAdapter implements InquireReader, InquireWriter {
 
 	@Override
 	public void deleteComment(Long inquireNo, Long commentNo) {
-		inquireRepository.findById(inquireNo).ifPresent(entity -> {
-			entity.deleteInquireComment(commentNo);
-		});
+		inquireRepository.findById(inquireNo)
+			.ifPresent(inquireEntity -> inquireEntity.getInquireComment()
+				.removeIf(entity -> entity.getId().equals(commentNo)));
 	}
 
 	@Override
@@ -63,9 +63,5 @@ public class InquirePersistenceAdapter implements InquireReader, InquireWriter {
 	public Page<Inquire> findItemInquires(Long itemNo, Pageable pageable) {
 		return inquireRepository.findInquiresByItemNo(itemNo, pageable);
 	}
-
-	@Override
-	public Optional<InquireComment> findCommentByInquireNo(Long inquireNo) {
-		return Optional.empty();
-	}
+	
 }

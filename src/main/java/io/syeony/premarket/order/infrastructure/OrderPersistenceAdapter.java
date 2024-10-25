@@ -6,7 +6,6 @@ import io.syeony.premarket.order.domain.model.Order;
 import io.syeony.premarket.order.domain.processor.reader.OrderWriter;
 import io.syeony.premarket.order.infrastructure.persistence.OrderDetailRepository;
 import io.syeony.premarket.order.infrastructure.persistence.OrderRepository;
-import io.syeony.premarket.order.infrastructure.persistence.entity.OrderEntity;
 import lombok.RequiredArgsConstructor;
 
 @Repository
@@ -20,7 +19,7 @@ public class OrderPersistenceAdapter implements OrderWriter {
 
 	@Override
 	public String createNormalOrder(final Order order) {
-		OrderEntity savedEntity = orderRepository.save(orderMapper.toEntity(order));
+		var savedEntity = orderRepository.save(orderMapper.toEntity(order));
 		order.getNormalOrderDetails().forEach(domain -> {
 			orderDetailRepository.save(orderDetailMapper.toEntity(domain.withOrderId(savedEntity.getOrderId())));
 		});
@@ -29,7 +28,7 @@ public class OrderPersistenceAdapter implements OrderWriter {
 
 	@Override
 	public String createPreOrder(final Order order) {
-		OrderEntity savedEntity = orderRepository.save(orderMapper.toEntity(order));
+		var savedEntity = orderRepository.save(orderMapper.toEntity(order));
 		orderDetailRepository.save(
 			orderDetailMapper.toEntity(order.getPreOrderDetail().withOrderId(savedEntity.getOrderId())));
 		return savedEntity.getOrderId();

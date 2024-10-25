@@ -50,7 +50,7 @@ public class ItemFacade {
 
 	@Transactional(readOnly = true)
 	public Item retrieveItemDetail(Long itemId) {
-		return itemReader.retrieveItemDetailByItemId(itemId);
+		return itemReader.retrieveItemDetailByItemNo(itemId);
 	}
 
 	@Transactional

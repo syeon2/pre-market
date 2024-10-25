@@ -12,7 +12,6 @@ import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
-import io.syeony.premarket.account.domain.model.vo.MemberId;
 import io.syeony.premarket.account.infrastructure.persistence.entity.QMemberEntity;
 import io.syeony.premarket.item.domain.model.Category;
 import io.syeony.premarket.item.domain.model.Cost;
@@ -49,9 +48,9 @@ public class ItemRepositoryImpl implements ItemRepositoryCustom {
 					QCategoryEntity.categoryEntity.id,
 					QCategoryEntity.categoryEntity.name
 				).as("category"),
-				Projections.fields(MemberId.class,
-					QItemEntity.itemEntity.memberId.as("value")
-				).as("memberId")
+				Projections.fields(Seller.class,
+					QItemEntity.itemEntity.memberId
+				).as("seller")
 			)).from(QItemEntity.itemEntity)
 			.leftJoin(QCategoryEntity.categoryEntity)
 			.on(QItemEntity.itemEntity.categoryId.eq(QCategoryEntity.categoryEntity.id))
@@ -120,8 +119,8 @@ public class ItemRepositoryImpl implements ItemRepositoryCustom {
 	@Override
 	public Item findItemDetailByItemId(Long itemId) {
 		return queryFactory.select(Projections.fields(Item.class,
-				QItemEntity.itemEntity.id,
-				QItemEntity.itemEntity.name,
+				QItemEntity.itemEntity.id.as("itemNo"),
+				QItemEntity.itemEntity.name.as("itemName"),
 				Projections.fields(Cost.class,
 					QItemEntity.itemEntity.price,
 					QItemEntity.itemEntity.discount
