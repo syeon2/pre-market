@@ -25,5 +25,7 @@ include::{docdir}/parts/category.adoc[]
 include::{docdir}/parts/item.adoc[]
 
 [[Inquire-APIs]]
-
 include::{docdir}/parts/inquire.adoc[]
+
+[[Order-APIs]]
+include::{docdir}/parts/order.adoc[]

@@ -64,10 +64,20 @@ public class Item {
 		return itemType == ItemType.PRE_ORDER;
 	}
 
+	public boolean isNormalOrderType() {
+		return itemType == ItemType.NORMAL_ORDER;
+	}
+
 	public boolean validateItem() {
 		if (itemType.equals(ItemType.PRE_ORDER) && preOrderSchedule != null) {
 			return true;
 		}
 		return itemType.equals(ItemType.NORMAL_ORDER) && preOrderSchedule == null;
+	}
+
+	public boolean isPreOrderAvailable() {
+		return itemType == ItemType.PRE_ORDER
+			&& preOrderSchedule != null
+			&& preOrderSchedule.isAfter(LocalDateTime.now());
 	}
 }

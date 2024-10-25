@@ -14,22 +14,24 @@ public class CreatePreOrderProcessor {
 	private final ItemReader itemReader;
 
 	public String createOrder(final Order order) {
-		Item item = itemReader.findItemByNo(order.getPreOrderDetail().getItemNo())
+		var orderDetail = createPreOrderDetail(order.getPreOrderDetail());
+		return orderWriter.createPreOrder(order.initializeForCreate(orderDetail));
+	}
+
+	private OrderDetail createPreOrderDetail(OrderDetail orderDetail) {
+		var item = itemReader.findItemByNo(orderDetail.getItemNo())
 			.orElseThrow(() -> new IllegalArgumentException("Not found item"));
+		validateItem(item);
 
+		return orderDetail.initializeForCreate(item.getCost().getPrice(), item.getCost().getDiscount());
+	}
+
+	private void validateItem(Item item) {
 		if (!item.isPreOrderType()) {
-			throw new IllegalArgumentException("Order is not pre-order type");
+			throw new IllegalArgumentException("The order type must be pre-order type");
 		}
-
-		OrderDetail orderDetail = OrderDetail.builder()
-			.quantity(order.getPreOrderDetail().getQuantity())
-			.totalPrice(order.getPreOrderDetail().calculateTotalPrice(item.getCost().getPrice()))
-			.totalDiscount(order.getPreOrderDetail().calculateTotalDiscount(item.getCost().getDiscount()))
-			.itemNo(item.getItemNo())
-			.orderId(null)
-			.build();
-
-		Order initializeOrder = order.initializeForCreate(orderDetail);
-		return orderWriter.createPreOrder(initializeOrder, orderDetail);
+		if (item.isPreOrderAvailable()) {
+			throw new IllegalArgumentException("Pre-order schedule must be after now");
+		}
 	}
 }

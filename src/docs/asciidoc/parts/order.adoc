@@ -1,0 +1,25 @@
+[[Create-Normal-Order-API]]
+=== Create Normal Order API
+
+==== API Request
+
+include::{snippets}/order-create-normal/http-request.adoc[]
+include::{snippets}/order-create-normal/request-fields.adoc[]
+
+==== API Response
+
+include::{snippets}/order-create-normal/http-response.adoc[]
+include::{snippets}/order-create-normal/response-fields.adoc[]
+
+[[Create-Pre-Order-API]]
+=== Create Pre Order API
+
+==== API Request
+
+include::{snippets}/order-create-pre/http-request.adoc[]
+include::{snippets}/order-create-pre/request-fields.adoc[]
+
+==== API Response
+
+include::{snippets}/order-create-pre/http-response.adoc[]
+include::{snippets}/order-create-pre/response-fields.adoc[]

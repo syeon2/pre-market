@@ -21,3 +21,40 @@ include::{snippets}/inquire-delete/request-fields.adoc[]
 ==== API Response
 
 include::{snippets}/inquire-delete/http-response.adoc[]
+
+[[Find-Item-Inquires-API]]
+=== Find Item Inquires API
+
+==== API Request
+
+include::{snippets}/inquire-find-item-no/http-request.adoc[]
+include::{snippets}/inquire-find-item-no/path-parameters.adoc[]
+
+==== API Response
+
+include::{snippets}/inquire-find-item-no/http-response.adoc[]
+include::{snippets}/inquire-find-item-no/response-fields.adoc[]
+
+[[Create-Inquire-Comment-API]]
+=== Create Inquire Comment API
+
+==== API Request
+
+include::{snippets}/inquire-comment-create/http-request.adoc[]
+include::{snippets}/inquire-comment-create/request-fields.adoc[]
+
+==== API Response
+
+include::{snippets}/inquire-comment-create/http-response.adoc[]
+
+[[Delete-Inquire-Comment-API]]
+=== Delete Inquire Comment API
+
+==== API Request
+
+include::{snippets}/inquire-comment-delete/http-request.adoc[]
+include::{snippets}/inquire-comment-delete/path-parameters.adoc[]
+
+==== API Response
+
+include::{snippets}/inquire-comment-delete/http-response.adoc[]

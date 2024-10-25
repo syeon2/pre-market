@@ -39,4 +39,8 @@ public class InquireCommentEntity extends BaseEntity {
 	public void delete() {
 		this.inquire = null;
 	}
+
+	public void addComment(InquireEntity inquire) {
+		this.inquire = inquire;
+	}
 }

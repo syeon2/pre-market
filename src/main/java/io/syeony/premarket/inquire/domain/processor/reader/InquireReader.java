@@ -7,7 +7,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import io.syeony.premarket.inquire.domain.model.Inquire;
-import io.syeony.premarket.inquire.domain.model.InquireComment;
 
 public interface InquireReader {
 
@@ -17,5 +16,4 @@ public interface InquireReader {
 
 	Page<Inquire> findItemInquires(Long itemNo, Pageable pageable);
 
-	Optional<InquireComment> findCommentByInquireNo(Long inquireNo);
 }

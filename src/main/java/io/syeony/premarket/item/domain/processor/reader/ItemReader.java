@@ -16,7 +16,7 @@ public interface ItemReader {
 
 	Page<Item> findItemsByCategoryNo(Long categoryId, Pageable pageable);
 
-	Item retrieveItemDetailByItemId(Long itemId);
+	Item retrieveItemDetailByItemNo(Long itemNo);
 
 	List<Item> findItemsByNos(List<Long> itemNos);
 

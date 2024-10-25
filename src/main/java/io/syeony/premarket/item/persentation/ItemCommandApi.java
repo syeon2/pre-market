@@ -5,7 +5,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -48,7 +47,7 @@ public final class ItemCommandApi {
 		return ResponseEntity.ok().build();
 	}
 
-	@PutMapping("/v1/items/{item_id}/info")
+	@PatchMapping("/v1/items/{item_id}/info")
 	public ResponseEntity<ApiResult<Void>> editItem(
 		@PathVariable("item_id") String itemId,
 		@RequestBody EditItemRequest request

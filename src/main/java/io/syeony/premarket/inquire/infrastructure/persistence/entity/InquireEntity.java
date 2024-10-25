@@ -43,11 +43,11 @@ public class InquireEntity extends BaseEntity {
 	@OneToMany(
 		mappedBy = "inquire",
 		cascade = CascadeType.ALL,
-		orphanRemoval = true
-	)
+		orphanRemoval = true)
 	private List<InquireCommentEntity> inquireComment = new ArrayList<>();
 
 	public void addInquireComment(InquireCommentEntity inquireComment) {
+		inquireComment.addComment(this);
 		this.inquireComment.add(inquireComment);
 	}
 

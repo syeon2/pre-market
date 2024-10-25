@@ -8,13 +8,13 @@ import io.syeony.premarket.order.infrastructure.persistence.entity.OrderDetailEn
 @Component
 public final class OrderDetailMapper {
 
-	public OrderDetailEntity toEntity(OrderDetail orderDetail, String orderId) {
+	public OrderDetailEntity toEntity(OrderDetail orderDetail) {
 		return OrderDetailEntity.builder()
 			.totalPrice(orderDetail.getTotalPrice())
 			.totalDiscount(orderDetail.getTotalDiscount())
 			.quantity(orderDetail.getQuantity())
 			.itemId(orderDetail.getItemNo())
-			.orderId(orderId)
+			.orderId(orderDetail.getOrderId())
 			.build();
 	}
 }

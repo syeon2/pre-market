@@ -8,7 +8,7 @@ import io.syeony.premarket.order.domain.model.Order;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
-public record CreateOrderRequest(
+public record CreateNormalOrderRequest(
 	@JsonProperty(value = "order_details")
 	@NotNull(message = "The order details field is required")
 	List<OrderDetailRequest> orderDetails,
