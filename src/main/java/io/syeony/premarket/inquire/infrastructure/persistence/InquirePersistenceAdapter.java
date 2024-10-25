@@ -63,5 +63,5 @@ public class InquirePersistenceAdapter implements InquireReader, InquireWriter {
 	public Page<Inquire> findItemInquires(Long itemNo, Pageable pageable) {
 		return inquireRepository.findInquiresByItemNo(itemNo, pageable);
 	}
-	
+
 }
