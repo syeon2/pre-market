@@ -1,6 +1,7 @@
 package io.syeony.premarket.order.infrastructure.persistence.entity;
 
 import io.syeony.premarket.order.domain.model.OrderStatus;
+import io.syeony.premarket.support.common.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -21,7 +22,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "orders")
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class OrderEntity {
+public class OrderEntity extends BaseEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
