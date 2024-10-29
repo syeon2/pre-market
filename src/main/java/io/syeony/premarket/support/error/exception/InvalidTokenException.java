@@ -6,11 +6,11 @@ import io.syeony.premarket.support.error.SystemException;
 
 public class InvalidTokenException extends SystemException {
 	public InvalidTokenException(String value) {
-		super("Invalid token", HttpStatus.UNAUTHORIZED.value(), value);
+		super("Invalid token", HttpStatus.FORBIDDEN.value(), value);
 	}
 
 	@Override
 	public HttpStatus getHttpStatus() {
-		return HttpStatus.UNAUTHORIZED;
+		return HttpStatus.FORBIDDEN;
 	}
 }

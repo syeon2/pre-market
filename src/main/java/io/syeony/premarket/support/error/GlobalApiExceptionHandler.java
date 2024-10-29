@@ -12,12 +12,21 @@ import io.syeony.premarket.support.common.ApiResult;
 import io.syeony.premarket.support.error.exception.DuplicatedEmailException;
 import io.syeony.premarket.support.error.exception.DuplicatedPhoneNumberException;
 import io.syeony.premarket.support.error.exception.InvalidCredentialsException;
+import io.syeony.premarket.support.error.exception.InvalidTokenException;
 import io.syeony.premarket.support.error.exception.InvalidVerificationCodeException;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RestControllerAdvice
 public final class GlobalApiExceptionHandler {
+
+	@ExceptionHandler(value = InvalidTokenException.class)
+	private ResponseEntity<ApiResult<Void>> handleInvalidTokenException(InvalidTokenException exception) {
+		log.error("InvalidTokenException", exception);
+		return ResponseEntity
+			.status(exception.getHttpStatus())
+			.body(ApiResult.error(exception.getMessage()));
+	}
 
 	@ExceptionHandler(value = InvalidCredentialsException.class)
 	private ResponseEntity<ApiResult<Void>> handlerInvalidCredentialsException(InvalidCredentialsException exception) {
