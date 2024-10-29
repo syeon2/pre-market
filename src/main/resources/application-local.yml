@@ -30,6 +30,11 @@ spring:
             required: true
           auth: true
 
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: item
+
   data:
     redis:
       host: localhost

@@ -52,6 +52,7 @@ dependencies {
     runtimeOnly 'com.mysql:mysql-connector-j'
     implementation 'org.springframework.boot:spring-boot-starter-mail'
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    implementation 'org.springframework.kafka:spring-kafka'
 
     // Util
     annotationProcessor 'org.projectlombok:lombok'

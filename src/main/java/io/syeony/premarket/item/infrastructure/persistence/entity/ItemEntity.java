@@ -85,4 +85,8 @@ public class ItemEntity extends BaseEntity {
 		this.introduction = introduction;
 		this.categoryId = categoryId;
 	}
+
+	public void deductStock(Integer stock) {
+		this.stock = this.stock - stock;
+	}
 }

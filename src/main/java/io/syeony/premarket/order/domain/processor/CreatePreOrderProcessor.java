@@ -1,7 +1,11 @@
 package io.syeony.premarket.order.domain.processor;
 
+import org.springframework.context.ApplicationEventPublisher;
+
+import io.syeony.premarket.item.domain.ItemStockHandler;
 import io.syeony.premarket.item.domain.model.Item;
 import io.syeony.premarket.item.domain.processor.reader.ItemReader;
+import io.syeony.premarket.item.infrastructure.kafka.ItemStock;
 import io.syeony.premarket.order.domain.model.Order;
 import io.syeony.premarket.order.domain.model.OrderDetail;
 import io.syeony.premarket.order.domain.processor.reader.OrderWriter;
@@ -12,6 +16,8 @@ public class CreatePreOrderProcessor {
 
 	private final OrderWriter orderWriter;
 	private final ItemReader itemReader;
+	private final ItemStockHandler itemStockHandler;
+	private final ApplicationEventPublisher publisher;
 
 	public String createOrder(final Order order) {
 		var orderDetail = createPreOrderDetail(order.getPreOrderDetail());
@@ -22,6 +28,11 @@ public class CreatePreOrderProcessor {
 		var item = itemReader.findItemByNo(orderDetail.getItemNo())
 			.orElseThrow(() -> new IllegalArgumentException("Not found item"));
 		validateItem(item);
+
+		itemStockHandler.deductStock(item.getItemNo(), orderDetail.getQuantity());
+		publisher.publishEvent(
+			new ItemStock(item.getItemNo(), orderDetail.getQuantity())
+		);
 
 		return orderDetail.initializeForCreate(item.getCost().getPrice(), item.getCost().getDiscount());
 	}
