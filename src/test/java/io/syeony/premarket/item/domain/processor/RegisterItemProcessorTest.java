@@ -13,6 +13,7 @@ import org.mockito.Mock;
 
 import io.syeony.premarket.UnitTestSupport;
 import io.syeony.premarket.account.domain.processor.reader.AccountReader;
+import io.syeony.premarket.item.domain.ItemStockHandler;
 import io.syeony.premarket.item.domain.model.Cost;
 import io.syeony.premarket.item.domain.model.Item;
 import io.syeony.premarket.item.domain.model.ItemType;
@@ -31,9 +32,12 @@ class RegisterItemProcessorTest extends UnitTestSupport {
 	@Mock
 	private AccountReader accountReader = mock(AccountReader.class);
 
+	@Mock
+	private ItemStockHandler itemStockHandler = mock(ItemStockHandler.class);
+
 	@BeforeEach
 	void setUp() {
-		registerItemProcessor = new RegisterItemProcessor(itemWriter, accountReader);
+		registerItemProcessor = new RegisterItemProcessor(itemWriter, itemStockHandler, accountReader);
 	}
 
 	@Test
