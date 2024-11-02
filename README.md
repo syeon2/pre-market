@@ -35,3 +35,9 @@ Docs
 - 트러블슈팅
     - Redis + Kafka를 활용하여 예약 주문 TPS를 향상
     - Spring Security + JWT를 활용한 인증/인가 처리
+
+---
+
+### 🌱 트러블슈팅 접근 과정
+
+[Pessimistic Lock Deep Dive (feat.MySQL)](https://medium.com/@gsy4568/pessimistic-locking-deep-dive-feat-mysql-7fcf90f259f0)
