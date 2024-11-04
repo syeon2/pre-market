@@ -40,4 +40,11 @@ Docs
 
 ### 🌱 트러블슈팅 접근 과정
 
-[Pessimistic Lock Deep Dive (feat.MySQL)](https://medium.com/@gsy4568/pessimistic-locking-deep-dive-feat-mysql-7fcf90f259f0)
+- [Layered Architecture with DDD](https://syeon2.github.io/devlog/pre-market-architecture.html)
+- [상품 주문 시 재고 차감 동시성 이슈 트러블슈팅](https://syeon2.github.io/devlog/premarket-concurrency.html)
+    - [Java Synchronized Deep Dive](https://medium.com/@gsy4568/java-synchronized-deep-dive-9a764568d27c)
+    - [Pessimistic Lock Deep Dive (feat.MySQL)](https://medium.com/@gsy4568/pessimistic-locking-deep-dive-feat-mysql-7fcf90f259f0)
+    - [예약 상품 주문 요청 속도 개선 사례를 소개합니다.](https://syeon2.github.io/devlog/premarket-order-speed.html)
+- [Spring Security 동작 프로세스](https://syeon2.github.io/devlog/pre-market-security.html)
+
+
