@@ -48,4 +48,9 @@ Docs
 - [상품 주문 쿼리 최적화 사례](https://syeon2.github.io/devlog/premarket-order-query.html)
 - [Spring Security 동작 프로세스](https://syeon2.github.io/devlog/pre-market-security.html)
 
+---
 
+## 🌱 Links
+
+- [Blog](https://syeon2.github.io/devlog/premarket-overall.html)
+- [API Docs](http://221.163.118.12:18000/docs/index.html)
