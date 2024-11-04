@@ -45,6 +45,7 @@ Docs
     - [Java Synchronized Deep Dive](https://medium.com/@gsy4568/java-synchronized-deep-dive-9a764568d27c)
     - [Pessimistic Lock Deep Dive (feat.MySQL)](https://medium.com/@gsy4568/pessimistic-locking-deep-dive-feat-mysql-7fcf90f259f0)
     - [예약 상품 주문 요청 속도 개선 사례를 소개합니다.](https://syeon2.github.io/devlog/premarket-order-speed.html)
+- [상품 주문 쿼리 최적화 사례](https://syeon2.github.io/devlog/premarket-order-query.html)
 - [Spring Security 동작 프로세스](https://syeon2.github.io/devlog/pre-market-security.html)
 
 
