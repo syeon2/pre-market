@@ -10,7 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RequiredArgsConstructor
-public class SmtpMailDispatcher implements MailDispatcher {
+public class SmtpVerificationCodeMailDispatcher implements VerificationCodeMailDispatcher {
 
 	private final JavaMailSender javaMailSender;
 

@@ -9,7 +9,7 @@ public class IssueVerificationCodeProcessor {
 
 	private final VerificationCodeWriter verificationCodeWriter;
 
-	public VerificationCode issue(final String toEmail) {
+	public VerificationCode process(final String toEmail) {
 		VerificationCode verificationCode = VerificationCode.issueVerificationCode(toEmail);
 		verificationCodeWriter.save(verificationCode);
 

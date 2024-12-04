@@ -46,7 +46,7 @@ public final class MemberCommandApi {
 	public ApiResult<Void> issueVerificationCode(
 		@RequestBody @Valid IssueVerificationRequest request
 	) {
-		memberAuthenticationFacade.issueVerification(request.toEmail());
+		memberAuthenticationFacade.issueVerificationCode(request.toEmail());
 		return ApiResult.success();
 	}
 

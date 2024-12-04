@@ -10,7 +10,7 @@ public final class VerificationCodeVerifier {
 
 	private final VerificationCodeReader verificationCodeReader;
 
-	public void verifyCode(final String email, final String inputCode) {
+	public void verify(final String email, final String inputCode) {
 		var storedCode = verificationCodeReader.findByToEmail(email)
 			.orElseThrow(() -> new VerificationCodeNotFoundException(email));
 

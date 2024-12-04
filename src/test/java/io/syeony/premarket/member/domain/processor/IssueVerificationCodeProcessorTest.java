@@ -28,13 +28,13 @@ class IssueVerificationCodeProcessorTest extends UnitTestSupport {
 
 	@Test
 	@DisplayName(value = "Save verification code and return verification code generated this method")
-	void issue_verificationCode() {
+	void process_verificationCode() {
 		// given
 		String toEmail = "waterkite94@gmail.com";
 		VerificationCode verificationCode = VerificationCode.issueVerificationCode(toEmail);
 
 		// when
-		issueVerificationCodeProcessor.issue(toEmail);
+		issueVerificationCodeProcessor.process(toEmail);
 
 		// then
 		assertThat(verificationCode.getToEmail()).isEqualTo(toEmail);

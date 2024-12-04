@@ -12,8 +12,8 @@ import io.syeony.premarket.member.domain.processor.IssueVerificationCodeProcesso
 import io.syeony.premarket.member.domain.processor.RefreshTokenVerifier;
 import io.syeony.premarket.member.domain.processor.RegisterMemberProcessor;
 import io.syeony.premarket.member.domain.processor.VerificationCodeVerifier;
-import io.syeony.premarket.member.infrastructure.smpt.MailDispatcher;
-import io.syeony.premarket.member.infrastructure.smpt.SmtpMailDispatcher;
+import io.syeony.premarket.member.infrastructure.smpt.SmtpVerificationCodeMailDispatcher;
+import io.syeony.premarket.member.infrastructure.smpt.VerificationCodeMailDispatcher;
 import lombok.RequiredArgsConstructor;
 
 @Import({
@@ -29,8 +29,8 @@ import lombok.RequiredArgsConstructor;
 public class MemberModuleConfiguration {
 
 	@Bean
-	public MailDispatcher mailDispatcher(JavaMailSender mailSender) {
-		return new SmtpMailDispatcher(mailSender);
+	public VerificationCodeMailDispatcher mailDispatcher(JavaMailSender mailSender) {
+		return new SmtpVerificationCodeMailDispatcher(mailSender);
 	}
 
 	@Bean

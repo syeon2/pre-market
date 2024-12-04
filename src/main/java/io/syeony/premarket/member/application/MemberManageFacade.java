@@ -18,7 +18,7 @@ public class MemberManageFacade {
 
 	@Transactional
 	public MemberId registerMember(final Member member, final String verificationCode) {
-		verificationCodeVerifier.verifyCode(member.getEmail(), verificationCode);
+		verificationCodeVerifier.verify(member.getEmail(), verificationCode);
 		return registerMemberProcessor.register(member);
 	}
 

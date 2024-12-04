@@ -39,8 +39,8 @@ public class MemberAuthenticationFacade {
 	}
 
 	@Transactional
-	public void issueVerification(final String toEmail) {
-		VerificationCode verificationCode = issueVerificationCodeProcessor.issue(toEmail);
+	public void issueVerificationCode(final String toEmail) {
+		VerificationCode verificationCode = issueVerificationCodeProcessor.process(toEmail);
 		publisher.publishEvent(
 			VerificationCodeEvent.createEvent(verificationCode.getToEmail(), verificationCode.getCode()));
 	}

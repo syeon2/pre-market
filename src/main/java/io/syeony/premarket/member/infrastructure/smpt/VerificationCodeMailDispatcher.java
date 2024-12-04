@@ -1,6 +1,6 @@
 package io.syeony.premarket.member.infrastructure.smpt;
 
-public interface MailDispatcher {
+public interface VerificationCodeMailDispatcher {
 
 	void dispatch(MailMessage message);
 }

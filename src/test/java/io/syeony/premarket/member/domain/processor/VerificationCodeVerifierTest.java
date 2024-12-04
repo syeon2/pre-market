@@ -9,6 +9,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 
 import io.syeony.premarket.UnitTestSupport;
 import io.syeony.premarket.member.domain.model.VerificationCode;
@@ -29,7 +30,7 @@ class VerificationCodeVerifierTest extends UnitTestSupport {
 
 	@Test
 	@DisplayName(value = "Verify stored verification code and input code from external api")
-	void verifyCode() {
+	void verify() {
 		// given
 		final String email = "waterkite94@gmail.com";
 		final String inputCode = "000111";
@@ -38,9 +39,9 @@ class VerificationCodeVerifierTest extends UnitTestSupport {
 			.willReturn(Optional.of(VerificationCode.of(email, inputCode)));
 
 		// when
-		verificationCodeVerifier.verifyCode(email, inputCode);
+		verificationCodeVerifier.verify(email, inputCode);
 
 		// then
-		verify(verificationCodeReader, times(1)).findByToEmail(email);
+		Mockito.verify(verificationCodeReader, times(1)).findByToEmail(email);
 	}
 }
