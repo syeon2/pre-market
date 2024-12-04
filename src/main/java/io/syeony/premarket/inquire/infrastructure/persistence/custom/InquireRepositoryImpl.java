@@ -13,11 +13,11 @@ import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
-import io.syeony.premarket.account.infrastructure.persistence.entity.QMemberEntity;
 import io.syeony.premarket.inquire.domain.model.Inquire;
 import io.syeony.premarket.inquire.domain.model.Writer;
 import io.syeony.premarket.inquire.infrastructure.persistence.entity.InquireEntity;
 import io.syeony.premarket.inquire.infrastructure.persistence.entity.QInquireEntity;
+import io.syeony.premarket.member.infrastructure.persistence.entity.QMemberEntity;
 import io.syeony.premarket.support.common.AuditTimestamps;
 import lombok.RequiredArgsConstructor;
 

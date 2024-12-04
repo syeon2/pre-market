@@ -12,13 +12,13 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
 import io.syeony.premarket.UnitTestSupport;
-import io.syeony.premarket.account.domain.processor.reader.AccountReader;
 import io.syeony.premarket.item.domain.ItemStockHandler;
 import io.syeony.premarket.item.domain.model.Cost;
 import io.syeony.premarket.item.domain.model.Item;
 import io.syeony.premarket.item.domain.model.ItemType;
 import io.syeony.premarket.item.domain.model.Seller;
 import io.syeony.premarket.item.domain.processor.writer.ItemWriter;
+import io.syeony.premarket.member.domain.processor.reader.MemberReader;
 import io.syeony.premarket.support.error.exception.InvalidCredentialsException;
 
 class RegisterItemProcessorTest extends UnitTestSupport {
@@ -30,14 +30,14 @@ class RegisterItemProcessorTest extends UnitTestSupport {
 	private ItemWriter itemWriter = mock(ItemWriter.class);
 
 	@Mock
-	private AccountReader accountReader = mock(AccountReader.class);
+	private MemberReader memberReader = mock(MemberReader.class);
 
 	@Mock
 	private ItemStockHandler itemStockHandler = mock(ItemStockHandler.class);
 
 	@BeforeEach
 	void setUp() {
-		registerItemProcessor = new RegisterItemProcessor(itemWriter, itemStockHandler, accountReader);
+		registerItemProcessor = new RegisterItemProcessor(itemWriter, itemStockHandler, memberReader);
 	}
 
 	@Test
@@ -48,14 +48,14 @@ class RegisterItemProcessorTest extends UnitTestSupport {
 		Item item = createItemDomain(memberId, ItemType.NORMAL_ORDER, null);
 
 		Long itemId = 1L;
-		given(accountReader.existsByMemberId(memberId)).willReturn(true);
+		given(memberReader.existsByMemberId(memberId)).willReturn(true);
 		given(itemWriter.register(any(Item.class))).willReturn(itemId);
 
 		// when
 		Long savedItemId = registerItemProcessor.register(item);
 
 		// then
-		verify(accountReader, times(1)).existsByMemberId(memberId);
+		verify(memberReader, times(1)).existsByMemberId(memberId);
 		verify(itemWriter, times(1)).register(any(Item.class));
 		assertThat(itemId).isEqualTo(savedItemId);
 	}
@@ -82,7 +82,7 @@ class RegisterItemProcessorTest extends UnitTestSupport {
 		String memberId = "memberId";
 		Item item = createItemDomain(memberId, ItemType.NORMAL_ORDER, null);
 
-		given(accountReader.existsByMemberId(memberId)).willReturn(false);
+		given(memberReader.existsByMemberId(memberId)).willReturn(false);
 
 		// when // then
 		assertThatThrownBy(() -> registerItemProcessor.register(item))

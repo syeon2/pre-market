@@ -9,10 +9,10 @@ endif::[]
 :toclevels: 2
 :sectlinks:
 
-[[Account-APIs]]
-== Account APIs
+[[Member-APIs]]
+== Member APIs
 
-include::{docdir}/parts/account.adoc[]
+include::{docdir}/parts/member.adoc[]
 
 [[Category-APIs]]
 == Category APIs

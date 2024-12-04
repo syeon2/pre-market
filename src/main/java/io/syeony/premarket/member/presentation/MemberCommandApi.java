@@ -1,0 +1,69 @@
+package io.syeony.premarket.member.presentation;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
+
+import io.syeony.premarket.member.application.MemberFacade;
+import io.syeony.premarket.member.presentation.request.IssueVerificationRequest;
+import io.syeony.premarket.member.presentation.request.LoginRequest;
+import io.syeony.premarket.member.presentation.request.RegisterMemberRequest;
+import io.syeony.premarket.member.presentation.request.RenewTokensRequest;
+import io.syeony.premarket.member.presentation.response.AuthorizeTokenResponse;
+import io.syeony.premarket.member.presentation.response.RegisterMemberResponse;
+import io.syeony.premarket.support.common.ApiResult;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+
+@RestController
+@RequestMapping(
+	value = "/api",
+	produces = MediaType.APPLICATION_JSON_VALUE,
+	consumes = MediaType.APPLICATION_JSON_VALUE
+)
+@RequiredArgsConstructor
+public final class MemberCommandApi {
+
+	private final MemberFacade memberFacade;
+
+	@PostMapping("/v1/members")
+	@ResponseStatus(HttpStatus.CREATED)
+	public ApiResult<RegisterMemberResponse> registerMember(
+		@RequestBody @Valid RegisterMemberRequest request
+	) {
+		var memberId = memberFacade.register(request.toDomain(), request.verificationCode());
+		return ApiResult.success(new RegisterMemberResponse(memberId.value()));
+	}
+
+	@PostMapping("/v1/members/email-verification")
+	@ResponseStatus(HttpStatus.ACCEPTED)
+	public ApiResult<Void> issueVerificationCode(
+		@RequestBody @Valid IssueVerificationRequest request
+	) {
+		memberFacade.issueVerification(request.toEmail());
+		return ApiResult.success();
+	}
+
+	@PostMapping("/v1/members/login")
+	@ResponseStatus(HttpStatus.OK)
+	public ApiResult<AuthorizeTokenResponse> loginMember(
+		@RequestBody @Valid LoginRequest request
+	) {
+		var token = memberFacade.authenticateMember(request.email(), request.password());
+		return ApiResult.success(new AuthorizeTokenResponse(token.accessToken(), token.refreshToken()));
+	}
+
+	@PostMapping("/v1/members/refresh-token")
+	@ResponseStatus(HttpStatus.OK)
+	public ApiResult<AuthorizeTokenResponse> renewToken(
+		@RequestBody @Valid RenewTokensRequest request
+	) {
+		var token = memberFacade.authenticateRefreshToken(request.email(), request.refreshToken());
+		return ApiResult.success(new AuthorizeTokenResponse(token.accessToken(), token.refreshToken()));
+	}
+
+}

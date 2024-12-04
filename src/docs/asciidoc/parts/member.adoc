@@ -1,0 +1,50 @@
+[[Register-Member-API]]
+=== Register Member API
+
+==== API Request
+
+include::{snippets}/member-register/http-request.adoc[]
+include::{snippets}/member-register/request-fields.adoc[]
+
+==== API Response
+
+include::{snippets}/member-register/http-response.adoc[]
+include::{snippets}/member-register/response-fields.adoc[]
+
+[[Send-Email-Verification-Code-API]]
+=== Send Email Verification Code API
+
+==== API Request
+
+include::{snippets}/member-email-verification/http-request.adoc[]
+include::{snippets}/member-email-verification/request-fields.adoc[]
+
+==== API Response
+
+include::{snippets}/member-email-verification/http-response.adoc[]
+
+[[Login-member-API]]
+=== Login member API
+
+==== API Request
+
+include::{snippets}/member-login/http-request.adoc[]
+include::{snippets}/member-login/request-fields.adoc[]
+
+==== API Response
+
+include::{snippets}/member-login/http-response.adoc[]
+include::{snippets}/member-login/response-fields.adoc[]
+
+[[Renew-Token-API]]
+=== Renew Token API
+
+==== API Request
+
+include::{snippets}/member-renew-token/http-request.adoc[]
+include::{snippets}/member-renew-token/request-fields.adoc[]
+
+==== API Response
+
+include::{snippets}/member-renew-token/http-response.adoc[]
+include::{snippets}/member-renew-token/response-fields.adoc[]

@@ -49,7 +49,7 @@ public final class InquireCommandApi {
 	}
 
 	@PostMapping("/v1/items/inquires/comment")
-	@ResponseStatus(HttpStatus.OK)
+	@ResponseStatus(HttpStatus.CREATED)
 	public ApiResult<Void> createInquireComment(
 		@RequestBody @Valid CreateInquireCommentRequest request
 	) {

@@ -12,13 +12,13 @@ import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
-import io.syeony.premarket.account.infrastructure.persistence.entity.QMemberEntity;
 import io.syeony.premarket.item.domain.model.Category;
 import io.syeony.premarket.item.domain.model.Cost;
 import io.syeony.premarket.item.domain.model.Item;
 import io.syeony.premarket.item.domain.model.Seller;
 import io.syeony.premarket.item.infrastructure.persistence.entity.QCategoryEntity;
 import io.syeony.premarket.item.infrastructure.persistence.entity.QItemEntity;
+import io.syeony.premarket.member.infrastructure.persistence.entity.QMemberEntity;
 import io.syeony.premarket.support.common.AuditTimestamps;
 import io.syeony.premarket.support.common.EntityStatus;
 import lombok.RequiredArgsConstructor;

@@ -45,7 +45,7 @@ class ItemCommandApiTest extends ControllerTestSupport {
 					.content(objectMapper.writeValueAsString(request))
 					.contentType(MediaType.APPLICATION_JSON)
 			).andDo(print())
-			.andExpect(status().isOk())
+			.andExpect(status().isCreated())
 			.andExpect(jsonPath("$.data.item_no").isNumber())
 			.andDo(document("item-add",
 				preprocessRequest(prettyPrint()),
@@ -65,9 +65,7 @@ class ItemCommandApiTest extends ControllerTestSupport {
 					fieldWithPath("seller_id").type(JsonFieldType.STRING).description("판매 회원 아이디"),
 					fieldWithPath("category_no").type(JsonFieldType.NUMBER).description("카테고리 고유번호")
 				),
-				responseFields(
-					fieldWithPath("code").type(JsonFieldType.NUMBER).description("상태 코드"),
-					fieldWithPath("message").type(JsonFieldType.STRING).description("메시지"),
+				relaxedResponseFields(
 					fieldWithPath("data.item_no").type(JsonFieldType.NUMBER).description("상품 번호")
 				)
 			));

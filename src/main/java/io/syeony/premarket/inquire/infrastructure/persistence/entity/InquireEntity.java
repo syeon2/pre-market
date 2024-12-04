@@ -13,17 +13,14 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
-@Builder
 @Entity
 @Table(name = "inquire")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class InquireEntity extends BaseEntity {
 
 	@Id
@@ -53,5 +50,15 @@ public class InquireEntity extends BaseEntity {
 
 	public void deleteInquireComment(Long commentNo) {
 		getInquireComment().removeIf(entity -> entity.getId().equals(commentNo));
+	}
+
+	@Builder
+	private InquireEntity(Long id, String message, String memberId, Long itemNo,
+		List<InquireCommentEntity> inquireComment) {
+		this.id = id;
+		this.message = message;
+		this.memberId = memberId;
+		this.itemNo = itemNo;
+		this.inquireComment = inquireComment;
 	}
 }
