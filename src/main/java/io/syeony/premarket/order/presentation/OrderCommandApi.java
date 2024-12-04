@@ -2,10 +2,10 @@ package io.syeony.premarket.order.presentation;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.syeony.premarket.order.application.OrderFacade;
@@ -28,20 +28,20 @@ public final class OrderCommandApi {
 	private final OrderFacade orderFacade;
 
 	@PostMapping("/v1/orders/normal")
-	public ResponseEntity<ApiResult<CreateOrderResponse>> createOrder(
+	@ResponseStatus(HttpStatus.CREATED)
+	public ApiResult<CreateOrderResponse> createOrder(
 		@RequestBody @Valid CreateNormalOrderRequest request
 	) {
 		var orderId = orderFacade.createNormalOrder(request.toDomain());
-		return ResponseEntity.status(HttpStatus.CREATED)
-			.body(ApiResult.created(new CreateOrderResponse(orderId)));
+		return ApiResult.success(new CreateOrderResponse(orderId));
 	}
 
 	@PostMapping("/v1/orders/pre")
-	public ResponseEntity<ApiResult<CreateOrderResponse>> createPreOrder(
+	@ResponseStatus(HttpStatus.CREATED)
+	public ApiResult<CreateOrderResponse> createPreOrder(
 		@RequestBody @Valid CreatePreOrderRequest request
 	) {
 		var orderId = orderFacade.createPreOrder(request.toDomain());
-		return ResponseEntity.status(HttpStatus.CREATED)
-			.body(ApiResult.created(new CreateOrderResponse(orderId)));
+		return ApiResult.success(new CreateOrderResponse(orderId));
 	}
 }

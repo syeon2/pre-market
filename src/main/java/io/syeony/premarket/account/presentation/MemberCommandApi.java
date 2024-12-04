@@ -2,13 +2,13 @@ package io.syeony.premarket.account.presentation;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import io.syeony.premarket.account.application.AccountFacade;
+import io.syeony.premarket.account.application.MemberFacade;
 import io.syeony.premarket.account.presentation.request.IssueVerificationRequest;
 import io.syeony.premarket.account.presentation.request.LoginRequest;
 import io.syeony.premarket.account.presentation.request.RegisterAccountRequest;
@@ -26,43 +26,44 @@ import lombok.RequiredArgsConstructor;
 	consumes = MediaType.APPLICATION_JSON_VALUE
 )
 @RequiredArgsConstructor
-public final class AccountCommandApi {
+public final class MemberCommandApi {
 
-	private final AccountFacade accountFacade;
+	private final MemberFacade memberFacade;
 
-	@PostMapping("/v1/accounts")
-	public ResponseEntity<ApiResult<RegisterAccountResponse>> register(
+	@PostMapping("/v1/members")
+	@ResponseStatus(HttpStatus.CREATED)
+	public ApiResult<RegisterAccountResponse> registerMember(
 		@RequestBody @Valid RegisterAccountRequest request
 	) {
-		var memberId = accountFacade.register(request.toDomain(), request.verificationCode());
-		return ResponseEntity.status(HttpStatus.CREATED)
-			.body(ApiResult.created(new RegisterAccountResponse(memberId.value())));
+		var memberId = memberFacade.register(request.toDomain(), request.verificationCode());
+		return ApiResult.success(new RegisterAccountResponse(memberId.value()));
 	}
 
-	@PostMapping("/v1/accounts/email-verification")
-	public ResponseEntity<Void> issueVerificationCode(
+	@PostMapping("/v1/members/email-verification")
+	@ResponseStatus(HttpStatus.ACCEPTED)
+	public ApiResult<Void> issueVerificationCode(
 		@RequestBody @Valid IssueVerificationRequest request
 	) {
-		accountFacade.issueVerification(request.toEmail());
-		return ResponseEntity.status(HttpStatus.ACCEPTED).build();
+		memberFacade.issueVerification(request.toEmail());
+		return ApiResult.success();
 	}
 
-	@PostMapping("/v1/accounts/login")
-	public ResponseEntity<ApiResult<AuthorizeTokenResponse>> loginAccount(
+	@PostMapping("/v1/members/login")
+	@ResponseStatus(HttpStatus.OK)
+	public ApiResult<AuthorizeTokenResponse> loginAccount(
 		@RequestBody @Valid LoginRequest request
 	) {
-		var token = accountFacade.authenticateAccount(request.email(), request.password());
-		return ResponseEntity.ok()
-			.body(ApiResult.ok(new AuthorizeTokenResponse(token.accessToken(), token.refreshToken())));
+		var token = memberFacade.authenticateAccount(request.email(), request.password());
+		return ApiResult.success(new AuthorizeTokenResponse(token.accessToken(), token.refreshToken()));
 	}
 
-	@PostMapping("/v1/accounts/refresh-token")
-	public ResponseEntity<ApiResult<AuthorizeTokenResponse>> renewToken(
+	@PostMapping("/v1/members/refresh-token")
+	@ResponseStatus(HttpStatus.OK)
+	public ApiResult<AuthorizeTokenResponse> renewToken(
 		@RequestBody @Valid RenewTokensRequest request
 	) {
-		var token = accountFacade.authenticateRefreshToken(request.email(), request.refreshToken());
-		return ResponseEntity.ok()
-			.body(ApiResult.ok(new AuthorizeTokenResponse(token.accessToken(), token.refreshToken())));
+		var token = memberFacade.authenticateRefreshToken(request.email(), request.refreshToken());
+		return ApiResult.success(new AuthorizeTokenResponse(token.accessToken(), token.refreshToken()));
 	}
 
 }

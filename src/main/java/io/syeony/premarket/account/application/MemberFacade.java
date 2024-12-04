@@ -19,7 +19,7 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class AccountFacade {
+public class MemberFacade {
 
 	private final RegisterAccountProcessor registerAccountProcessor;
 	private final IssueVerificationCodeProcessor issueVerificationCodeProcessor;

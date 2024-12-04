@@ -1,9 +1,10 @@
 package io.syeony.premarket.item.persentation;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.syeony.premarket.item.application.CategoryFacade;
@@ -23,8 +24,8 @@ public final class CategoryQueryApi {
 	private final CategoryFacade categoryFacade;
 
 	@GetMapping("/v1/categories")
-	public ResponseEntity<ApiResult<RetrieveCategoriesResponse>> retrieveAllCategories() {
-		return ResponseEntity.ok()
-			.body(ApiResult.ok(RetrieveCategoriesResponse.from(categoryFacade.retrieveAllCategories())));
+	@ResponseStatus(HttpStatus.OK)
+	public ApiResult<RetrieveCategoriesResponse> retrieveAllCategories() {
+		return ApiResult.success(RetrieveCategoriesResponse.from(categoryFacade.retrieveAllCategories()));
 	}
 }
