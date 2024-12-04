@@ -7,6 +7,8 @@ import java.util.UUID;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import io.syeony.premarket.member.domain.model.vo.Address;
 import io.syeony.premarket.member.domain.model.vo.MemberId;
@@ -49,7 +51,7 @@ class MemberTest {
 
 	@Test
 	@DisplayName(value = "Register with encrypted password")
-	void registerWithEncryptedPassword_shouldReturnNewMemberWithEncodedPassword() {
+	void registerCustomerWithEncryptedPassword_shouldReturnNewMemberWithEncodedPassword() {
 		// given
 		String email = "waterkite94@gmail.com";
 		Password password = new Password("rawPassword", null);
@@ -57,18 +59,17 @@ class MemberTest {
 		String phoneNumber = "00011112222";
 		Address address = new Address("address1", "address2", "zipcode");
 		MemberRole role = MemberRole.NORMAL_CUSTOMER;
+		PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
 		Member member = createMemberDomain(
 			MemberId.of("memberId"), email, password, name, phoneNumber, address, role, null);
 
-		String newEncodedPassword = "encryptedPassword";
-
 		// when
-		Member newMember = member.registerWithEncryptedPassword(newEncodedPassword);
+		Member newMember = member.registerCustomer(passwordEncoder::encode);
 
 		// then
 		assertThat(newMember).isNotSameAs(member);
-		assertThat(newMember.getPassword().encryptPassword()).isEqualTo(newEncodedPassword);
+		assertThat(newMember.getPassword().encryptPassword()).isNotEqualTo(password.rawPassword());
 		assertThat(newMember.getEmail()).isEqualTo(email);
 		assertThat(newMember.getMemberId()).isNotNull();
 		assertThat(newMember.getRole()).isEqualTo(MemberRole.NORMAL_CUSTOMER);

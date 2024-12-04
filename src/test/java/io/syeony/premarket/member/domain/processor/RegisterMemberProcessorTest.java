@@ -40,15 +40,14 @@ class RegisterMemberProcessorTest extends UnitTestSupport {
 
 	@Test
 	@DisplayName(value = "Should successfully register when the email and phone number are valid")
-	void register_shouldReturnMemberId_whenEmailAndPhoneNumberAreValid() {
+	void register_Customer_shouldReturnMemberId_whenEmailAndPhoneNumberAreValid() {
 		// given
 		Member member = mock(Member.class);
 
 		when(member.getEmail()).thenReturn("waterkite94@gmail.com");
 		when(member.getPhoneNumber()).thenReturn("01011112222");
 		when(member.getPassword()).thenReturn(new Password("rawPassword", null));
-		when(passwordEncryptor.encrypt(any())).thenReturn("encryptedPassword");
-		when(member.registerWithEncryptedPassword("encryptedPassword")).thenReturn(member);
+		when(member.registerCustomer(any())).thenReturn(member);
 		when(memberWriter.save(member)).thenReturn(new MemberId("new-member-id"));
 
 		// when
@@ -59,13 +58,12 @@ class RegisterMemberProcessorTest extends UnitTestSupport {
 		assertEquals("new-member-id", result.value());
 		verify(memberReader).existsByEmail("waterkite94@gmail.com");
 		verify(memberReader).existsByPhoneNumber("01011112222");
-		verify(passwordEncryptor).encrypt("rawPassword");
 		verify(memberWriter).save(member);
 	}
 
 	@Test
 	@DisplayName("Should throw DuplicatedEmailException when the email already exists")
-	void register_shouldThrowDuplicatedEmailException_whenEmailAlreadyExists() {
+	void register_Customer_shouldThrowDuplicatedEmailException_whenEmailAlreadyExists() {
 		// given
 		Member member = mock(Member.class);
 		when(member.getEmail()).thenReturn("waterkite94@gmail.com");
@@ -83,7 +81,7 @@ class RegisterMemberProcessorTest extends UnitTestSupport {
 
 	@Test
 	@DisplayName("Should throw DuplicatedPhoneNumberException when the phone number already exists")
-	void register_shouldThrowDuplicatedPhoneNumberException_whenPhoneNumberAlreadyExists() {
+	void register_Customer_shouldThrowDuplicatedPhoneNumberException_whenPhoneNumberAlreadyExists() {
 		// given
 		Member member = mock(Member.class);
 		when(member.getEmail()).thenReturn("waterkite94@gmail.com");

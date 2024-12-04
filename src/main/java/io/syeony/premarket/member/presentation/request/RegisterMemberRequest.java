@@ -42,7 +42,7 @@ public record RegisterMemberRequest(
 	public Member toDomain() {
 		return Member.builder()
 			.email(email)
-			.password(new Password(password, null))
+			.password(Password.ofRawPassword(password))
 			.name(name)
 			.phoneNumber(phoneNumber)
 			.address(addressRequest.toDomain())

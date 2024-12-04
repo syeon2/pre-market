@@ -12,14 +12,17 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
 @Entity
+@Builder
 @Table(name = "member")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class MemberEntity extends BaseEntity {
 
 	@Id
@@ -58,20 +61,4 @@ public class MemberEntity extends BaseEntity {
 	@Enumerated(value = EnumType.STRING)
 	@Column(name = "status", columnDefinition = "varchar(30)", nullable = false)
 	private EntityStatus status;
-
-	@Builder
-	private MemberEntity(Long id, String memberId, String email, String password, String name, String phoneNumber,
-		String baseAddress, String addressDetail, String zipcode, MemberRole role, EntityStatus status) {
-		this.id = id;
-		this.memberId = memberId;
-		this.email = email;
-		this.password = password;
-		this.name = name;
-		this.phoneNumber = phoneNumber;
-		this.baseAddress = baseAddress;
-		this.addressDetail = addressDetail;
-		this.zipcode = zipcode;
-		this.role = role;
-		this.status = status;
-	}
 }

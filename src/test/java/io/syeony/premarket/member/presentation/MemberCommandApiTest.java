@@ -14,7 +14,8 @@ import org.springframework.http.MediaType;
 import org.springframework.restdocs.payload.JsonFieldType;
 
 import io.syeony.premarket.ControllerTestSupport;
-import io.syeony.premarket.member.application.MemberFacade;
+import io.syeony.premarket.member.application.MemberAuthenticationFacade;
+import io.syeony.premarket.member.application.MemberManageFacade;
 import io.syeony.premarket.member.domain.model.AuthorizationToken;
 import io.syeony.premarket.member.domain.model.vo.MemberId;
 import io.syeony.premarket.member.presentation.request.IssueVerificationRequest;
@@ -25,20 +26,21 @@ import io.syeony.premarket.member.presentation.request.vo.AddressRequest;
 
 class MemberCommandApiTest extends ControllerTestSupport {
 
-	private final MemberFacade memberFacade = mock(MemberFacade.class);
+	private final MemberManageFacade memberManageFacade = mock(MemberManageFacade.class);
+	private final MemberAuthenticationFacade memberAuthenticationFacade = mock(MemberAuthenticationFacade.class);
 
 	@Override
 	protected Object initController() {
-		return new MemberCommandApi(memberFacade);
+		return new MemberCommandApi(memberManageFacade, memberAuthenticationFacade);
 	}
 
 	@Test
 	@DisplayName(value = "Register member successfully when all required fields are provided")
-	void registerMemberApi() throws Exception {
+	void registerCustomerMemberApi() throws Exception {
 		// given
-		RegisterMemberRequest request = createRegisterMemberRequest();
+		RegisterMemberRequest request = createRegisterCustomerMemberRequest();
 
-		given(memberFacade.register(request.toDomain(), request.verificationCode()))
+		given(memberManageFacade.registerMember(request.toDomain(), request.verificationCode()))
 			.willReturn(new MemberId("memberId"));
 
 		// when // then
@@ -96,7 +98,7 @@ class MemberCommandApiTest extends ControllerTestSupport {
 		// given
 		LoginRequest request = new LoginRequest("waterkite94@gmail.com", "rawPassword");
 
-		given(memberFacade.authenticateMember(request.email(), request.password()))
+		given(memberAuthenticationFacade.authenticateMember(request.email(), request.password()))
 			.willReturn(new AuthorizationToken("access_token_value", "refresh_token_value"));
 
 		// when // then
@@ -127,7 +129,7 @@ class MemberCommandApiTest extends ControllerTestSupport {
 		RenewTokensRequest request =
 			new RenewTokensRequest("waterkite94@gmail.com", "refresh_token_value");
 
-		given(memberFacade.authenticateRefreshToken(request.email(), request.refreshToken()))
+		given(memberAuthenticationFacade.renewToken(request.email(), request.refreshToken()))
 			.willReturn(new AuthorizationToken("access_token_value", "refresh_token_value"));
 
 		// when // then
@@ -151,7 +153,7 @@ class MemberCommandApiTest extends ControllerTestSupport {
 			));
 	}
 
-	private RegisterMemberRequest createRegisterMemberRequest() {
+	private RegisterMemberRequest createRegisterCustomerMemberRequest() {
 		return new RegisterMemberRequest(
 			"waterkite94@gmail.com",
 			"rawPassword",

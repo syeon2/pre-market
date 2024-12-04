@@ -8,7 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import io.syeony.premarket.member.application.MemberFacade;
+import io.syeony.premarket.member.application.MemberAuthenticationFacade;
+import io.syeony.premarket.member.application.MemberManageFacade;
 import io.syeony.premarket.member.presentation.request.IssueVerificationRequest;
 import io.syeony.premarket.member.presentation.request.LoginRequest;
 import io.syeony.premarket.member.presentation.request.RegisterMemberRequest;
@@ -28,14 +29,15 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public final class MemberCommandApi {
 
-	private final MemberFacade memberFacade;
+	private final MemberManageFacade memberManageFacade;
+	private final MemberAuthenticationFacade memberAuthenticationFacade;
 
 	@PostMapping("/v1/members")
 	@ResponseStatus(HttpStatus.CREATED)
 	public ApiResult<RegisterMemberResponse> registerMember(
 		@RequestBody @Valid RegisterMemberRequest request
 	) {
-		var memberId = memberFacade.register(request.toDomain(), request.verificationCode());
+		var memberId = memberManageFacade.registerMember(request.toDomain(), request.verificationCode());
 		return ApiResult.success(new RegisterMemberResponse(memberId.value()));
 	}
 
@@ -44,7 +46,7 @@ public final class MemberCommandApi {
 	public ApiResult<Void> issueVerificationCode(
 		@RequestBody @Valid IssueVerificationRequest request
 	) {
-		memberFacade.issueVerification(request.toEmail());
+		memberAuthenticationFacade.issueVerification(request.toEmail());
 		return ApiResult.success();
 	}
 
@@ -53,7 +55,7 @@ public final class MemberCommandApi {
 	public ApiResult<AuthorizeTokenResponse> loginMember(
 		@RequestBody @Valid LoginRequest request
 	) {
-		var token = memberFacade.authenticateMember(request.email(), request.password());
+		var token = memberAuthenticationFacade.authenticateMember(request.email(), request.password());
 		return ApiResult.success(new AuthorizeTokenResponse(token.accessToken(), token.refreshToken()));
 	}
 
@@ -62,7 +64,7 @@ public final class MemberCommandApi {
 	public ApiResult<AuthorizeTokenResponse> renewToken(
 		@RequestBody @Valid RenewTokensRequest request
 	) {
-		var token = memberFacade.authenticateRefreshToken(request.email(), request.refreshToken());
+		var token = memberAuthenticationFacade.renewToken(request.email(), request.refreshToken());
 		return ApiResult.success(new AuthorizeTokenResponse(token.accessToken(), token.refreshToken()));
 	}
 

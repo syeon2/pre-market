@@ -20,9 +20,8 @@ public class RegisterMemberProcessor {
 		checkEmailIsUnique(member.getEmail());
 		checkPhoneNumberIsUnique(member.getPhoneNumber());
 
-		String encodedPassword = encryptPassword(member.getPassword().rawPassword());
 		return memberWriter.save(
-			member.registerWithEncryptedPassword(encodedPassword));
+			member.registerCustomer(passwordEncryptor::encrypt));
 	}
 
 	private void checkEmailIsUnique(final String email) {

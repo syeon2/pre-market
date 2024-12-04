@@ -1,6 +1,7 @@
 package io.syeony.premarket.member.domain.model;
 
 import java.util.UUID;
+import java.util.function.Function;
 
 import io.syeony.premarket.member.domain.model.vo.Address;
 import io.syeony.premarket.member.domain.model.vo.MemberId;
@@ -44,11 +45,11 @@ public final class Member {
 		this.status = status != null ? status : EntityStatus.ALIVE;
 	}
 
-	public Member registerWithEncryptedPassword(String encodedPassword) {
+	public Member registerCustomer(Function<String, String> encrypt) {
 		return Member.builder()
 			.memberId(generateMemberId())
 			.email(email)
-			.password(new Password(this.password.rawPassword(), encodedPassword))
+			.password(encryptPassword(encrypt))
 			.name(name)
 			.phoneNumber(phoneNumber)
 			.address(address)
@@ -59,5 +60,10 @@ public final class Member {
 
 	private MemberId generateMemberId() {
 		return MemberId.of(UUID.randomUUID().toString());
+	}
+
+	private Password encryptPassword(Function<String, String> encrypt) {
+		String rawPassword = this.password.rawPassword();
+		return Password.from(rawPassword, encrypt.apply(rawPassword));
 	}
 }
