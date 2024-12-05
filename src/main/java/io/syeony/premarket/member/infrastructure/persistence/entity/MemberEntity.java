@@ -36,7 +36,7 @@ public class MemberEntity extends BaseEntity {
 	@Column(name = "email", columnDefinition = "varchar(60)", nullable = false, unique = true)
 	private String email;
 
-	@Column(name = "password", columnDefinition = "varchar(60)", nullable = false)
+	@Column(name = "password", columnDefinition = "varchar(255)", nullable = false)
 	private String password;
 
 	@Column(name = "name", columnDefinition = "varchar(30)", nullable = false)

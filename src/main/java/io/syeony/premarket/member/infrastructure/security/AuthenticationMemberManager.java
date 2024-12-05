@@ -15,7 +15,7 @@ public class AuthenticationMemberManager implements AuthenticateMember {
 	private final AuthenticationManager authenticationManager;
 
 	@Override
-	public boolean authenticate(String email, String password) {
+	public boolean authenticate(final String email, final String password) {
 		Authentication authenticate = authenticationManager.authenticate(
 			new UsernamePasswordAuthenticationToken(email, password));
 

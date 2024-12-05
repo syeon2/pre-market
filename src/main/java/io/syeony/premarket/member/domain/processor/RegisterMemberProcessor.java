@@ -21,7 +21,7 @@ public class RegisterMemberProcessor {
 		checkPhoneNumberIsUnique(member.getPhoneNumber());
 
 		return memberWriter.save(
-			member.registerCustomer(passwordEncryptor::encrypt));
+			member.register(passwordEncryptor::encrypt));
 	}
 
 	private void checkEmailIsUnique(final String email) {

@@ -51,7 +51,7 @@ class MemberTest {
 
 	@Test
 	@DisplayName(value = "Register with encrypted password")
-	void registerCustomerWithEncryptedPassword_shouldReturnNewMemberWithEncodedPassword() {
+	void register_shouldReturnNewWithEncodedPassword() {
 		// given
 		String email = "waterkite94@gmail.com";
 		Password password = new Password("rawPassword", null);
@@ -65,7 +65,7 @@ class MemberTest {
 			MemberId.of("memberId"), email, password, name, phoneNumber, address, role, null);
 
 		// when
-		Member newMember = member.registerCustomer(passwordEncoder::encode);
+		Member newMember = member.register(passwordEncoder::encode);
 
 		// then
 		assertThat(newMember).isNotSameAs(member);

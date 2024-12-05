@@ -14,7 +14,7 @@ import io.syeony.premarket.member.presentation.request.IssueVerificationRequest;
 import io.syeony.premarket.member.presentation.request.LoginRequest;
 import io.syeony.premarket.member.presentation.request.RegisterMemberRequest;
 import io.syeony.premarket.member.presentation.request.RenewTokensRequest;
-import io.syeony.premarket.member.presentation.response.AuthorizeTokenResponse;
+import io.syeony.premarket.member.presentation.response.LoginResponse;
 import io.syeony.premarket.member.presentation.response.RegisterMemberResponse;
 import io.syeony.premarket.support.common.ApiResult;
 import jakarta.validation.Valid;
@@ -52,20 +52,20 @@ public final class MemberCommandApi {
 
 	@PostMapping("/v1/members/login")
 	@ResponseStatus(HttpStatus.OK)
-	public ApiResult<AuthorizeTokenResponse> loginMember(
+	public ApiResult<LoginResponse> loginMember(
 		@RequestBody @Valid LoginRequest request
 	) {
-		var token = memberAuthenticationFacade.authenticateMember(request.email(), request.password());
-		return ApiResult.success(new AuthorizeTokenResponse(token.accessToken(), token.refreshToken()));
+		var token = memberAuthenticationFacade.loginMember(request.email(), request.password());
+		return ApiResult.success(new LoginResponse(token.accessToken(), token.refreshToken()));
 	}
 
 	@PostMapping("/v1/members/refresh-token")
 	@ResponseStatus(HttpStatus.OK)
-	public ApiResult<AuthorizeTokenResponse> renewToken(
+	public ApiResult<LoginResponse> renewToken(
 		@RequestBody @Valid RenewTokensRequest request
 	) {
 		var token = memberAuthenticationFacade.renewToken(request.email(), request.refreshToken());
-		return ApiResult.success(new AuthorizeTokenResponse(token.accessToken(), token.refreshToken()));
+		return ApiResult.success(new LoginResponse(token.accessToken(), token.refreshToken()));
 	}
 
 }

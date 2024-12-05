@@ -1,4 +1,4 @@
-package io.syeony.premarket.member.infrastructure.security.login;
+package io.syeony.premarket.member.infrastructure.security;
 
 import java.util.ArrayList;
 

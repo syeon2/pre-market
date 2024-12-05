@@ -36,9 +36,9 @@ class MemberCommandApiTest extends ControllerTestSupport {
 
 	@Test
 	@DisplayName(value = "Register member successfully when all required fields are provided")
-	void registerCustomerMemberApi() throws Exception {
+	void registerMemberApi() throws Exception {
 		// given
-		RegisterMemberRequest request = createRegisterCustomerMemberRequest();
+		RegisterMemberRequest request = createRegisterMemberRequest();
 
 		given(memberManageFacade.registerMember(request.toDomain(), request.verificationCode()))
 			.willReturn(new MemberId("memberId"));
@@ -98,7 +98,7 @@ class MemberCommandApiTest extends ControllerTestSupport {
 		// given
 		LoginRequest request = new LoginRequest("waterkite94@gmail.com", "rawPassword");
 
-		given(memberAuthenticationFacade.authenticateMember(request.email(), request.password()))
+		given(memberAuthenticationFacade.loginMember(request.email(), request.password()))
 			.willReturn(new AuthorizationToken("access_token_value", "refresh_token_value"));
 
 		// when // then
@@ -153,7 +153,7 @@ class MemberCommandApiTest extends ControllerTestSupport {
 			));
 	}
 
-	private RegisterMemberRequest createRegisterCustomerMemberRequest() {
+	private RegisterMemberRequest createRegisterMemberRequest() {
 		return new RegisterMemberRequest(
 			"waterkite94@gmail.com",
 			"rawPassword",

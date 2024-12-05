@@ -45,7 +45,7 @@ public final class Member {
 		this.status = status != null ? status : EntityStatus.ALIVE;
 	}
 
-	public Member registerCustomer(Function<String, String> encrypt) {
+	public Member register(Function<String, String> encrypt) {
 		return Member.builder()
 			.memberId(generateMemberId())
 			.email(email)

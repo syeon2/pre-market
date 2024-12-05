@@ -23,7 +23,7 @@ public class MemberAuthenticationFacade {
 	private final ApplicationEventPublisher publisher;
 
 	@Transactional
-	public AuthorizationToken authenticateMember(final String email, final String password) {
+	public AuthorizationToken loginMember(final String email, final String password) {
 		AuthorizationToken token = authenticateMemberVerifier.verify(email, password);
 		publisher.publishEvent(new RefreshTokenEvent(email, token.refreshToken()));
 
